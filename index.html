@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <!-- Main Navigation Tabs: Finder vs My Wallet -->
+      <!-- Main Navigation Tabs: Finder vs My Wallet vs Bank Intel -->
       <nav class="view-tabs" role="tablist">
         <button class="view-tab-btn active" id="tabFinder" role="tab" data-view="finder">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -36,6 +36,10 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
           My Wallet & Swipe Guide
           <span id="walletBadge" class="wallet-badge-count">0</span>
+        </button>
+        <button class="view-tab-btn" id="tabBanks" role="tab" data-view="banks">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3L2 10h20L12 3z"/></svg>
+          Bank Intel & Rules
         </button>
       </nav>
 
@@ -142,6 +146,23 @@
             <span id="maxFeeVal" class="slider-val-tag">$700</span>
           </div>
           <input type="range" id="maxFee" min="0" max="700" step="25" value="700" class="spend-slider">
+        </div>
+
+        <!-- Bank / Issuer Filter -->
+        <div class="filter-group">
+          <label for="issuerSelect">Bank / Issuer</label>
+          <select id="issuerSelect">
+            <option value="all">All Banks</option>
+            <option value="Chase">Chase</option>
+            <option value="American Express">American Express</option>
+            <option value="Capital One">Capital One</option>
+            <option value="Citi">Citi</option>
+            <option value="Wells Fargo">Wells Fargo</option>
+            <option value="Bank of America">Bank of America</option>
+            <option value="Bilt">Bilt</option>
+            <option value="Discover">Discover</option>
+            <option value="U.S. Bank">U.S. Bank</option>
+          </select>
         </div>
 
         <!-- Card Network -->
@@ -263,6 +284,11 @@
         <!-- Injected and managed by JS -->
       </div>
 
+      <!-- View 3: Bank Intelligence Hub & Approval Rules -->
+      <div id="bankHubView" class="bank-hub-container" hidden>
+        <!-- Injected and managed by JS -->
+      </div>
+
     </div>
 
   </main>
@@ -302,6 +328,16 @@
         <p style="font-size:0.85rem; color:var(--text-muted);">Comparing rewards, fees, perks, and calculated return on your spend.</p>
       </div>
       <div class="matrix-table-wrap" id="comparisonTableContainer">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bank Intelligence Dossier Modal -->
+  <div id="bankModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container bank-modal-container">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div id="bankModalContent">
         <!-- Injected by JS -->
       </div>
     </div>

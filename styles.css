@@ -2064,3 +2064,319 @@ select:focus, input[type="text"]:focus {
   font-size: 0.72rem;
   color: var(--text-muted);
 }
+
+
+/* ==========================================================================
+   Bank Intelligence & Underwriting Dossier Styles
+   ========================================================================== */
+
+/* Bank Intel Clickable Pill on Cards */
+.card-bank-intel-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.card-bank-intel-pill:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.bank-color-indicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Bank Intelligence Modal Container */
+.bank-modal-container {
+  max-width: 850px;
+}
+
+.bank-modal-header {
+  padding: 28px 32px 20px;
+  color: #fff;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  position: relative;
+}
+
+.bank-modal-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.bank-brand-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px);
+}
+
+.bank-modal-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.bank-modal-sub {
+  font-size: 0.88rem;
+  opacity: 0.9;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Bank Dossier Content */
+.bank-dossier-body {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bank-dossier-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .bank-dossier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bank-info-card {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bank-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.bank-rule-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.bank-rule-header {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent-rose);
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bank-rule-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Partner Chips Grid */
+.transfer-partners-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.partner-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 0.82rem;
+}
+
+.partner-name {
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.partner-tag {
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.partner-tag.airline {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.partner-tag.hotel {
+  background: var(--accent-amber-bg);
+  color: var(--accent-amber);
+}
+
+.partner-tag.cash {
+  background: var(--accent-green-bg);
+  color: var(--accent-green);
+}
+
+.partner-ratio {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.partner-note {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* Bureau Pull Box */
+.bureau-badge-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(2, 132, 199, 0.08);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.bureau-icon {
+  font-size: 1.25rem;
+}
+
+/* Pre-Approval Status Tag */
+.preapproval-status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--accent-green-bg);
+  color: var(--accent-green);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.preapproval-status-tag.unavailable {
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+  border-color: var(--border-color);
+}
+
+/* Direct Contacts Box */
+.contact-hotline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-color);
+  font-size: 0.82rem;
+}
+
+.contact-hotline-row:last-child {
+  border-bottom: 0;
+}
+
+.hotline-num {
+  font-family: monospace;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Bank Hub View (Tab 3 in Header) */
+.bank-hub-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bank-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.bank-hub-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.bank-hub-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+}
+
+.bank-hub-header {
+  padding: 16px 20px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bank-hub-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bank-quick-stat {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}

@@ -1,14 +1,20 @@
 /**
  * Card Finder Pro - Main Application Logic
- * Comprehensive Features: 3D Flip Cards, Holographic Sheen, My Wallet Swipe Guide, SVG Charts, CSV Export
+ * Comprehensive Features:
+ * - 3D Flip Cards & Holographic Sheen
+ * - My Wallet & Checkout Swipe Guide
+ * - Bank Intelligence Dossiers & Approval Rules
+ * - SVG Donut Charts & Return on Spend (ROI)
+ * - CSV Spreadsheet Export & Print View
  */
 
 // Application State
 const state = {
-  activeView: "finder", // "finder" | "wallet"
+  activeView: "finder", // "finder" | "wallet" | "banks"
   tier: 2, // Good by default
   maxFee: 700,
   type: "all", // "all" | "cashback" | "travel"
+  issuer: "all", // "all" | "Chase" | "American Express" | etc.
   network: "all", // "all" | "Visa" | "Mastercard" | "Amex" | "Discover"
   noFtf: false,
   hasLounge: false,
@@ -95,7 +101,6 @@ function calculateCardValue(card, spending, options = {}) {
     // Standard calculation with point valuation adjustment
     CATEGORIES.forEach(({ key }) => {
       const rate = card.rewards[key] || 1.0;
-      // Points valuation boost applies if card is travel points
       const effectiveRate = card.type === "travel" ? rate * pointMultiplier : rate;
       const earned = spending[key] * 12 * (effectiveRate / 100);
       breakdown[key] = earned;
@@ -116,7 +121,6 @@ function calculateCardValue(card, spending, options = {}) {
   const ongoingNet = totalEarned - effectiveFee;
   const firstYearNet = totalEarned - card.annualFee + bonus + (useCredits ? (card.annualCredits || 0) : 0);
 
-  // Return on total spend percentage (ROI)
   const totalAnnualSpend = Object.values(spending).reduce((a, b) => a + b, 0) * 12;
   const roiPct = totalAnnualSpend > 0 ? ((totalEarned / totalAnnualSpend) * 100).toFixed(2) : "0.00";
 
@@ -180,25 +184,46 @@ function findOptimalCombo(cards, spending) {
   return bestCombo;
 }
 
-// Filter and Sort Cards
+// Filter and Sort Cards with Deep Bank & Ecosystem Search
 function getFilteredAndSortedCards() {
   return CARDS_DATABASE
     .filter(card => {
+      // Credit Tier
       if (card.tier > state.tier) return false;
+      // Max Fee
       if (card.annualFee > state.maxFee) return false;
+      // Reward Type
       if (state.type !== "all" && card.type !== state.type) return false;
+      // Bank / Issuer Filter
+      if (state.issuer !== "all" && card.issuer !== state.issuer) return false;
+      // Card Network
       if (state.network !== "all" && card.network !== state.network) return false;
+      // Foreign Transaction Fee
       if (state.noFtf && card.foreignFee) return false;
+      // Lounge Access
       if (state.hasLounge && !card.hasLounge) return false;
+      // Intro APR
       if (state.hasIntroApr && !card.hasIntroApr) return false;
+      // Favorites Only
       if (state.onlyFavorites && !state.favorites.has(card.id)) return false;
+
+      // Deep Multi-Field Search (Card name, bank, ecosystem, transfer partners, underwriting rules, bureaus)
       if (state.searchQuery.trim() !== "") {
         const q = state.searchQuery.toLowerCase();
+        const bank = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[card.issuer]) ? BANK_PROFILES[card.issuer] : {};
+
         const matchesName = card.name.toLowerCase().includes(q);
-        const matchesIssuer = card.issuer.toLowerCase().includes(q);
+        const matchesIssuer = card.issuer.toLowerCase().includes(q) || (bank.name && bank.name.toLowerCase().includes(q));
         const matchesPerks = card.perks.some(p => p.toLowerCase().includes(q));
         const matchesBestFor = card.bestFor.toLowerCase().includes(q);
-        if (!matchesName && !matchesIssuer && !matchesPerks && !matchesBestFor) return false;
+        const matchesEcosystem = bank.rewardsEcosystem && bank.rewardsEcosystem.toLowerCase().includes(q);
+        const matchesBureau = bank.bureauPulled && bank.bureauPulled.toLowerCase().includes(q);
+        const matchesRules = bank.underwritingRules && bank.underwritingRules.some(r => r.title.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q));
+        const matchesPartners = bank.transferPartners && bank.transferPartners.some(p => p.name.toLowerCase().includes(q) || p.type.toLowerCase().includes(q));
+
+        if (!matchesName && !matchesIssuer && !matchesPerks && !matchesBestFor && !matchesEcosystem && !matchesBureau && !matchesRules && !matchesPartners) {
+          return false;
+        }
       }
       return true;
     })
@@ -234,33 +259,37 @@ document.addEventListener("DOMContentLoaded", () => {
   renderApp();
 });
 
-// View Switcher: Card Finder vs My Wallet
+// View Switcher: Card Finder vs My Wallet vs Bank Intel
 function initViewSwitcher() {
   const tabFinder = document.getElementById("tabFinder");
   const tabWallet = document.getElementById("tabWallet");
+  const tabBanks = document.getElementById("tabBanks");
   const finderView = document.getElementById("finderView");
   const walletView = document.getElementById("walletView");
+  const bankHubView = document.getElementById("bankHubView");
 
   if (!tabFinder || !tabWallet) return;
 
   const setView = (view) => {
     state.activeView = view;
-    if (view === "finder") {
-      tabFinder.classList.add("active");
-      tabWallet.classList.remove("active");
-      if (finderView) finderView.hidden = false;
-      if (walletView) walletView.hidden = true;
-    } else {
-      tabWallet.classList.add("active");
-      tabFinder.classList.remove("active");
-      if (finderView) finderView.hidden = true;
-      if (walletView) walletView.hidden = false;
+    [tabFinder, tabWallet, tabBanks].forEach(t => {
+      if (t) t.classList.toggle("active", t.dataset.view === view);
+    });
+
+    if (finderView) finderView.hidden = (view !== "finder");
+    if (walletView) walletView.hidden = (view !== "wallet");
+    if (bankHubView) bankHubView.hidden = (view !== "banks");
+
+    if (view === "wallet") {
       renderWalletView();
+    } else if (view === "banks") {
+      renderBankHubView();
     }
   };
 
   tabFinder.addEventListener("click", () => setView("finder"));
   tabWallet.addEventListener("click", () => setView("wallet"));
+  if (tabBanks) tabBanks.addEventListener("click", () => setView("banks"));
 }
 
 // Wallet Card Toggle
@@ -411,6 +440,16 @@ function initFilterControls() {
     });
   }
 
+  // Issuer/Bank dropdown
+  const issuerSelect = document.getElementById("issuerSelect");
+  if (issuerSelect) {
+    issuerSelect.value = state.issuer;
+    issuerSelect.addEventListener("change", (e) => {
+      state.issuer = e.target.value;
+      renderApp();
+    });
+  }
+
   document.querySelectorAll("[data-type-tab]").forEach(tab => {
     tab.addEventListener("click", () => {
       document.querySelectorAll("[data-type-tab]").forEach(t => t.classList.remove("active"));
@@ -504,6 +543,7 @@ function resetAllFilters() {
   state.tier = 3;
   state.maxFee = 700;
   state.type = "all";
+  state.issuer = "all";
   state.network = "all";
   state.noFtf = false;
   state.hasLounge = false;
@@ -518,6 +558,9 @@ function resetAllFilters() {
   if (maxFeeInput) maxFeeInput.value = 700;
   const maxFeeVal = document.getElementById("maxFeeVal");
   if (maxFeeVal) maxFeeVal.textContent = "$700";
+
+  const issuerSelect = document.getElementById("issuerSelect");
+  if (issuerSelect) issuerSelect.value = "all";
 
   document.querySelectorAll("[data-type-tab]").forEach(t => {
     t.classList.toggle("active", t.dataset.typeTab === "all");
@@ -657,6 +700,196 @@ function flipCard(event, cardId) {
   }
 }
 
+// Open Bank Intelligence & Rules Modal
+function openBankModal(issuerName) {
+  const bank = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[issuerName]) ? BANK_PROFILES[issuerName] : null;
+  if (!bank) return;
+
+  const modal = document.getElementById("bankModal");
+  const content = document.getElementById("bankModalContent");
+  if (!modal || !content) return;
+
+  const bankCards = CARDS_DATABASE.filter(c => c.issuer === issuerName);
+
+  content.innerHTML = `
+    <div class="bank-modal-header" style="background: ${bank.logoColor || '#1e3a8a'}">
+      <div class="bank-modal-brand">
+        <div class="bank-brand-icon-box">🏛️</div>
+        <div>
+          <h2>${bank.name}</h2>
+          <div class="bank-modal-sub">
+            <span>📍 HQ: ${bank.headquarters}</span>
+            <span>⭐ Satisfaction: ${bank.customerSatisfaction}</span>
+            <span>📱 App: ${bank.mobileAppRating}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bank-dossier-body">
+      <!-- Top Overview Banner -->
+      <div style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <div>
+            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--primary); display:block;">Primary Rewards Ecosystem</span>
+            <strong style="font-size:1.15rem; color:var(--text-main);">${bank.rewardsEcosystem}</strong>
+          </div>
+          <div>
+            <span class="preapproval-status-tag ${bank.hasPreApproval ? '' : 'unavailable'}">
+              ${bank.hasPreApproval ? '✓ Soft-Pull Pre-Approval Tool Available' : 'No Official Soft-Pull Tool'}
+            </span>
+          </div>
+        </div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height:1.4;">
+          ${bank.ecosystemDescription}
+        </p>
+      </div>
+
+      <!-- Two-column dossier grid -->
+      <div class="bank-dossier-grid">
+        
+        <!-- Left: Underwriting Rules & Bureau Pull -->
+        <div class="bank-info-card">
+          <div class="bank-card-title">
+            <span>📋 Strict Application & Underwriting Rules</span>
+          </div>
+          
+          <div class="bank-rules-list">
+            ${bank.underwritingRules.map(r => `
+              <div class="bank-rule-item">
+                <div class="bank-rule-header">
+                  <span>⚠️</span>
+                  <span>${r.title}</span>
+                </div>
+                <p class="bank-rule-desc">${r.desc}</p>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="bureau-badge-box">
+            <span class="bureau-icon">🔍</span>
+            <div>
+              <strong style="display:block; font-size:0.8rem; color:var(--text-main);">Credit Bureau Pulled:</strong>
+              <span style="font-size:0.78rem; color:var(--text-muted);">${bank.bureauPulled}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Transfer Partners & Direct Hotlines -->
+        <div class="bank-info-card">
+          <div class="bank-card-title">
+            <span>✈️ 1:1 Airline & Hotel Transfer Partners</span>
+          </div>
+
+          <div class="transfer-partners-list">
+            ${bank.transferPartners.map(p => `
+              <div class="partner-row">
+                <div>
+                  <div class="partner-name">
+                    <span>${p.name}</span>
+                    <span class="partner-tag ${p.type.toLowerCase().includes('airline') ? 'airline' : p.type.toLowerCase().includes('hotel') ? 'hotel' : 'cash'}">${p.type}</span>
+                  </div>
+                  <span class="partner-note">${p.valueNote}</span>
+                </div>
+                <span class="partner-ratio">${p.ratio}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div style="margin-top:10px; border-top:1px solid var(--border-color); padding-top:10px;">
+            <strong style="font-size:0.85rem; display:block; margin-bottom:6px;">📞 Direct Bank Contact Hotlines:</strong>
+            <div class="contact-hotline-row">
+              <span style="color:var(--text-muted);">Application Reconsideration:</span>
+              <a href="tel:${bank.reconsiderationPhone.split(' ')[0]}" class="hotline-num">${bank.reconsiderationPhone}</a>
+            </div>
+            <div class="contact-hotline-row">
+              <span style="color:var(--text-muted);">Customer Service:</span>
+              <a href="tel:${bank.customerServicePhone.split(' ')[0]}" class="hotline-num">${bank.customerServicePhone}</a>
+            </div>
+            <div class="contact-hotline-row">
+              <span style="color:var(--text-muted);">Instant Digital Card:</span>
+              <span style="font-size:0.75rem; text-align:right; max-width:180px;">${bank.instantCardNumber}</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Bank's Cards in Database -->
+      <div style="background:var(--bg-surface); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px;">
+        <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:8px;">💳 ${bank.shortName} Cards in Catalog (${bankCards.length})</h4>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          ${bankCards.map(c => `
+            <button onclick="document.getElementById('bankModal').classList.remove('open'); openCardModal('${c.id}');" class="btn-secondary" style="font-size:0.78rem; padding:5px 12px; display:inline-flex; align-items:center; gap:6px;">
+              <span>${c.name}</span>
+              <span style="color:var(--primary); font-weight:700;">$${c.annualFee}/yr</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+
+    </div>
+  `;
+
+  modal.classList.add("open");
+}
+
+// Render "Bank Intelligence Hub & Rulebook" View
+function renderBankHubView() {
+  const container = document.getElementById("bankHubView");
+  if (!container || typeof BANK_PROFILES === "undefined") return;
+
+  container.innerHTML = `
+    <div style="background:linear-gradient(135deg, var(--bg-surface), var(--bg-surface-alt)); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:24px; box-shadow:var(--shadow-sm);">
+      <h2 style="font-size:1.45rem; font-weight:800; margin-bottom:4px;">🏦 Bank Intelligence & Approval Rulebook</h2>
+      <p style="font-size:0.85rem; color:var(--text-muted);">
+        Every major card issuer enforces strict proprietary underwriting algorithms, credit bureau pull patterns, and application limits. Click any bank below to view its complete rules, transfer partners, and direct reconsideration numbers.
+      </p>
+    </div>
+
+    <div class="bank-hub-grid">
+      ${Object.entries(BANK_PROFILES).map(([key, bank]) => {
+        const count = CARDS_DATABASE.filter(c => c.issuer === key).length;
+        const topRule = bank.underwritingRules[0] || {};
+        return `
+          <div class="bank-hub-card" onclick="openBankModal('${key}')">
+            <div class="bank-hub-header" style="background:${bank.logoColor || '#1e3a8a'}">
+              <strong style="font-size:1.05rem;">${bank.shortName}</strong>
+              <span style="font-size:0.72rem; background:rgba(255,255,255,0.25); padding:2px 8px; border-radius:999px;">
+                ${count} Cards
+              </span>
+            </div>
+            <div class="bank-hub-body">
+              <div class="bank-quick-stat">
+                <span>Ecosystem:</span>
+                <strong style="color:var(--text-main);">${bank.rewardsEcosystem.split('®')[0]}</strong>
+              </div>
+              <div class="bank-quick-stat">
+                <span>Key Rule:</span>
+                <span style="color:var(--accent-rose); font-weight:700;">${topRule.title || 'Standard'}</span>
+              </div>
+              <div class="bank-quick-stat">
+                <span>Bureau Pulled:</span>
+                <span>${bank.bureauPulled.split(' ')[0]}</span>
+              </div>
+              <div class="bank-quick-stat">
+                <span>Pre-Approval:</span>
+                <span style="color:${bank.hasPreApproval ? 'var(--accent-green)' : 'var(--text-muted)'}; font-weight:600;">
+                  ${bank.hasPreApproval ? '✓ Soft Pull' : 'Hard Pull'}
+                </span>
+              </div>
+              <button class="btn-primary" style="margin-top:6px; font-size:0.8rem; padding:6px 12px; width:100%;">
+                View Full Bank Dossier &rarr;
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
 // Main Render Function
 function renderApp() {
   renderSpendSummary();
@@ -666,6 +899,8 @@ function renderApp() {
   renderWalletBadge();
   if (state.activeView === "wallet") {
     renderWalletView();
+  } else if (state.activeView === "banks") {
+    renderBankHubView();
   }
 }
 
@@ -770,6 +1005,7 @@ function renderCardResults() {
 
       const topCat = Object.entries(breakdown).sort((a, b) => b[1] - a[1])[0];
       const topCatInfo = CATEGORIES.find(c => c.key === topCat[0]);
+      const bankInfo = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[card.issuer]) ? BANK_PROFILES[card.issuer] : null;
 
       return `
         <article class="card-item ${idx === 0 ? 'top-ranked' : ''}" data-card-id="${card.id}">
@@ -825,7 +1061,13 @@ function renderCardResults() {
             <div class="card-header-meta">
               <div class="card-titles">
                 <h3 class="card-title" onclick="openCardModal('${card.id}')">${card.name}</h3>
-                <span class="card-best-for">${card.bestFor}</span>
+                <div style="display:flex; align-items:center; gap:8px; margin-top:2px;">
+                  <button class="card-bank-intel-pill" onclick="openBankModal('${card.issuer}')" title="Click to view ${card.issuer} underwriting rules, bureau pulls, & transfer partners">
+                    <span class="bank-color-indicator" style="background:${bankInfo ? bankInfo.logoColor : '#38bdf8'}"></span>
+                    ${card.issuer} Intel &rarr;
+                  </button>
+                  <span class="card-best-for">${card.bestFor}</span>
+                </div>
               </div>
               <div class="card-quick-actions">
                 <button class="wallet-toggle-btn ${inWallet ? 'in-wallet' : ''}" onclick="toggleWalletCard('${card.id}')" title="Toggle card in My Wallet">
@@ -1066,7 +1308,6 @@ function renderWalletView() {
 
   const currentWalletNet = currentWalletTotalEarned - currentWalletTotalFees;
 
-  // Potential optimal combo net
   const optimalCombo = findOptimalCombo(CARDS_DATABASE, state.spending);
   const potentialNet = optimalCombo ? optimalCombo.net : currentWalletNet;
   const missedAmount = Math.max(0, Math.round(potentialNet - currentWalletNet));
@@ -1191,23 +1432,27 @@ function renderWalletView() {
 function initModals() {
   const detailModal = document.getElementById("cardDetailModal");
   const compareModal = document.getElementById("comparisonModal");
+  const bankModal = document.getElementById("bankModal");
 
   document.querySelectorAll(".modal-close-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       if (detailModal) detailModal.classList.remove("open");
       if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
     });
   });
 
   window.addEventListener("click", (e) => {
     if (e.target === detailModal) detailModal.classList.remove("open");
     if (e.target === compareModal) compareModal.classList.remove("open");
+    if (e.target === bankModal) bankModal.classList.remove("open");
   });
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       if (detailModal) detailModal.classList.remove("open");
       if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
     }
   });
 }
@@ -1222,6 +1467,8 @@ function openCardModal(cardId) {
   const modal = document.getElementById("cardDetailModal");
   const content = document.getElementById("cardDetailContent");
   if (!modal || !content) return;
+
+  const bankInfo = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[card.issuer]) ? BANK_PROFILES[card.issuer] : null;
 
   content.innerHTML = `
     <div class="modal-card-header" style="background:${card.cardColor}">
@@ -1254,6 +1501,24 @@ function openCardModal(cardId) {
           <span class="val highlight">${val.roiPct}%</span>
         </div>
       </div>
+
+      <!-- Bank Intel Preview Section -->
+      ${bankInfo ? `
+        <div class="modal-section" style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <div>
+              <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); display:block;">Issuing Bank & Rules</span>
+              <strong style="font-size:1.05rem; color:var(--text-main);">🏛️ ${bankInfo.name}</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">
+                Bureau: ${bankInfo.bureauPulled.split(' ')[0]} &bull; Top Rule: ${bankInfo.underwritingRules[0].title}
+              </div>
+            </div>
+            <button class="btn-primary" style="font-size:0.76rem; padding:6px 14px;" onclick="openBankModal('${card.issuer}')">
+              View ${card.issuer} Rules & Partners &rarr;
+            </button>
+          </div>
+        </div>
+      ` : ''}
 
       <!-- Donut Chart & Category Breakdown -->
       <div class="modal-section">
@@ -1291,6 +1556,7 @@ function openCardModal(cardId) {
         <p>${card.issuer === 'Chase' ? 'Chase cards are subject to the 5/24 rule: You will typically not be approved if you have opened 5 or more personal cards across any bank in the past 24 months.' : 
              card.issuer === 'American Express' ? 'Amex has a once-in-a-lifetime rule for welcome bonuses. Check if you are eligible for the welcome offer via their Apply with Confidence tool.' :
              card.issuer === 'Capital One' ? 'Capital One generally pulls all three credit bureaus and limits applicants to at most 1 card every 6 months.' :
+             card.issuer === 'Bank of America' ? 'Bank of America enforces the 2/3/4 rule and limits approvals to 7 new cards in 12 months for depositors (or 3 in 12 months without deposits).' :
              'Ensure your credit score meets or exceeds the recommended tier before applying for the best approval odds.'}</p>
       </div>
     </div>
@@ -1495,7 +1761,8 @@ function shareConfiguration() {
     spend: state.spending,
     tier: state.tier,
     maxFee: state.maxFee,
-    type: state.type
+    type: state.type,
+    issuer: state.issuer
   };
   const encoded = btoa(JSON.stringify(shareData));
   const url = `${window.location.origin}${window.location.pathname}#config=${encoded}`;
@@ -1521,6 +1788,7 @@ function loadStateFromUrl() {
       if (parsed.tier !== undefined) state.tier = parsed.tier;
       if (parsed.maxFee !== undefined) state.maxFee = parsed.maxFee;
       if (parsed.type) state.type = parsed.type;
+      if (parsed.issuer) state.issuer = parsed.issuer;
     } catch (err) {
       console.warn("Failed to parse config from URL:", err);
     }
@@ -1533,6 +1801,7 @@ window.toggleFavorite = toggleFavorite;
 window.toggleWalletCard = toggleWalletCard;
 window.flipCard = flipCard;
 window.openCardModal = openCardModal;
+window.openBankModal = openBankModal;
 window.openComparisonModal = openComparisonModal;
 window.resetAllFilters = resetAllFilters;
 window.exportToCsv = exportToCsv;

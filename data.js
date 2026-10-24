@@ -1,8 +1,254 @@
 /**
- * Card Finder Pro - Comprehensive Card Database
- * Rewards are base percentages or point-rates per dollar spent.
- * minTier: 0 (Building / Secured, 300-620), 1 (Fair, 620-689), 2 (Good, 690-749), 3 (Excellent, 750+)
+ * Card Finder Pro - Comprehensive Card Database & Bank Intelligence Profiles
+ * Contains in-depth bank underwriting rules, credit bureau pull patterns, transfer partner ecosystems, and customer support data.
  */
+
+const BANK_PROFILES = {
+  "Chase": {
+    name: "JPMorgan Chase Bank, N.A.",
+    shortName: "Chase",
+    logoColor: "#117aca",
+    rewardsEcosystem: "Chase Ultimate Rewards®",
+    ecosystemDescription: "One of the most versatile point programs in the world. Points transfer 1:1 to premium partners or redeem with a 25%-50% bonus on Sapphire cards.",
+    transferPartners: [
+      { name: "World of Hyatt", type: "Hotel", ratio: "1:1", valueNote: "Best hotel transfer value (2.0¢+ avg)" },
+      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance network" },
+      { name: "Southwest Rapid Rewards", type: "Airline", ratio: "1:1", valueNote: "Domestic flights & 2 free checked bags" },
+      { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Exceptional Star Alliance awards" },
+      { name: "British Airways Avios", type: "Airline", ratio: "1:1", valueNote: "Oneworld short-haul sweet spots" },
+      { name: "Marriott Bonvoy", type: "Hotel", ratio: "1:1", valueNote: "Global hotel footprint" }
+    ],
+    underwritingRules: [
+      { title: "Chase 5/24 Rule", desc: "You will almost certainly be rejected if you have opened 5 or more personal credit cards with ANY bank in the past 24 months." },
+      { title: "2/30 Velocity Rule", desc: "You cannot be approved for more than 2 Chase cards in a 30-day window." },
+      { title: "Sapphire 48-Month Rule", desc: "You can only receive a welcome bonus on ONE Sapphire card (Preferred or Reserve) once every 48 months." },
+      { title: "Maximum Credit Line", desc: "Chase rarely extends total credit across all your Chase cards exceeding 50% of your reported annual income." }
+    ],
+    bureauPulled: "Experian (majority of US states), occasionally Equifax in the Southeast",
+    hasPreApproval: true,
+    preApprovalNote: "Chase offers an online 'Pre-Qualified Offers' tool with a soft credit pull that won't impact your score.",
+    customerServicePhone: "1-800-432-3117",
+    reconsiderationPhone: "1-888-270-2127",
+    customerSatisfaction: "J.D. Power #1 for National Credit Card Customer Satisfaction (4.9/5)",
+    mobileAppRating: "4.8★ iOS (5M+ reviews) / 4.6★ Android",
+    headquarters: "New York, NY",
+    instantCardNumber: "Available immediately via Chase Mobile App & Apple Pay upon approval"
+  },
+  "American Express": {
+    name: "American Express National Bank",
+    shortName: "American Express",
+    logoColor: "#006fcf",
+    rewardsEcosystem: "Membership Rewards®",
+    ecosystemDescription: "Top-tier international travel rewards program with 20+ transfer airline and hotel partners and extensive lifestyle statement credit partnerships.",
+    transferPartners: [
+      { name: "Delta SkyMiles", type: "Airline", ratio: "1:1", valueNote: "SkyTeam hub flights (small excise fee)" },
+      { name: "Air France / KLM Flying Blue", type: "Airline", ratio: "1:1", valueNote: "Monthly promo award flights to Europe" },
+      { name: "ANA Mileage Club", type: "Airline", ratio: "1:1", valueNote: "Incredible roundtrip business class sweet spots" },
+      { name: "Hilton Honors", type: "Hotel", ratio: "1:2", valueNote: "2 Hilton points per 1 Amex point" },
+      { name: "Virgin Atlantic Flying Club", type: "Airline", ratio: "1:1", valueNote: "Frequent 30% transfer bonuses" },
+      { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "Star Alliance award bookings without fuel surcharges" }
+    ],
+    underwritingRules: [
+      { title: "Once-Per-Lifetime Bonus Rule", desc: "You can only earn the welcome bonus on a specific Amex card once in your lifetime. Amex will warn you with a popup before pulling your credit." },
+      { title: "5 Credit Card Limit", desc: "Amex limits consumers to a maximum of 5 active revolving credit cards at one time (charge cards like Gold/Platinum do not count towards this limit)." },
+      { title: "2/90 Velocity Rule", desc: "You can be approved for at most 2 revolving Amex credit cards in a 90-day period." },
+      { title: "Apply with Confidence", desc: "Soft-pull check before you commit: You only get a hard credit inquiry if you are approved AND choose to accept the card!" }
+    ],
+    bureauPulled: "Experian (almost exclusively nationwide). Existing customers usually receive soft pulls for subsequent cards!",
+    hasPreApproval: true,
+    preApprovalNote: "'Apply With Confidence' tells you if you're approved with NO impact to credit score until you accept.",
+    customerServicePhone: "1-800-528-4800",
+    reconsiderationPhone: "1-800-567-1083",
+    customerSatisfaction: "J.D. Power Top 2 Ranking (4.9/5) - Renowned 24/7 in-app live chat and dispute protection",
+    mobileAppRating: "4.9★ iOS (2.5M+ reviews) / 4.7★ Android",
+    headquarters: "New York, NY",
+    instantCardNumber: "Instant virtual card number issued immediately upon approval"
+  },
+  "Capital One": {
+    name: "Capital One Financial Corporation",
+    shortName: "Capital One",
+    logoColor: "#004879",
+    rewardsEcosystem: "Capital One Miles",
+    ecosystemDescription: "Simple, flexible miles that can be erased against ANY travel purchase at 1.0¢ each, or transferred 1:1 to airline and hotel partners.",
+    transferPartners: [
+      { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Global Star Alliance flights" },
+      { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "Excellent partner awards with no surcharges" },
+      { name: "British Airways Avios", type: "Airline", ratio: "1:1", valueNote: "Oneworld short-haul & American Airlines flights" },
+      { name: "Wyndham Rewards", type: "Hotel", ratio: "1:1", valueNote: "15k/30k flat rate Vacasa vacation rental sweet spots" },
+      { name: "Turkish Airlines Miles&Smiles", type: "Airline", ratio: "1:1", valueNote: "Domestic flights on United from 10k miles" }
+    ],
+    underwritingRules: [
+      { title: "Triple Bureau Pull", desc: "Capital One uniquely pulls all THREE major credit bureaus (Experian, TransUnion, Equifax) for every application." },
+      { title: "1/6 Rule", desc: "You can generally only be approved for 1 Capital One card every 6 months." },
+      { title: "2 Personal Card Limit", desc: "Capital One generally limits cardholders to 2 personal cards in their core lineup (Venture, Savor, Quicksilver)." },
+      { title: "Subprime vs Prime Sensitivity", desc: "Prefers applicants who actually carry modest balances or have active revolving utilization rather than spotless 800+ credit churners." }
+    ],
+    bureauPulled: "All 3 bureaus pulled simultaneously (Experian, TransUnion, Equifax)",
+    hasPreApproval: true,
+    preApprovalNote: "Industry-leading pre-approval tool with pre-fill options and zero credit score impact.",
+    customerServicePhone: "1-800-227-4825",
+    reconsiderationPhone: "1-800-625-7866",
+    customerSatisfaction: "4.7/5 - Excellent real-time fraud alerts and virtual Eno card numbers",
+    mobileAppRating: "4.9★ iOS (4.5M+ reviews) / 4.6★ Android",
+    headquarters: "McLean, VA",
+    instantCardNumber: "Instant virtual card available in Capital One mobile app via Eno"
+  },
+  "Citi": {
+    name: "Citigroup Inc.",
+    shortName: "Citi",
+    logoColor: "#003b70",
+    rewardsEcosystem: "Citi ThankYou® Rewards",
+    ecosystemDescription: "Highly lucrative cash back pairing with Citi Double Cash & Custom Cash, or high-value airline transfer partners with Citi Strata/Premier.",
+    transferPartners: [
+      { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "Star Alliance sweet spots" },
+      { name: "Virgin Atlantic Flying Club", type: "Airline", ratio: "1:1", valueNote: "Delta flights & UK awards" },
+      { name: "Choice Privileges", type: "Hotel", ratio: "1:2", valueNote: "2 Choice hotel points per 1 ThankYou point" },
+      { name: "Qatar Airways Privilege Club", type: "Airline", ratio: "1:1", valueNote: "Qsuite business class redemptions" },
+      { name: "Turkish Airlines Miles&Smiles", type: "Airline", ratio: "1:1", valueNote: "7.5k to 10k mile award flights" }
+    ],
+    underwritingRules: [
+      { title: "8/65 Rule", desc: "Citi will only approve 1 card application in an 8-day period, and at most 2 applications in a 65-day period." },
+      { title: "48-Month Family Rule", desc: "You cannot earn a welcome bonus on a card if you received a bonus or closed that card family in the past 48 months." },
+      { title: "Inquiry Sensitivity", desc: "Citi is very sensitive to recent hard inquiries in the past 6 months (especially for cards like Premier/Custom Cash)." }
+    ],
+    bureauPulled: "Experian or Equifax (state-dependent, occasionally TransUnion in the Midwest)",
+    hasPreApproval: true,
+    preApprovalNote: "Offers an online pre-qualification check with soft inquiry.",
+    customerServicePhone: "1-800-950-5114",
+    reconsiderationPhone: "1-800-695-5171",
+    customerSatisfaction: "4.5/5 - Generous 0% intro APR balance transfer terms",
+    mobileAppRating: "4.8★ iOS (3M+ reviews) / 4.7★ Android",
+    headquarters: "New York, NY",
+    instantCardNumber: "Digital wallet push provisioning available on select cards"
+  },
+  "Wells Fargo": {
+    name: "Wells Fargo & Company",
+    shortName: "Wells Fargo",
+    logoColor: "#d71e28",
+    rewardsEcosystem: "Wells Fargo Rewards®",
+    ecosystemDescription: "Modernized transfer program featuring competitive no-annual-fee options like Autograph and Active Cash.",
+    transferPartners: [
+      { name: "Air France / KLM Flying Blue", type: "Airline", ratio: "1:1", valueNote: "European awards with low fees" },
+      { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "United & Star Alliance flights" },
+      { name: "British Airways Avios", type: "Airline", ratio: "1:1", valueNote: "American Airlines domestic flights" },
+      { name: "Choice Privileges", type: "Hotel", ratio: "1:2", valueNote: "Double points conversion rate" }
+    ],
+    underwritingRules: [
+      { title: "1/6 Bonus Rule", desc: "You are not eligible for a welcome bonus if you opened another Wells Fargo credit card in the last 6 months." },
+      { title: "Existing Customer Relationship", desc: "Underwriting odds improve noticeably if you have a checking, savings, or brokerage account with Wells Fargo." }
+    ],
+    bureauPulled: "Experian (majority) or TransUnion (West Coast)",
+    hasPreApproval: true,
+    preApprovalNote: "Wells Fargo offers an online pre-selected offers page with soft check.",
+    customerServicePhone: "1-800-642-4720",
+    reconsiderationPhone: "1-866-412-5956",
+    customerSatisfaction: "4.6/5 - Industry-leading cell phone protection on $0 fee cards",
+    mobileAppRating: "4.8★ iOS (4M+ reviews) / 4.7★ Android",
+    headquarters: "San Francisco, CA",
+    instantCardNumber: "Add to Apple Pay / Google Pay directly from the Wells Fargo app"
+  },
+  "Bank of America": {
+    name: "Bank of America Corporation",
+    shortName: "Bank of America",
+    logoColor: "#e31837",
+    rewardsEcosystem: "Bank of America Preferred Rewards®",
+    ecosystemDescription: "The king of cash back multipliers for depositors. Qualifying balances in Merrill or BofA boost credit card rewards by 25%, 50%, or 75%!",
+    transferPartners: [
+      { name: "Statement Credit / Cash Deposit", type: "Cash", ratio: "1:1", valueNote: "Direct deposit into checking or investment account" },
+      { name: "Travel Center Redemptions", type: "Travel", ratio: "1.0¢ - 1.25¢", valueNote: "Book flights, hotels, and rentals with no blackout dates" }
+    ],
+    underwritingRules: [
+      { title: "2/3/4 Velocity Rule", desc: "Max 2 new BofA cards in a 2-month period, max 3 cards in 12 months, and max 4 cards in 24 months." },
+      { title: "7/12 or 3/12 Rule", desc: "If you have a deposit account with BofA, max 7 new accounts in 12 months across all banks. Without a deposit account, max 3 new accounts in 12 months!" },
+      { title: "Preferred Rewards Multiplier", desc: "$20k balance = +25% bonus; $50k = +50% bonus; $100k+ = +75% bonus (turning 3% into 5.25%!)." }
+    ],
+    bureauPulled: "Experian (majority) or TransUnion",
+    hasPreApproval: true,
+    preApprovalNote: "Offers customized pre-selected card offers online with soft inquiry.",
+    customerServicePhone: "1-800-732-9194",
+    reconsiderationPhone: "1-877-383-0120",
+    customerSatisfaction: "4.6/5 - Unmatched cash back bonus tiers for savers and investors",
+    mobileAppRating: "4.8★ iOS (3.8M+ reviews) / 4.7★ Android",
+    headquarters: "Charlotte, NC",
+    instantCardNumber: "Instant card provisioning to Apple Pay/Google Pay via BofA Mobile app"
+  },
+  "Bilt": {
+    name: "Bilt Rewards / Wells Fargo",
+    shortName: "Bilt",
+    logoColor: "#111827",
+    rewardsEcosystem: "Bilt Rewards Points",
+    ecosystemDescription: "The only card program in the world that lets you earn valuable transfer points on rent with NO credit card transaction fees.",
+    transferPartners: [
+      { name: "World of Hyatt", type: "Hotel", ratio: "1:1", valueNote: "Most valuable hotel redemption program" },
+      { name: "Alaska Airlines Mileage Plan", type: "Airline", ratio: "1:1", valueNote: "Rare exclusive transfer partner" },
+      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance network" },
+      { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Star Alliance sweet spots" },
+      { name: "Air France / KLM Flying Blue", type: "Airline", ratio: "1:1", valueNote: "Periodic 75%-150% Rent Day transfer bonuses!" }
+    ],
+    underwritingRules: [
+      { title: "5 Transactions per Billing Cycle", desc: "You MUST make at least 5 transactions per billing cycle on the card to earn points on your rent and everyday spend." },
+      { title: "Wells Fargo Underwriting", desc: "Issued by Wells Fargo, so you need a clean credit profile (typically 680+ FICO)." }
+    ],
+    bureauPulled: "Experian (most states) or TransUnion",
+    hasPreApproval: false,
+    preApprovalNote: "No official soft-pull pre-approval tool, but instant credit decisions are standard.",
+    customerServicePhone: "1-844-245-8761",
+    reconsiderationPhone: "1-866-412-5956 (Wells Fargo Credit Operations)",
+    customerSatisfaction: "4.9/5 - Huge fan favorite for renters and Rent Day bonus promos",
+    mobileAppRating: "4.9★ iOS (150k+ reviews) / 4.8★ Android",
+    headquarters: "New York, NY",
+    instantCardNumber: "Instant virtual card in Bilt app upon approval to pay rent immediately"
+  },
+  "Discover": {
+    name: "Discover Financial Services",
+    shortName: "Discover",
+    logoColor: "#ea580c",
+    rewardsEcosystem: "Discover Cashback / Miles",
+    ecosystemDescription: "Legendary for beginner-friendly credit building, 100% US-based customer support, and the first-year Cashback Match.",
+    transferPartners: [
+      { name: "Statement Credit / Bank Deposit", type: "Cash", ratio: "1:1", valueNote: "Redeem any amount anytime directly to bank" },
+      { name: "Discounted Gift Cards", type: "Retail", ratio: "5%-20% bonus", valueNote: "Redeem cash back for extra value on 100+ partner brands" }
+    ],
+    underwritingRules: [
+      { title: "1 Card in Year 1", desc: "Discover strictly permits only ONE credit card during your first 12 months as a customer." },
+      { title: "Max 2 Cards Total", desc: "You can hold a lifetime maximum of 2 Discover credit cards at any one time." },
+      { title: "Secured Card Graduation", desc: "Secured accounts are automatically reviewed monthly starting at month 7 to refund your deposit and graduate to unsecured." }
+    ],
+    bureauPulled: "Equifax or Experian (TransUnion for certain Midwest states)",
+    hasPreApproval: true,
+    preApprovalNote: "Excellent online pre-approval tool with 0 impact to credit score.",
+    customerServicePhone: "1-800-347-2683",
+    reconsiderationPhone: "1-888-676-3695",
+    customerSatisfaction: "J.D. Power Top 2 Ranking (4.9/5) - 100% US-based customer service 24/7",
+    mobileAppRating: "4.9★ iOS (4M+ reviews) / 4.7★ Android",
+    headquarters: "Riverwoods, IL",
+    instantCardNumber: "Account info available upon card delivery, expedited shipping upon request"
+  },
+  "U.S. Bank": {
+    name: "U.S. Bancorp",
+    shortName: "U.S. Bank",
+    logoColor: "#0c2340",
+    rewardsEcosystem: "U.S. Bank Altitude Rewards",
+    ecosystemDescription: "High-value travel rewards, famous for mobile wallet (Apple Pay/Google Pay) 3x point multipliers worth 4.5% on travel.",
+    transferPartners: [
+      { name: "Real-Time Rewards", type: "Travel Instant Redemption", ratio: "1.5¢ per pt", valueNote: "Text-to-redeem on any direct airline, hotel, or rental car purchase" },
+      { name: "Direct Travel Portal", type: "Travel Portal", ratio: "1.5¢ per pt", valueNote: "Book travel with 50% points bonus" }
+    ],
+    underwritingRules: [
+      { title: "Inquiry Sensitive (0/6 or 1/12)", desc: "U.S. Bank is notoriously conservative. Prefer applicants with 0 new hard inquiries in the past 6 months and fewer than 2 in 12 months." },
+      { title: "Existing Relationship Preferred", desc: "Having an existing checking account, CD, or mortgage with U.S. Bank significantly increases approval odds for premium cards." }
+    ],
+    bureauPulled: "TransUnion (common) or Experian",
+    hasPreApproval: true,
+    preApprovalNote: "Online pre-qualification page available for checking cards without score impact.",
+    customerServicePhone: "1-800-285-8585",
+    reconsiderationPhone: "1-800-947-1444",
+    customerSatisfaction: "4.6/5 - Exceptional mobile wallet integration and travel statement credits",
+    mobileAppRating: "4.8★ iOS (1.5M+ reviews) / 4.6★ Android",
+    headquarters: "Minneapolis, MN",
+    instantCardNumber: "Virtual card instant push to digital wallet for eligible applicants"
+  }
+};
 
 const CARDS_DATABASE = [
   {
@@ -14,11 +260,11 @@ const CARDS_DATABASE = [
     tierName: "Good to Excellent (690+)",
     type: "travel",
     annualFee: 95,
-    annualCredits: 50, // $50 annual Chase Travel hotel credit
+    annualCredits: 50,
     foreignFee: false,
     rewards: { dining: 3.0, groceries: 3.0, gas: 1.0, travel: 2.0, other: 1.0 },
     specialNotes: "3x on dining & online groceries; 2x on general travel (5x via Chase Travel portal). $50 hotel credit annually.",
-    bonusValue: 750, // 60,000 pts @ 1.25¢ redemption via portal
+    bonusValue: 750,
     bonusText: "60,000 points after $4,000 spend in first 3 months (~$750 towards travel)",
     pointValuation: 1.25,
     perks: [
@@ -46,11 +292,11 @@ const CARDS_DATABASE = [
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 395,
-    annualCredits: 400, // $300 travel portal credit + 10,000 bonus miles ($100)
+    annualCredits: 400,
     foreignFee: false,
     rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
     specialNotes: "2x miles flat on all purchases; 10x on hotels & rental cars, 5x on flights via Capital One Travel.",
-    bonusValue: 750, // 75,000 miles @ 1.0¢ baseline
+    bonusValue: 750,
     bonusText: "75,000 bonus miles after $4,000 spend in first 3 months ($750 value)",
     pointValuation: 1.0,
     perks: [
@@ -79,11 +325,11 @@ const CARDS_DATABASE = [
     tierName: "Good to Excellent (690+)",
     type: "travel",
     annualFee: 325,
-    annualCredits: 424, // $120 dining + $120 Uber + $100 Resy + $84 Dunkin
+    annualCredits: 424,
     foreignFee: false,
     rewards: { dining: 4.0, groceries: 4.0, gas: 1.0, travel: 3.0, other: 1.0 },
     specialNotes: "4x points on Dining worldwide; 4x at US supermarkets (up to $25k/yr); 3x on flights booked directly or on amextravel.com.",
-    bonusValue: 600, // 60,000 MR pts
+    bonusValue: 600,
     bonusText: "60,000 Membership Rewards points after $6,000 spend in first 6 months",
     pointValuation: 1.0,
     perks: [
@@ -111,11 +357,11 @@ const CARDS_DATABASE = [
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 550,
-    annualCredits: 300, // $300 automatic travel statement credit
+    annualCredits: 300,
     foreignFee: false,
     rewards: { dining: 3.0, groceries: 1.0, gas: 1.0, travel: 3.0, other: 1.0 },
     specialNotes: "3x on dining & general travel after $300 credit; 10x hotels/cars & 5x flights via Chase portal.",
-    bonusValue: 900, // 60,000 pts @ 1.5¢ redemption
+    bonusValue: 900,
     bonusText: "60,000 points after $4,000 spend in 3 months ($900 value via Chase Travel)",
     pointValuation: 1.5,
     perks: [
@@ -176,7 +422,7 @@ const CARDS_DATABASE = [
     type: "cashback",
     annualFee: 0,
     annualCredits: 0,
-    foreignFee: true, // 3% foreign fee
+    foreignFee: true,
     rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
     specialNotes: "Flat 2% on everything: 1% when you buy plus 1% as you pay off purchases.",
     bonusValue: 200,
@@ -196,6 +442,69 @@ const CARDS_DATABASE = [
     introAprText: "0% intro APR on balance transfers for 18 mo",
     rating: 4.8,
     bestFor: "Best Simple 2% Flat Catch-All Card"
+  },
+  {
+    id: "bofa-customized-cash",
+    name: "Bank of America® Customized Cash Rewards",
+    issuer: "Bank of America",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 3.0, groceries: 2.0, gas: 3.0, travel: 1.0, other: 1.0 },
+    specialNotes: "3% cash back in choice category (dining, gas, online shopping, travel, drugstores, or home improvement); 2% at grocery stores/wholesale clubs (up to $2,500/quarter combined). Up to 5.25% with Preferred Rewards!",
+    bonusValue: 200,
+    bonusText: "$200 online cash rewards bonus after spending $1,000 in first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Customizable 3% category can be changed monthly in the app",
+      "Preferred Rewards boost: 25% to 75% extra rewards on every purchase",
+      "0% intro APR for 15 billing cycles on purchases and balance transfers"
+    ],
+    cardColor: "linear-gradient(135deg, #991b1b 0%, #b91c1c 50%, #7f1d1d 100%)",
+    accentColor: "#fca5a5",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 billing cycles",
+    rating: 4.85,
+    bestFor: "Customizable 3% Choice Category (Up to 5.25% with BofA)"
+  },
+  {
+    id: "bofa-premium-rewards",
+    name: "Bank of America® Premium Rewards®",
+    issuer: "Bank of America",
+    network: "Visa",
+    tier: 3,
+    tierName: "Excellent (750+)",
+    type: "travel",
+    annualFee: 95,
+    annualCredits: 100, // $100 airline incidental credit
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 1.5, gas: 1.5, travel: 2.0, other: 1.5 },
+    specialNotes: "Unlimited 2x on travel and dining, 1.5x on everything else. With Preferred Rewards Platinum Honors, this jumps to 3.5% on travel/dining and 2.62% on all purchases!",
+    bonusValue: 500,
+    bonusText: "50,000 bonus points ($500 value) after $3,000 spend in first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "$100 annual airline incidental statement credit (seats, baggage, lounge)",
+      "Up to $100 airport security credit for TSA PreCheck or Global Entry",
+      "No foreign transaction fees",
+      "Preferred Rewards boost up to 75% bonus rewards",
+      "Travel protection including baggage delay and trip cancellation"
+    ],
+    cardColor: "linear-gradient(135deg, #1e293b 0%, #0f172a 60%, #020617 100%)",
+    accentColor: "#cbd5e1",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.8,
+    bestFor: "High-Spenders & Preferred Rewards Members"
   },
   {
     id: "wells-fargo-active-cash",
@@ -237,9 +546,9 @@ const CARDS_DATABASE = [
     tier: 2,
     tierName: "Good to Excellent (690+)",
     type: "cashback",
-    annualFee: 95, // $0 intro 1st yr, then $95
-    annualCredits: 84, // $7/mo Disney Bundle statement credit ($84/yr)
-    foreignFee: true, // 2.7%
+    annualFee: 95,
+    annualCredits: 84,
+    foreignFee: true,
     rewards: { dining: 1.0, groceries: 6.0, gas: 3.0, travel: 1.0, other: 1.0 },
     specialNotes: "6% back at US supermarkets (on up to $6,000/yr, then 1%); 6% on select US streaming; 3% on gas and transit.",
     bonusValue: 250,
@@ -305,7 +614,7 @@ const CARDS_DATABASE = [
     annualFee: 0,
     annualCredits: 0,
     foreignFee: true,
-    rewards: { dining: 5.0, groceries: 5.0, gas: 5.0, travel: 1.0, other: 1.0 }, // Calculated dynamically: 5% on top spend category up to $500/mo
+    rewards: { dining: 5.0, groceries: 5.0, gas: 5.0, travel: 1.0, other: 1.0 },
     specialNotes: "5% back automatically on your highest eligible spend category each billing cycle up to $500 spend (e.g. Restaurants, Groceries, Gas, Travel), 1% on all other.",
     bonusValue: 200,
     bonusText: "$200 cash back after spending $1,500 in first 6 months",
@@ -398,7 +707,7 @@ const CARDS_DATABASE = [
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 695,
-    annualCredits: 840, // $200 hotel + $240 streaming + $200 airline fee + $200 Uber Cash
+    annualCredits: 840,
     foreignFee: false,
     rewards: { dining: 1.0, groceries: 1.0, gas: 1.0, travel: 5.0, other: 1.0 },
     specialNotes: "5x points on flights booked directly with airlines or amextravel.com (up to $500k/yr); 5x on prepaid hotels booked on amextravel.com.",
@@ -465,9 +774,9 @@ const CARDS_DATABASE = [
     annualFee: 0,
     annualCredits: 0,
     foreignFee: false,
-    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 1.0, other: 1.0 }, // Effective average with rotating 5%
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 1.0, other: 1.0 },
     specialNotes: "5% cash back on everyday purchases at different places each quarter (up to quarterly maximum of $1,500 when activated); 1% on all other.",
-    bonusValue: 300, // Estimated match bonus value
+    bonusValue: 300,
     bonusText: "Unlimited Cashback Match: Discover matches all cash back earned at the end of your first year!",
     pointValuation: 1.0,
     perks: [
@@ -494,11 +803,11 @@ const CARDS_DATABASE = [
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 400,
-    annualCredits: 325, // $325 automatic dining/travel credit (effective fee $75)
+    annualCredits: 325,
     foreignFee: false,
-    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 1.0 }, // 3x points on mobile wallet tap-to-pay (worth 4.5% on travel)
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 1.0 },
     specialNotes: "3x points on eligible travel and mobile wallet purchases (Apple Pay, Google Pay); 5x on prepaid hotels and car rentals. Points worth 1.5¢ each for travel.",
-    bonusValue: 750, // 50,000 pts @ 1.5¢
+    bonusValue: 750,
     bonusText: "50,000 bonus points after spending $4,500 in first 90 days ($750 travel value)",
     pointValuation: 1.5,
     perks: [
@@ -642,7 +951,6 @@ const CARDS_DATABASE = [
   }
 ];
 
-// Preset spending lifestyles for quick exploration
 const SPEND_PRESETS = {
   student: {
     label: "🎓 Student / Lean",
