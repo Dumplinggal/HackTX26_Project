@@ -1,6 +1,7 @@
-/**
- * Card Finder Pro - Comprehensive Card Database & Bank Intelligence Profiles
- * Contains in-depth bank underwriting rules, credit bureau pull patterns, transfer partner ecosystems, and customer support data.
+﻿/**
+ * Card Finder Pro - Bank Intelligence & Application Rulebook Database
+ * Comprehensive profiles for 14 major card issuers including proprietary underwriting rules,
+ * credit bureau pull trends, transfer partner networks, and direct reconsideration hotlines.
  */
 
 const BANK_PROFILES = {
@@ -8,11 +9,11 @@ const BANK_PROFILES = {
     name: "JPMorgan Chase Bank, N.A.",
     shortName: "Chase",
     logoColor: "#117aca",
-    rewardsEcosystem: "Chase Ultimate Rewards®",
-    ecosystemDescription: "One of the most versatile point programs in the world. Points transfer 1:1 to premium partners or redeem with a 25%-50% bonus on Sapphire cards.",
+    rewardsEcosystem: "Chase Ultimate RewardsÂ®",
+    ecosystemDescription: "One of the most versatile point programs in the world. Points transfer 1:1 to premium airline & hotel partners, or redeem with a 25%-50% bonus on Sapphire cards.",
     transferPartners: [
-      { name: "World of Hyatt", type: "Hotel", ratio: "1:1", valueNote: "Best hotel transfer value (2.0¢+ avg)" },
-      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance network" },
+      { name: "World of Hyatt", type: "Hotel", ratio: "1:1", valueNote: "Best hotel transfer value (2.0Â¢+ avg)" },
+      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance global network" },
       { name: "Southwest Rapid Rewards", type: "Airline", ratio: "1:1", valueNote: "Domestic flights & 2 free checked bags" },
       { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Exceptional Star Alliance awards" },
       { name: "British Airways Avios", type: "Airline", ratio: "1:1", valueNote: "Oneworld short-haul sweet spots" },
@@ -30,7 +31,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-432-3117",
     reconsiderationPhone: "1-888-270-2127",
     customerSatisfaction: "J.D. Power #1 for National Credit Card Customer Satisfaction (4.9/5)",
-    mobileAppRating: "4.8★ iOS (5M+ reviews) / 4.6★ Android",
+    mobileAppRating: "4.8â˜… iOS (5M+ reviews) / 4.6â˜… Android",
     headquarters: "New York, NY",
     instantCardNumber: "Available immediately via Chase Mobile App & Apple Pay upon approval"
   },
@@ -38,7 +39,7 @@ const BANK_PROFILES = {
     name: "American Express National Bank",
     shortName: "American Express",
     logoColor: "#006fcf",
-    rewardsEcosystem: "Membership Rewards®",
+    rewardsEcosystem: "Membership RewardsÂ®",
     ecosystemDescription: "Top-tier international travel rewards program with 20+ transfer airline and hotel partners and extensive lifestyle statement credit partnerships.",
     transferPartners: [
       { name: "Delta SkyMiles", type: "Airline", ratio: "1:1", valueNote: "SkyTeam hub flights (small excise fee)" },
@@ -60,7 +61,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-528-4800",
     reconsiderationPhone: "1-800-567-1083",
     customerSatisfaction: "J.D. Power Top 2 Ranking (4.9/5) - Renowned 24/7 in-app live chat and dispute protection",
-    mobileAppRating: "4.9★ iOS (2.5M+ reviews) / 4.7★ Android",
+    mobileAppRating: "4.9â˜… iOS (2.5M+ reviews) / 4.7â˜… Android",
     headquarters: "New York, NY",
     instantCardNumber: "Instant virtual card number issued immediately upon approval"
   },
@@ -69,7 +70,7 @@ const BANK_PROFILES = {
     shortName: "Capital One",
     logoColor: "#004879",
     rewardsEcosystem: "Capital One Miles",
-    ecosystemDescription: "Simple, flexible miles that can be erased against ANY travel purchase at 1.0¢ each, or transferred 1:1 to airline and hotel partners.",
+    ecosystemDescription: "Simple, flexible miles that can be erased against ANY travel purchase at 1.0Â¢ each, or transferred 1:1 to airline and hotel partners.",
     transferPartners: [
       { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Global Star Alliance flights" },
       { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "Excellent partner awards with no surcharges" },
@@ -81,7 +82,7 @@ const BANK_PROFILES = {
       { title: "Triple Bureau Pull", desc: "Capital One uniquely pulls all THREE major credit bureaus (Experian, TransUnion, Equifax) for every application." },
       { title: "1/6 Rule", desc: "You can generally only be approved for 1 Capital One card every 6 months." },
       { title: "2 Personal Card Limit", desc: "Capital One generally limits cardholders to 2 personal cards in their core lineup (Venture, Savor, Quicksilver)." },
-      { title: "Subprime vs Prime Sensitivity", desc: "Prefers applicants who actually carry modest balances or have active revolving utilization rather than spotless 800+ credit churners." }
+      { title: "Subprime vs Prime Sensitivity", desc: "Prefers applicants who carry modest balances or have active revolving utilization rather than spotless 800+ credit churners." }
     ],
     bureauPulled: "All 3 bureaus pulled simultaneously (Experian, TransUnion, Equifax)",
     hasPreApproval: true,
@@ -89,7 +90,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-227-4825",
     reconsiderationPhone: "1-800-625-7866",
     customerSatisfaction: "4.7/5 - Excellent real-time fraud alerts and virtual Eno card numbers",
-    mobileAppRating: "4.9★ iOS (4.5M+ reviews) / 4.6★ Android",
+    mobileAppRating: "4.9â˜… iOS (4.5M+ reviews) / 4.6â˜… Android",
     headquarters: "McLean, VA",
     instantCardNumber: "Instant virtual card available in Capital One mobile app via Eno"
   },
@@ -97,7 +98,7 @@ const BANK_PROFILES = {
     name: "Citigroup Inc.",
     shortName: "Citi",
     logoColor: "#003b70",
-    rewardsEcosystem: "Citi ThankYou® Rewards",
+    rewardsEcosystem: "Citi ThankYouÂ® Rewards",
     ecosystemDescription: "Highly lucrative cash back pairing with Citi Double Cash & Custom Cash, or high-value airline transfer partners with Citi Strata/Premier.",
     transferPartners: [
       { name: "Avianca LifeMiles", type: "Airline", ratio: "1:1", valueNote: "Star Alliance sweet spots" },
@@ -117,7 +118,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-950-5114",
     reconsiderationPhone: "1-800-695-5171",
     customerSatisfaction: "4.5/5 - Generous 0% intro APR balance transfer terms",
-    mobileAppRating: "4.8★ iOS (3M+ reviews) / 4.7★ Android",
+    mobileAppRating: "4.8â˜… iOS (3M+ reviews) / 4.7â˜… Android",
     headquarters: "New York, NY",
     instantCardNumber: "Digital wallet push provisioning available on select cards"
   },
@@ -125,7 +126,7 @@ const BANK_PROFILES = {
     name: "Wells Fargo & Company",
     shortName: "Wells Fargo",
     logoColor: "#d71e28",
-    rewardsEcosystem: "Wells Fargo Rewards®",
+    rewardsEcosystem: "Wells Fargo RewardsÂ®",
     ecosystemDescription: "Modernized transfer program featuring competitive no-annual-fee options like Autograph and Active Cash.",
     transferPartners: [
       { name: "Air France / KLM Flying Blue", type: "Airline", ratio: "1:1", valueNote: "European awards with low fees" },
@@ -143,7 +144,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-642-4720",
     reconsiderationPhone: "1-866-412-5956",
     customerSatisfaction: "4.6/5 - Industry-leading cell phone protection on $0 fee cards",
-    mobileAppRating: "4.8★ iOS (4M+ reviews) / 4.7★ Android",
+    mobileAppRating: "4.8â˜… iOS (4M+ reviews) / 4.7â˜… Android",
     headquarters: "San Francisco, CA",
     instantCardNumber: "Add to Apple Pay / Google Pay directly from the Wells Fargo app"
   },
@@ -151,11 +152,11 @@ const BANK_PROFILES = {
     name: "Bank of America Corporation",
     shortName: "Bank of America",
     logoColor: "#e31837",
-    rewardsEcosystem: "Bank of America Preferred Rewards®",
+    rewardsEcosystem: "Bank of America Preferred RewardsÂ®",
     ecosystemDescription: "The king of cash back multipliers for depositors. Qualifying balances in Merrill or BofA boost credit card rewards by 25%, 50%, or 75%!",
     transferPartners: [
       { name: "Statement Credit / Cash Deposit", type: "Cash", ratio: "1:1", valueNote: "Direct deposit into checking or investment account" },
-      { name: "Travel Center Redemptions", type: "Travel", ratio: "1.0¢ - 1.25¢", valueNote: "Book flights, hotels, and rentals with no blackout dates" }
+      { name: "Travel Center Redemptions", type: "Travel", ratio: "1.0Â¢ - 1.25Â¢", valueNote: "Book flights, hotels, and rentals with no blackout dates" }
     ],
     underwritingRules: [
       { title: "2/3/4 Velocity Rule", desc: "Max 2 new BofA cards in a 2-month period, max 3 cards in 12 months, and max 4 cards in 24 months." },
@@ -168,9 +169,136 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-732-9194",
     reconsiderationPhone: "1-877-383-0120",
     customerSatisfaction: "4.6/5 - Unmatched cash back bonus tiers for savers and investors",
-    mobileAppRating: "4.8★ iOS (3.8M+ reviews) / 4.7★ Android",
+    mobileAppRating: "4.8â˜… iOS (3.8M+ reviews) / 4.7â˜… Android",
     headquarters: "Charlotte, NC",
     instantCardNumber: "Instant card provisioning to Apple Pay/Google Pay via BofA Mobile app"
+  },
+  "Barclays": {
+    name: "Barclays Bank Delaware",
+    shortName: "Barclays",
+    logoColor: "#00aeef",
+    rewardsEcosystem: "Barclays Rewards & Airline Travel",
+    ecosystemDescription: "Famous for cobranded travel partnerships with JetBlue, Wyndham Rewards, Hawaiian Airlines, and AAdvantage Aviator cards.",
+    transferPartners: [
+      { name: "JetBlue TrueBlue", type: "Airline", ratio: "Direct Earning", valueNote: "Free checked bags and 5k anniversary points" },
+      { name: "Wyndham Rewards", type: "Hotel", ratio: "Direct Earning", valueNote: "Vacasa rental homes and Caesars status match" },
+      { name: "American Airlines AAdvantage", type: "Airline", ratio: "Direct Earning", valueNote: "Flight award redemptions" }
+    ],
+    underwritingRules: [
+      { title: "6/24 Velocity Sensitivity", desc: "Barclays is notoriously inquiry and new account sensitive. Applicants with 6 or more new cards in 24 months are frequently denied." },
+      { title: "Existing Card Activity Rule", desc: "Barclays often denies applicants for new cards if their existing Barclays credit card has had low or zero spending over the past 6 months." },
+      { title: "Same Product Restriction", desc: "You generally cannot hold two of the exact same credit card concurrently." }
+    ],
+    bureauPulled: "TransUnion (almost exclusively nationwide)",
+    hasPreApproval: false,
+    preApprovalNote: "Barclays rarely offers soft-pull pre-approvals for co-branded cards.",
+    customerServicePhone: "1-888-232-0780",
+    reconsiderationPhone: "1-866-408-4064",
+    customerSatisfaction: "4.4/5 - Excellent cobranded airline perks like free companion certificates",
+    mobileAppRating: "4.7â˜… iOS (1M+ reviews) / 4.5â˜… Android",
+    headquarters: "Wilmington, DE",
+    instantCardNumber: "Instant card access provided for select cobrand airline tickets"
+  },
+  "Fidelity": {
+    name: "Fidelity Investments / Elan Financial Services",
+    shortName: "Fidelity",
+    logoColor: "#437b38",
+    rewardsEcosystem: "Fidelity Automatic Investment Rewards",
+    ecosystemDescription: "Industry favorite for automated wealth accumulation. Earn unlimited 2% cash back deposited automatically into your Brokerage, Roth IRA, 529, or HSA.",
+    transferPartners: [
+      { name: "Fidelity Brokerage Account", type: "Investment", ratio: "1:1", valueNote: "Direct cash deposit for stocks, ETFs, or index funds" },
+      { name: "Roth IRA / Traditional IRA", type: "Retirement", ratio: "1:1", valueNote: "Tax-advantaged retirement compounding" },
+      { name: "Fidelity Health Savings Account (HSA)", type: "Health", ratio: "1:1", valueNote: "Triple-tax advantaged medical savings" },
+      { name: "529 College Savings", type: "Education", ratio: "1:1", valueNote: "Tax-free growth for future education expenses" }
+    ],
+    underwritingRules: [
+      { title: "Elan Financial Underwriting", desc: "Issued by Elan Financial Services (a division of U.S. Bank), known for conservative, steady underwriting standards." },
+      { title: "Inquiry Sensitive", desc: "Prefers applicants with fewer than 2 hard inquiries on the pulled bureau in the prior 6 months." },
+      { title: "Clean Credit History", desc: "Typically requires a FICO score of 690+ and no recent late payments or derogatory marks." }
+    ],
+    bureauPulled: "TransUnion (common) or Experian (depending on state)",
+    hasPreApproval: false,
+    preApprovalNote: "No standalone pre-approval tool, but pre-qualified offers sometimes appear inside Fidelity investor accounts.",
+    customerServicePhone: "1-888-551-5147",
+    reconsiderationPhone: "1-800-364-9648",
+    customerSatisfaction: "4.9/5 - Top rated no-nonsense 2% cash back card with zero category tracking",
+    mobileAppRating: "4.8â˜… iOS (2.5M+ reviews) / 4.7â˜… Android",
+    headquarters: "Boston, MA",
+    instantCardNumber: "Digital card push to Apple Pay & Google Pay inside Fidelity app"
+  },
+  "Navy Federal": {
+    name: "Navy Federal Credit Union",
+    shortName: "Navy Federal",
+    logoColor: "#002d62",
+    rewardsEcosystem: "Navy Federal Member Rewards",
+    ecosystemDescription: "The largest credit union in the world, famous for exceptionally high credit limits, low interest rates, and generous relationship bonuses.",
+    transferPartners: [
+      { name: "Cash Back / Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Instant cash deposit to savings or checking" },
+      { name: "Travel Redemptions", type: "Travel", ratio: "1.0Â¢ per pt", valueNote: "Flights and hotels with no blackout dates" }
+    ],
+    underwritingRules: [
+      { title: "Membership Eligibility Required", desc: "Must be active duty military, veteran, Department of Defense civilian, or an immediate family member of an eligible member." },
+      { title: "91/3 Velocity Rule", desc: "Must wait at least 91 days and 3 full billing statements between new credit card applications with Navy Federal." },
+      { title: "$80,000 Combined Credit Limit", desc: "NFCU caps total combined revolving credit limits across all personal credit cards at $80,000 per member." },
+      { title: "Internal Relationship Score", desc: "NFCU calculates an internal score (100 to 450) where holding savings deposits and direct deposit boosts approval odds." }
+    ],
+    bureauPulled: "TransUnion (majority) or Equifax",
+    hasPreApproval: true,
+    preApprovalNote: "Offers an online pre-qualification tool for members that uses a soft credit inquiry.",
+    customerServicePhone: "1-888-842-6328",
+    reconsiderationPhone: "1-888-842-6328",
+    customerSatisfaction: "4.95/5 - Consistently ranked highest in the nation for customer loyalty & high limits",
+    mobileAppRating: "4.9â˜… iOS (1.2M+ reviews) / 4.8â˜… Android",
+    headquarters: "Vienna, VA",
+    instantCardNumber: "Virtual card details available immediately in NFCU mobile app"
+  },
+  "Robinhood": {
+    name: "Robinhood Credit / Coastal Community Bank",
+    shortName: "Robinhood",
+    logoColor: "#00c805",
+    rewardsEcosystem: "Robinhood Gold Cash Back",
+    ecosystemDescription: "Modern flat-rate powerhouse offering 3% cash back on ALL purchases with no category limits, or 5% back on travel through Robinhood.",
+    transferPartners: [
+      { name: "Robinhood Brokerage Cash", type: "Investment", ratio: "1:1", valueNote: "Deposit into brokerage account to invest in stocks, crypto, or earn high APY" },
+      { name: "Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Erase card charges directly" }
+    ],
+    underwritingRules: [
+      { title: "Robinhood Gold Subscription Required", desc: "Cardholders MUST maintain an active Robinhood Gold membership ($50/year or $5/month) to receive the 3% cash back rate." },
+      { title: "Strict Debt-to-Income Underwriting", desc: "Underwritten by Coastal Community Bank; requires verified income and a healthy credit profile (typically 700+ FICO)." },
+      { title: "Waitlist Access", desc: "Account rollout is managed through an active rolling invitation list." }
+    ],
+    bureauPulled: "Experian (majority)",
+    hasPreApproval: false,
+    preApprovalNote: "Invitations are sent to eligible Robinhood Gold subscribers.",
+    customerServicePhone: "In-App 24/7 Phone Support Callback",
+    reconsiderationPhone: "In-App Support Ticket & Chat",
+    customerSatisfaction: "4.7/5 - Beautiful heavy stainless steel card and industry-leading 3% flat rate",
+    mobileAppRating: "4.8â˜… iOS (4.5M+ reviews) / 4.7â˜… Android",
+    headquarters: "Menlo Park, CA",
+    instantCardNumber: "Disposable virtual card numbers and instant Apple Pay upon approval"
+  },
+  "Synchrony": {
+    name: "Synchrony Financial",
+    shortName: "Synchrony",
+    logoColor: "#ffc836",
+    rewardsEcosystem: "Synchrony Cashback & Retail Rewards",
+    ecosystemDescription: "One of the largest issuers of retail cobranded and consumer cards in the US, known for accessible underwriting and straightforward cash back.",
+    transferPartners: [
+      { name: "Automatic Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Automatically applies to monthly statement balance" }
+    ],
+    underwritingRules: [
+      { title: "Inquiry Velocity Limits", desc: "Synchrony can be sensitive to rapid account openings and high numbers of recent hard inquiries within the past 6-12 months." },
+      { title: "Credit Line Review Sensitivities", desc: "Monitors overall consumer credit reports and may adjust limits if credit card balances rise substantially across other banks." }
+    ],
+    bureauPulled: "TransUnion (majority of states)",
+    hasPreApproval: true,
+    preApprovalNote: "Many Synchrony cards offer an online pre-qualification check without affecting your credit score.",
+    customerServicePhone: "1-866-419-4096",
+    reconsiderationPhone: "1-800-480-0186",
+    customerSatisfaction: "4.5/5 - Generous starting limits and zero-annual-fee 2% cash back",
+    mobileAppRating: "4.7â˜… iOS (500k+ reviews) / 4.5â˜… Android",
+    headquarters: "Stamford, CT",
+    instantCardNumber: "Digital temporary account number provided upon approval"
   },
   "Bilt": {
     name: "Bilt Rewards / Wells Fargo",
@@ -195,7 +323,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-844-245-8761",
     reconsiderationPhone: "1-866-412-5956 (Wells Fargo Credit Operations)",
     customerSatisfaction: "4.9/5 - Huge fan favorite for renters and Rent Day bonus promos",
-    mobileAppRating: "4.9★ iOS (150k+ reviews) / 4.8★ Android",
+    mobileAppRating: "4.9â˜… iOS (150k+ reviews) / 4.8â˜… Android",
     headquarters: "New York, NY",
     instantCardNumber: "Instant virtual card in Bilt app upon approval to pay rent immediately"
   },
@@ -220,7 +348,7 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-347-2683",
     reconsiderationPhone: "1-888-676-3695",
     customerSatisfaction: "J.D. Power Top 2 Ranking (4.9/5) - 100% US-based customer service 24/7",
-    mobileAppRating: "4.9★ iOS (4M+ reviews) / 4.7★ Android",
+    mobileAppRating: "4.9â˜… iOS (4M+ reviews) / 4.7â˜… Android",
     headquarters: "Riverwoods, IL",
     instantCardNumber: "Account info available upon card delivery, expedited shipping upon request"
   },
@@ -231,8 +359,8 @@ const BANK_PROFILES = {
     rewardsEcosystem: "U.S. Bank Altitude Rewards",
     ecosystemDescription: "High-value travel rewards, famous for mobile wallet (Apple Pay/Google Pay) 3x point multipliers worth 4.5% on travel.",
     transferPartners: [
-      { name: "Real-Time Rewards", type: "Travel Instant Redemption", ratio: "1.5¢ per pt", valueNote: "Text-to-redeem on any direct airline, hotel, or rental car purchase" },
-      { name: "Direct Travel Portal", type: "Travel Portal", ratio: "1.5¢ per pt", valueNote: "Book travel with 50% points bonus" }
+      { name: "Real-Time Rewards", type: "Travel Instant Redemption", ratio: "1.5Â¢ per pt", valueNote: "Text-to-redeem on any direct airline, hotel, or rental car purchase" },
+      { name: "Direct Travel Portal", type: "Travel Portal", ratio: "1.5Â¢ per pt", valueNote: "Book travel with 50% points bonus" }
     ],
     underwritingRules: [
       { title: "Inquiry Sensitive (0/6 or 1/12)", desc: "U.S. Bank is notoriously conservative. Prefer applicants with 0 new hard inquiries in the past 6 months and fewer than 2 in 12 months." },
@@ -244,16 +372,22 @@ const BANK_PROFILES = {
     customerServicePhone: "1-800-285-8585",
     reconsiderationPhone: "1-800-947-1444",
     customerSatisfaction: "4.6/5 - Exceptional mobile wallet integration and travel statement credits",
-    mobileAppRating: "4.8★ iOS (1.5M+ reviews) / 4.6★ Android",
+    mobileAppRating: "4.8â˜… iOS (1.5M+ reviews) / 4.6â˜… Android",
     headquarters: "Minneapolis, MN",
     instantCardNumber: "Virtual card instant push to digital wallet for eligible applicants"
   }
 };
 
+
+/**
+ * Card Finder Pro - Credit Cards Database & Spending Presets
+ * Contains 27 credit cards across 14 major card issuers and multiple credit tiers.
+ */
+
 const CARDS_DATABASE = [
   {
     id: "chase-sapphire-preferred",
-    name: "Chase Sapphire Preferred®",
+    name: "Chase Sapphire PreferredÂ®",
     issuer: "Chase",
     network: "Visa",
     tier: 2,
@@ -318,7 +452,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "american-express-gold",
-    name: "American Express® Gold Card",
+    name: "American ExpressÂ® Gold Card",
     issuer: "American Express",
     network: "Amex",
     tier: 3,
@@ -350,7 +484,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "chase-sapphire-reserve",
-    name: "Chase Sapphire Reserve®",
+    name: "Chase Sapphire ReserveÂ®",
     issuer: "Chase",
     network: "Visa",
     tier: 3,
@@ -380,6 +514,165 @@ const CARDS_DATABASE = [
     introAprText: "None",
     rating: 4.75,
     bestFor: "Luxury Frequent Travelers & Airport Lounges"
+  },
+  {
+    id: "robinhood-gold-card",
+    name: "Robinhood Gold Card",
+    issuer: "Robinhood",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (700+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 3.0 },
+    specialNotes: "Flat 3% cash back on EVERYTHING with no categories to track; 5% on travel booked via Robinhood Travel portal. Requires $50/yr Robinhood Gold membership.",
+    bonusValue: 0,
+    bonusText: "No welcome bonus, but offers the highest flat-rate cash back in the industry (3% on all categories).",
+    pointValuation: 1.0,
+    perks: [
+      "Flat 3% cash back on all purchases with no rotating categories or spend caps",
+      "5% cash back on hotels & flights booked through Robinhood Travel",
+      "Heavy stainless steel card (17g) with custom cardholder engraving",
+      "Virtual disposable card numbers to prevent subscription recurring charges",
+      "No foreign transaction fees"
+    ],
+    cardColor: "linear-gradient(135deg, #022c22 0%, #064e3b 50%, #022c22 100%)",
+    accentColor: "#34d399",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.95,
+    bestFor: "Highest Flat Cash Back (3% on Everything)"
+  },
+  {
+    id: "fidelity-rewards-visa",
+    name: "FidelityÂ® Rewards Visa SignatureÂ®",
+    issuer: "Fidelity",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Unlimited 2% cash back on all purchases automatically deposited into your Fidelity brokerage, Roth IRA, 529, or HSA account.",
+    bonusValue: 150,
+    bonusText: "$150 bonus after spending $1,500 in the first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Unlimited 2% cash back deposited automatically into investment accounts",
+      "Auto rental collision damage waiver and zero fraud liability",
+      "Visa Signature luxury hotel & concierge privileges",
+      "Compound your rewards in stock market index funds"
+    ],
+    cardColor: "linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%)",
+    accentColor: "#86efac",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.88,
+    bestFor: "Investors & Automatic Roth IRA / Stock Compounding"
+  },
+  {
+    id: "navy-federal-more-rewards",
+    name: "Navy Federal More Rewards AmexÂ®",
+    issuer: "Navy Federal",
+    network: "Amex",
+    tier: 2,
+    tierName: "Average to Good (660+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 1.0, other: 1.0 },
+    specialNotes: "3x points on dining, food delivery, supermarkets, gas stations, and transit with no caps; 1x on other purchases. Requires military/defense family membership.",
+    bonusValue: 200,
+    bonusText: "20,000 points ($200 value) after spending $2,000 in first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee & no foreign transaction fee",
+      "3x points on 4 everyday categories: Supermarkets, Dining, Gas, Transit",
+      "Generous credit lines often exceeding $20,000+",
+      "Exclusive discounts with American Express Connect",
+      "Points never expire as long as account remains open"
+    ],
+    cardColor: "linear-gradient(135deg, #02224d 0%, #003366 50%, #001f3f 100%)",
+    accentColor: "#93c5fd",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR on purchases for 12 months",
+    rating: 4.85,
+    bestFor: "Military, Veterans & Families (3% Groceries/Gas/Dining)"
+  },
+  {
+    id: "barclays-jetblue-plus",
+    name: "JetBlue Plus Card from Barclays",
+    issuer: "Barclays",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good (690+)",
+    type: "travel",
+    annualFee: 99,
+    annualCredits: 60, // 5,000 anniversary points (~$65-75 value)
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 1.0, travel: 6.0, other: 1.0 },
+    specialNotes: "6x on JetBlue purchases; 2x at restaurants & grocery stores; 1x other. 5,000 bonus points each year on your account anniversary ($65+ value).",
+    bonusValue: 600,
+    bonusText: "50,000 bonus points after spending $1,000 in first 90 days (~$650 travel value)",
+    pointValuation: 1.3,
+    perks: [
+      "First checked bag free for you and up to 3 companions on JetBlue flights (save $70/roundtrip per person)",
+      "5,000 bonus points every year after account anniversary",
+      "10% points rebate on all award flight redemptions",
+      "$100 statement credit after purchasing a JetBlue Vacations package",
+      "50% savings on eligible inflight food & cocktails"
+    ],
+    cardColor: "linear-gradient(135deg, #002b49 0%, #004d7a 50%, #002b49 100%)",
+    accentColor: "#38bdf8",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.75,
+    bestFor: "JetBlue Flyers (Free Bags & 10% Points Rebate)"
+  },
+  {
+    id: "synchrony-premier-world",
+    name: "Synchrony Premier World MastercardÂ®",
+    issuer: "Synchrony",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Fair to Good (670+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Unlimited 2% cash back automatically credited to your monthly statement on every purchase with no redemption minimums.",
+    bonusValue: 0,
+    bonusText: "No standard signup bonus, but guarantees effortless automatic 2% statement credits on every swipe.",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Automatic statement credit payout every single billing cycle",
+      "Mastercard ID Theft Protection & Zero Liability",
+      "No caps or category tracking required"
+    ],
+    cardColor: "linear-gradient(135deg, #854d0e 0%, #ca8a04 50%, #a16207 100%)",
+    accentColor: "#fde047",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.6,
+    bestFor: "Zero-Hassle Automatic 2% Cash Back"
   },
   {
     id: "capital-one-savor",
@@ -414,7 +707,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "citi-double-cash",
-    name: "Citi Double Cash® Card",
+    name: "Citi Double CashÂ® Card",
     issuer: "Citi",
     network: "Mastercard",
     tier: 2,
@@ -445,7 +738,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "bofa-customized-cash",
-    name: "Bank of America® Customized Cash Rewards",
+    name: "Bank of AmericaÂ® Customized Cash Rewards",
     issuer: "Bank of America",
     network: "Visa",
     tier: 2,
@@ -476,14 +769,14 @@ const CARDS_DATABASE = [
   },
   {
     id: "bofa-premium-rewards",
-    name: "Bank of America® Premium Rewards®",
+    name: "Bank of AmericaÂ® Premium RewardsÂ®",
     issuer: "Bank of America",
     network: "Visa",
     tier: 3,
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 95,
-    annualCredits: 100, // $100 airline incidental credit
+    annualCredits: 100,
     foreignFee: false,
     rewards: { dining: 2.0, groceries: 1.5, gas: 1.5, travel: 2.0, other: 1.5 },
     specialNotes: "Unlimited 2x on travel and dining, 1.5x on everything else. With Preferred Rewards Platinum Honors, this jumps to 3.5% on travel/dining and 2.62% on all purchases!",
@@ -508,7 +801,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "wells-fargo-active-cash",
-    name: "Wells Fargo Active Cash® Card",
+    name: "Wells Fargo Active CashÂ® Card",
     issuer: "Wells Fargo",
     network: "Visa",
     tier: 2,
@@ -540,7 +833,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "blue-cash-preferred-amex",
-    name: "Blue Cash Preferred® Card from Amex",
+    name: "Blue Cash PreferredÂ® Card from Amex",
     issuer: "American Express",
     network: "Amex",
     tier: 2,
@@ -572,7 +865,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "bilt-mastercard",
-    name: "Bilt World Elite Mastercard®",
+    name: "Bilt World Elite MastercardÂ®",
     issuer: "Bilt",
     network: "Mastercard",
     tier: 2,
@@ -605,7 +898,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "citi-custom-cash",
-    name: "Citi Custom Cash® Card",
+    name: "Citi Custom CashÂ® Card",
     issuer: "Citi",
     network: "Mastercard",
     tier: 2,
@@ -636,7 +929,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "chase-freedom-flex",
-    name: "Chase Freedom Flex®",
+    name: "Chase Freedom FlexÂ®",
     issuer: "Chase",
     network: "Mastercard",
     tier: 2,
@@ -668,7 +961,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "wells-fargo-autograph",
-    name: "Wells Fargo Autograph℠ Card",
+    name: "Wells Fargo Autographâ„  Card",
     issuer: "Wells Fargo",
     network: "Visa",
     tier: 2,
@@ -700,7 +993,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "amex-platinum",
-    name: "The Platinum Card® from American Express",
+    name: "The Platinum CardÂ® from American Express",
     issuer: "American Express",
     network: "Amex",
     tier: 3,
@@ -733,7 +1026,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "chase-freedom-unlimited",
-    name: "Chase Freedom Unlimited®",
+    name: "Chase Freedom UnlimitedÂ®",
     issuer: "Chase",
     network: "Visa",
     tier: 2,
@@ -765,7 +1058,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "discover-it-cashback",
-    name: "Discover it® Cash Back",
+    name: "Discover itÂ® Cash Back",
     issuer: "Discover",
     network: "Discover",
     tier: 2,
@@ -796,7 +1089,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "us-bank-altitude-reserve",
-    name: "U.S. Bank Altitude® Reserve",
+    name: "U.S. Bank AltitudeÂ® Reserve",
     issuer: "U.S. Bank",
     network: "Visa",
     tier: 3,
@@ -806,7 +1099,7 @@ const CARDS_DATABASE = [
     annualCredits: 325,
     foreignFee: false,
     rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 1.0 },
-    specialNotes: "3x points on eligible travel and mobile wallet purchases (Apple Pay, Google Pay); 5x on prepaid hotels and car rentals. Points worth 1.5¢ each for travel.",
+    specialNotes: "3x points on eligible travel and mobile wallet purchases (Apple Pay, Google Pay); 5x on prepaid hotels and car rentals. Points worth 1.5Â¢ each for travel.",
     bonusValue: 750,
     bonusText: "50,000 bonus points after spending $4,500 in first 90 days ($750 travel value)",
     pointValuation: 1.5,
@@ -889,7 +1182,7 @@ const CARDS_DATABASE = [
   },
   {
     id: "discover-it-secured",
-    name: "Discover it® Secured Credit Card",
+    name: "Discover itÂ® Secured Credit Card",
     issuer: "Discover",
     network: "Discover",
     tier: 0,
@@ -901,7 +1194,7 @@ const CARDS_DATABASE = [
     rewards: { dining: 2.0, groceries: 1.0, gas: 2.0, travel: 1.0, other: 1.0 },
     specialNotes: "2% cash back at Gas Stations and Restaurants on up to $1,000 in combined purchases each quarter; 1% on all other purchases.",
     bonusValue: 80,
-    bonusText: "Unlimited Cashback Match for your first year — Discover matches all cash back earned!",
+    bonusText: "Unlimited Cashback Match for your first year â€” Discover matches all cash back earned!",
     pointValuation: 1.0,
     perks: [
       "No credit score required to apply; builds credit with all 3 major bureaus",
@@ -953,7 +1246,7 @@ const CARDS_DATABASE = [
 
 const SPEND_PRESETS = {
   student: {
-    label: "🎓 Student / Lean",
+    label: "ðŸŽ“ Student / Lean",
     desc: "Low budget, transit, groceries and casual dining",
     dining: 150,
     groceries: 200,
@@ -962,7 +1255,7 @@ const SPEND_PRESETS = {
     other: 200
   },
   average: {
-    label: "🏠 Average Household",
+    label: "ðŸ  Average Household",
     desc: "Balanced spend on groceries, gas, utilities and dining",
     dining: 350,
     groceries: 550,
@@ -971,7 +1264,7 @@ const SPEND_PRESETS = {
     other: 650
   },
   foodie: {
-    label: "🍽️ Urban Foodie",
+    label: "ðŸ½ï¸ Urban Foodie",
     desc: "High restaurant, takeout, delivery & entertainment spend",
     dining: 750,
     groceries: 350,
@@ -980,7 +1273,7 @@ const SPEND_PRESETS = {
     other: 550
   },
   traveler: {
-    label: "✈️ Jetsetter / Frequent Flyer",
+    label: "âœˆï¸ Jetsetter / Frequent Flyer",
     desc: "Frequent flights, hotels, dining, and global purchases",
     dining: 650,
     groceries: 350,
@@ -989,7 +1282,7 @@ const SPEND_PRESETS = {
     other: 700
   },
   family: {
-    label: "👨‍👩‍👧‍👦 Suburban Family",
+    label: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Suburban Family",
     desc: "Heavy supermarket, gas, home improvement and school spend",
     dining: 450,
     groceries: 950,
@@ -998,3 +1291,4 @@ const SPEND_PRESETS = {
     other: 1200
   }
 };
+

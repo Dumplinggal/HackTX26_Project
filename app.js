@@ -1,11 +1,9 @@
 /**
  * Card Finder Pro - Main Application Logic
- * Comprehensive Features:
- * - 3D Flip Cards & Holographic Sheen
- * - My Wallet & Checkout Swipe Guide
- * - Bank Intelligence Dossiers & Approval Rules
- * - SVG Donut Charts & Return on Spend (ROI)
- * - CSV Spreadsheet Export & Print View
+ * Integrates:
+ * - bank-data.js (14 Bank Profiles & Underwriting Rules)
+ * - cards-data.js (27 Credit Cards Database)
+ * - wallet.js (My Wallet & Checkout Swipe Guide)
  */
 
 // Application State
@@ -26,7 +24,6 @@ const state = {
   sortBy: "net", // "net" | "firstYear" | "feeAsc" | "name"
   onlyFavorites: false,
   favorites: new Set(JSON.parse(localStorage.getItem("card_finder_favs") || "[]")),
-  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '["citi-double-cash", "capital-one-savor"]')),
   comparedCards: new Set(),
   spending: {
     dining: 350,
@@ -45,7 +42,7 @@ const CATEGORIES = [
   { key: "other", label: "All Other Spending", icon: "🛍️", color: "#8b5cf6" }
 ];
 
-// Helper: Calculate net earnings for a single card
+// Calculate rewards and net value for a single card
 function calculateCardValue(card, spending, options = {}) {
   const useCredits = options.useCredits ?? state.useCredits;
   const pointMultiplier = card.type === "travel" ? (options.pointMultiplier ?? state.pointMultiplier) : 1.0;
@@ -53,9 +50,8 @@ function calculateCardValue(card, spending, options = {}) {
   let breakdown = {};
   let totalEarned = 0;
 
-  // Custom calculation for special cards
   if (card.id === "citi-custom-cash") {
-    // 5% on top spend category up to $500/mo ($6,000/yr), 1% on excess & all others
+    // 5% on highest category up to $500/mo ($6,000/yr), 1% on excess and others
     const spendCats = ["dining", "groceries", "gas", "travel"];
     let topCat = "groceries";
     let maxSpend = -1;
@@ -111,7 +107,7 @@ function calculateCardValue(card, spending, options = {}) {
   // First year match for Discover cards
   let bonus = card.bonusValue;
   if (card.id.includes("discover")) {
-    bonus = totalEarned; // Discover matches 100% of cash back year 1
+    bonus = totalEarned;
   }
 
   const effectiveFee = useCredits 
@@ -186,25 +182,18 @@ function findOptimalCombo(cards, spending) {
 
 // Filter and Sort Cards with Deep Bank & Ecosystem Search
 function getFilteredAndSortedCards() {
-  return CARDS_DATABASE
+  const db = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE : [];
+
+  return db
     .filter(card => {
-      // Credit Tier
       if (card.tier > state.tier) return false;
-      // Max Fee
       if (card.annualFee > state.maxFee) return false;
-      // Reward Type
       if (state.type !== "all" && card.type !== state.type) return false;
-      // Bank / Issuer Filter
       if (state.issuer !== "all" && card.issuer !== state.issuer) return false;
-      // Card Network
       if (state.network !== "all" && card.network !== state.network) return false;
-      // Foreign Transaction Fee
       if (state.noFtf && card.foreignFee) return false;
-      // Lounge Access
       if (state.hasLounge && !card.hasLounge) return false;
-      // Intro APR
       if (state.hasIntroApr && !card.hasIntroApr) return false;
-      // Favorites Only
       if (state.onlyFavorites && !state.favorites.has(card.id)) return false;
 
       // Deep Multi-Field Search (Card name, bank, ecosystem, transfer partners, underwriting rules, bureaus)
@@ -280,7 +269,7 @@ function initViewSwitcher() {
     if (walletView) walletView.hidden = (view !== "wallet");
     if (bankHubView) bankHubView.hidden = (view !== "banks");
 
-    if (view === "wallet") {
+    if (view === "wallet" && typeof renderWalletView === "function") {
       renderWalletView();
     } else if (view === "banks") {
       renderBankHubView();
@@ -290,28 +279,6 @@ function initViewSwitcher() {
   tabFinder.addEventListener("click", () => setView("finder"));
   tabWallet.addEventListener("click", () => setView("wallet"));
   if (tabBanks) tabBanks.addEventListener("click", () => setView("banks"));
-}
-
-// Wallet Card Toggle
-function toggleWalletCard(cardId) {
-  if (state.myWallet.has(cardId)) {
-    state.myWallet.delete(cardId);
-  } else {
-    state.myWallet.add(cardId);
-  }
-  localStorage.setItem("card_finder_my_wallet", JSON.stringify(Array.from(state.myWallet)));
-  renderWalletBadge();
-  if (state.activeView === "wallet") {
-    renderWalletView();
-  }
-  renderCardResults();
-}
-
-function renderWalletBadge() {
-  const badge = document.getElementById("walletBadge");
-  if (badge) {
-    badge.textContent = state.myWallet.size;
-  }
 }
 
 // Initialize Theme
@@ -344,7 +311,7 @@ function updateThemeIcon(theme) {
 // Preset Spending Handlers
 function initPresetButtons() {
   const container = document.getElementById("presetButtons");
-  if (!container) return;
+  if (!container || typeof SPEND_PRESETS === "undefined") return;
 
   container.innerHTML = Object.entries(SPEND_PRESETS).map(([key, p]) => `
     <button class="preset-pill" data-preset="${key}" title="${p.desc}">
@@ -440,7 +407,6 @@ function initFilterControls() {
     });
   }
 
-  // Issuer/Bank dropdown
   const issuerSelect = document.getElementById("issuerSelect");
   if (issuerSelect) {
     issuerSelect.value = state.issuer;
@@ -700,7 +666,7 @@ function flipCard(event, cardId) {
   }
 }
 
-// Open Bank Intelligence & Rules Modal
+// Open Bank Intelligence & Rules Modal (Uses bank-data.js)
 function openBankModal(issuerName) {
   const bank = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[issuerName]) ? BANK_PROFILES[issuerName] : null;
   if (!bank) return;
@@ -709,7 +675,7 @@ function openBankModal(issuerName) {
   const content = document.getElementById("bankModalContent");
   if (!modal || !content) return;
 
-  const bankCards = CARDS_DATABASE.filter(c => c.issuer === issuerName);
+  const bankCards = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.filter(c => c.issuer === issuerName) : [];
 
   content.innerHTML = `
     <div class="bank-modal-header" style="background: ${bank.logoColor || '#1e3a8a'}">
@@ -731,12 +697,12 @@ function openBankModal(issuerName) {
       <div style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div>
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--primary); display:block;">Primary Rewards Ecosystem</span>
+            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--primary); display:block;">Primary Rewards Currency</span>
             <strong style="font-size:1.15rem; color:var(--text-main);">${bank.rewardsEcosystem}</strong>
           </div>
           <div>
             <span class="preapproval-status-tag ${bank.hasPreApproval ? '' : 'unavailable'}">
-              ${bank.hasPreApproval ? '✓ Soft-Pull Pre-Approval Tool Available' : 'No Official Soft-Pull Tool'}
+              ${bank.hasPreApproval ? '✓ Soft-Pull Pre-Approval Tool' : 'No Official Soft-Pull Tool'}
             </span>
           </div>
         </div>
@@ -787,7 +753,7 @@ function openBankModal(issuerName) {
                 <div>
                   <div class="partner-name">
                     <span>${p.name}</span>
-                    <span class="partner-tag ${p.type.toLowerCase().includes('airline') ? 'airline' : p.type.toLowerCase().includes('hotel') ? 'hotel' : 'cash'}">${p.type}</span>
+                    <span class="partner-tag ${p.type.toLowerCase().includes('airline') ? 'airline' : p.type.toLowerCase().includes('hotel') ? 'hotel' : p.type.toLowerCase().includes('invest') ? 'cash' : 'cash'}">${p.type}</span>
                   </div>
                   <span class="partner-note">${p.valueNote}</span>
                 </div>
@@ -850,7 +816,7 @@ function renderBankHubView() {
 
     <div class="bank-hub-grid">
       ${Object.entries(BANK_PROFILES).map(([key, bank]) => {
-        const count = CARDS_DATABASE.filter(c => c.issuer === key).length;
+        const count = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.filter(c => c.issuer === key).length : 0;
         const topRule = bank.underwritingRules[0] || {};
         return `
           <div class="bank-hub-card" onclick="openBankModal('${key}')">
@@ -896,8 +862,9 @@ function renderApp() {
   renderCardResults();
   renderComboRecommendation();
   renderCompareDrawer();
-  renderWalletBadge();
-  if (state.activeView === "wallet") {
+  if (typeof renderWalletBadge === "function") renderWalletBadge();
+
+  if (state.activeView === "wallet" && typeof renderWalletView === "function") {
     renderWalletView();
   } else if (state.activeView === "banks") {
     renderBankHubView();
@@ -918,7 +885,7 @@ function renderSpendSummary() {
 // Render Optimal 2-Card Combo Section
 function renderComboRecommendation() {
   const comboContainer = document.getElementById("comboSection");
-  if (!comboContainer) return;
+  if (!comboContainer || typeof CARDS_DATABASE === "undefined") return;
 
   const combo = findOptimalCombo(CARDS_DATABASE, state.spending);
   if (!combo) {
@@ -926,7 +893,7 @@ function renderComboRecommendation() {
     return;
   }
 
-  const { cardA, cardB, net, combinedEarned, assignment } = combo;
+  const { cardA, cardB, net, assignment } = combo;
 
   const filtered = getFilteredAndSortedCards();
   const topSingleNet = filtered.length > 0 ? filtered[0].ongoingNet : 0;
@@ -945,13 +912,13 @@ function renderComboRecommendation() {
           <div class="mini-card-preview" style="background:${cardA.cardColor}">
             <div class="mini-card-issuer">${cardA.issuer}</div>
             <div class="mini-card-name">${cardA.name}</div>
-            <div class="mini-card-role">Primary Spend</div>
+            <div class="mini-card-role">Primary Multiplier</div>
           </div>
           <div class="combo-plus">+</div>
           <div class="mini-card-preview" style="background:${cardB.cardColor}">
             <div class="mini-card-issuer">${cardB.issuer}</div>
             <div class="mini-card-name">${cardB.name}</div>
-            <div class="mini-card-role">Catch-All</div>
+            <div class="mini-card-role">Flat Catch-All</div>
           </div>
         </div>
 
@@ -996,10 +963,10 @@ function renderCardResults() {
   if (emptyEl) emptyEl.hidden = true;
 
   if (gridEl) {
-    gridEl.innerHTML = cards.map(({ card, totalEarned, effectiveFee, ongoingNet, firstYearNet, breakdown, bonus, roiPct }, idx) => {
+    gridEl.innerHTML = cards.map(({ card, totalEarned, ongoingNet, firstYearNet, breakdown, bonus, roiPct }, idx) => {
       const isFav = state.favorites.has(card.id);
       const isCompared = state.comparedCards.has(card.id);
-      const inWallet = state.myWallet.has(card.id);
+      const inWallet = (window.walletState && window.walletState.myWallet) ? window.walletState.myWallet.has(card.id) : false;
       const displayValue = state.valueMode === "ongoing" ? Math.round(ongoingNet) : Math.round(firstYearNet);
       const valueLabel = state.valueMode === "ongoing" ? "net / year" : "1st year total";
 
@@ -1233,233 +1200,9 @@ function generateDonutChartSvg(breakdown, totalEarned, totalAnnualSpend) {
   `;
 }
 
-// Render "My Wallet & What-to-Swipe Guide"
-function renderWalletView() {
-  const container = document.getElementById("walletView");
-  if (!container) return;
-
-  const ownedCards = Array.from(state.myWallet).map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
-
-  if (ownedCards.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <h3>💼 Your Wallet is Empty</h3>
-        <p>Select cards you currently own below to unlock your custom "What-to-Swipe" cheat sheet and see if you're leaving money on the table!</p>
-        <div class="wallet-picker-grid" style="max-width:800px; margin:24px auto 0;">
-          ${CARDS_DATABASE.map(c => `
-            <div class="wallet-pick-item" onclick="toggleWalletCard('${c.id}')">
-              <div class="pick-item-info">
-                <span class="pick-item-name">${c.name}</span>
-                <span class="pick-item-sub">${c.issuer} · ${c.annualFee === 0 ? '$0 Fee' : '$' + c.annualFee + '/yr'}</span>
-              </div>
-              <span class="btn-primary" style="padding:4px 10px; font-size:0.75rem;">+ Add</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  // Calculate current wallet rewards per category
-  let currentWalletTotalEarned = 0;
-  let currentWalletTotalFees = 0;
-  let swipeGuide = {};
-
-  CATEGORIES.forEach(({ key }) => {
-    let bestOwnedRate = 0;
-    let bestOwnedCard = ownedCards[0];
-
-    ownedCards.forEach(c => {
-      const rate = c.rewards[key] || 1.0;
-      if (rate > bestOwnedRate) {
-        bestOwnedRate = rate;
-        bestOwnedCard = c;
-      }
-    });
-
-    const monthly = state.spending[key];
-    const dollars = monthly * 12 * (bestOwnedRate / 100);
-    currentWalletTotalEarned += dollars;
-
-    // Find best potential card in whole database
-    let bestCatalogRate = 0;
-    let bestCatalogCard = null;
-    CARDS_DATABASE.forEach(c => {
-      const rate = c.rewards[key] || 1.0;
-      if (rate > bestCatalogRate) {
-        bestCatalogRate = rate;
-        bestCatalogCard = c;
-      }
-    });
-
-    swipeGuide[key] = {
-      card: bestOwnedCard,
-      rate: bestOwnedRate,
-      dollars,
-      upgrade: (bestCatalogRate > bestOwnedRate) ? { card: bestCatalogCard, rate: bestCatalogRate } : null
-    };
-  });
-
-  ownedCards.forEach(c => {
-    const fee = state.useCredits ? Math.max(0, c.annualFee - (c.annualCredits || 0)) : c.annualFee;
-    currentWalletTotalFees += fee;
-  });
-
-  const currentWalletNet = currentWalletTotalEarned - currentWalletTotalFees;
-
-  const optimalCombo = findOptimalCombo(CARDS_DATABASE, state.spending);
-  const potentialNet = optimalCombo ? optimalCombo.net : currentWalletNet;
-  const missedAmount = Math.max(0, Math.round(potentialNet - currentWalletNet));
-
-  container.innerHTML = `
-    <!-- Wallet KPI Summary Hero -->
-    <div class="wallet-dashboard-hero">
-      <div>
-        <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:4px;">💼 My Wallet & Rewards Optimizer</h2>
-        <p style="font-size:0.85rem; color:var(--text-muted);">
-          You have <strong>${ownedCards.length} card${ownedCards.length === 1 ? '' : 's'}</strong> in your active wallet.
-        </p>
-      </div>
-      <div class="wallet-summary-kpis">
-        <div class="kpi-block">
-          <span class="kpi-lbl">Current Annual Rewards</span>
-          <span class="kpi-val highlight">$${Math.round(currentWalletTotalEarned).toLocaleString()}/yr</span>
-        </div>
-        <div class="kpi-block">
-          <span class="kpi-lbl">Total Annual Fees</span>
-          <span class="kpi-val">$${currentWalletTotalFees}/yr</span>
-        </div>
-        <div class="kpi-block">
-          <span class="kpi-lbl">Net Take-Home Value</span>
-          <span class="kpi-val positive">$${Math.round(currentWalletNet).toLocaleString()}/yr</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Missed Rewards Alert if user is leaving money on the table -->
-    ${missedAmount > 50 ? `
-      <div class="missed-rewards-banner">
-        <div class="missed-alert-text">
-          <h4>⚠️ You're Leaving Cash On The Table!</h4>
-          <p>By upgrading or adding the recommended card to your wallet, you could earn an additional <strong>+$${missedAmount.toLocaleString()}</strong> every single year on your current spending.</p>
-        </div>
-        <div class="missed-alert-badge">
-          +$${missedAmount.toLocaleString()} / yr Potential
-        </div>
-      </div>
-    ` : `
-      <div class="missed-rewards-banner" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08);">
-        <div class="missed-alert-text">
-          <h4 style="color:var(--accent-green);">🎉 Excellent Wallet Setup!</h4>
-          <p>Your current card combination is already extracting near-peak value for your spending habits!</p>
-        </div>
-      </div>
-    `}
-
-    <!-- Swipe Guide Cheat Sheet -->
-    <div class="swipe-guide-card">
-      <div class="swipe-guide-header">
-        <h3>💳 What to Swipe: Instant Checkout Cheat Sheet</h3>
-        <p style="font-size:0.85rem; color:var(--text-muted);">Always pull out this card when paying in these categories to guarantee maximum cash back or points.</p>
-      </div>
-
-      <div class="swipe-grid">
-        ${CATEGORIES.map(c => {
-          const guide = swipeGuide[c.key];
-          return `
-            <div class="swipe-item">
-              <div class="swipe-item-top">
-                <span class="swipe-cat-icon">${c.icon}</span>
-                <div class="swipe-cat-info">
-                  <h4>${c.label}</h4>
-                  <span>Monthly spend: $${state.spending[c.key]}</span>
-                </div>
-              </div>
-
-              <div class="swipe-recommendation">
-                <span class="swipe-rec-lbl">Swipe This Card:</span>
-                <span class="swipe-rec-card">${guide.card.name}</span>
-                <span class="swipe-rec-rate">${guide.rate}% Back &bull; $${Math.round(guide.dollars)}/yr</span>
-              </div>
-
-              ${guide.upgrade ? `
-                <div style="font-size:0.72rem; color:var(--text-muted); background:var(--bg-surface); padding:6px 10px; border-radius:var(--radius-sm); border:1px dashed var(--border-color);">
-                  <strong style="color:var(--accent-amber);">💡 Upgrade Tip:</strong> ${guide.upgrade.card.name.split(' ')[0]} gets <strong>${guide.upgrade.rate}%</strong>
-                </div>
-              ` : `
-                <div style="font-size:0.72rem; color:var(--accent-green); font-weight:700;">
-                  ✓ Maximized for this category!
-                </div>
-              `}
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-
-    <!-- Interactive Card Selector / Manage My Wallet -->
-    <div class="wallet-card-selector">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3>Manage Cards in Your Wallet</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Click any card to add or remove it from your active wallet:</p>
-        </div>
-        <button onclick="state.myWallet.clear(); localStorage.removeItem('card_finder_my_wallet'); renderApp();" class="btn-secondary" style="font-size:0.75rem;">Clear All</button>
-      </div>
-
-      <div class="wallet-picker-grid">
-        ${CARDS_DATABASE.map(c => {
-          const isOwned = state.myWallet.has(c.id);
-          return `
-            <div class="wallet-pick-item ${isOwned ? 'active' : ''}" onclick="toggleWalletCard('${c.id}')">
-              <div class="pick-item-info">
-                <span class="pick-item-name">${c.name}</span>
-                <span class="pick-item-sub">${c.issuer} &bull; ${c.annualFee === 0 ? '$0 Fee' : '$' + c.annualFee + '/yr'}</span>
-              </div>
-              <span style="font-size:0.85rem; font-weight:700; color:${isOwned ? 'var(--primary)' : 'var(--text-muted)'};">
-                ${isOwned ? '✓ In Wallet' : '+ Add'}
-              </span>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-  `;
-}
-
-// Card Detail Modal Handlers
-function initModals() {
-  const detailModal = document.getElementById("cardDetailModal");
-  const compareModal = document.getElementById("comparisonModal");
-  const bankModal = document.getElementById("bankModal");
-
-  document.querySelectorAll(".modal-close-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (detailModal) detailModal.classList.remove("open");
-      if (compareModal) compareModal.classList.remove("open");
-      if (bankModal) bankModal.classList.remove("open");
-    });
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === detailModal) detailModal.classList.remove("open");
-    if (e.target === compareModal) compareModal.classList.remove("open");
-    if (e.target === bankModal) bankModal.classList.remove("open");
-  });
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (detailModal) detailModal.classList.remove("open");
-      if (compareModal) compareModal.classList.remove("open");
-      if (bankModal) bankModal.classList.remove("open");
-    }
-  });
-}
-
-// Open Single Card Details Modal
+// Single Card Details Modal with Clean Non-Duplicated Bank Integration
 function openCardModal(cardId) {
-  const card = CARDS_DATABASE.find(c => c.id === cardId);
+  const card = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.find(c => c.id === cardId) : null;
   if (!card) return;
 
   const val = calculateCardValue(card, state.spending);
@@ -1502,19 +1245,19 @@ function openCardModal(cardId) {
         </div>
       </div>
 
-      <!-- Bank Intel Preview Section -->
+      <!-- Bank Intelligence & Underwriting Overview (Unified & Single Source of Truth) -->
       ${bankInfo ? `
-        <div class="modal-section" style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
+        <div class="modal-section" style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
               <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); display:block;">Issuing Bank & Rules</span>
               <strong style="font-size:1.05rem; color:var(--text-main);">🏛️ ${bankInfo.name}</strong>
               <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">
-                Bureau: ${bankInfo.bureauPulled.split(' ')[0]} &bull; Top Rule: ${bankInfo.underwritingRules[0].title}
+                Bureau: <strong>${bankInfo.bureauPulled.split(' ')[0]}</strong> &bull; Key Rule: <strong style="color:var(--accent-rose);">${bankInfo.underwritingRules[0].title}</strong>
               </div>
             </div>
             <button class="btn-primary" style="font-size:0.76rem; padding:6px 14px;" onclick="openBankModal('${card.issuer}')">
-              View ${card.issuer} Rules & Partners &rarr;
+              View Complete ${card.issuer} Rules & Partners &rarr;
             </button>
           </div>
         </div>
@@ -1549,27 +1292,46 @@ function openCardModal(cardId) {
           ${card.perks.map(p => `<li><span class="check-icon">✓</span> <span>${p}</span></li>`).join('')}
         </ul>
       </div>
-
-      <!-- Quick Tips -->
-      <div class="modal-section tips-box">
-        <h4>💡 Application Pro-Tip</h4>
-        <p>${card.issuer === 'Chase' ? 'Chase cards are subject to the 5/24 rule: You will typically not be approved if you have opened 5 or more personal cards across any bank in the past 24 months.' : 
-             card.issuer === 'American Express' ? 'Amex has a once-in-a-lifetime rule for welcome bonuses. Check if you are eligible for the welcome offer via their Apply with Confidence tool.' :
-             card.issuer === 'Capital One' ? 'Capital One generally pulls all three credit bureaus and limits applicants to at most 1 card every 6 months.' :
-             card.issuer === 'Bank of America' ? 'Bank of America enforces the 2/3/4 rule and limits approvals to 7 new cards in 12 months for depositors (or 3 in 12 months without deposits).' :
-             'Ensure your credit score meets or exceeds the recommended tier before applying for the best approval odds.'}</p>
-      </div>
     </div>
   `;
 
   modal.classList.add("open");
 }
 
+// Modals management
+function initModals() {
+  const detailModal = document.getElementById("cardDetailModal");
+  const compareModal = document.getElementById("comparisonModal");
+  const bankModal = document.getElementById("bankModal");
+
+  document.querySelectorAll(".modal-close-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === detailModal) detailModal.classList.remove("open");
+    if (e.target === compareModal) compareModal.classList.remove("open");
+    if (e.target === bankModal) bankModal.classList.remove("open");
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
+    }
+  });
+}
+
 // Open Multi-Card Comparison Matrix
 function openComparisonModal() {
   const modal = document.getElementById("comparisonModal");
   const tableContainer = document.getElementById("comparisonTableContainer");
-  if (!modal || !tableContainer) return;
+  if (!modal || !tableContainer || typeof CARDS_DATABASE === "undefined") return;
 
   const cards = Array.from(state.comparedCards).map(id => {
     const card = CARDS_DATABASE.find(c => c.id === id);
@@ -1798,7 +1560,6 @@ function loadStateFromUrl() {
 // Global exports for inline HTML event handlers
 window.toggleCompare = toggleCompare;
 window.toggleFavorite = toggleFavorite;
-window.toggleWalletCard = toggleWalletCard;
 window.flipCard = flipCard;
 window.openCardModal = openCardModal;
 window.openBankModal = openBankModal;

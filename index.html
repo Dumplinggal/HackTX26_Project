@@ -152,13 +152,18 @@
         <div class="filter-group">
           <label for="issuerSelect">Bank / Issuer</label>
           <select id="issuerSelect">
-            <option value="all">All Banks</option>
+            <option value="all">All Banks (14 Issuers)</option>
             <option value="Chase">Chase</option>
             <option value="American Express">American Express</option>
             <option value="Capital One">Capital One</option>
             <option value="Citi">Citi</option>
             <option value="Wells Fargo">Wells Fargo</option>
             <option value="Bank of America">Bank of America</option>
+            <option value="Barclays">Barclays</option>
+            <option value="Fidelity">Fidelity</option>
+            <option value="Navy Federal">Navy Federal</option>
+            <option value="Robinhood">Robinhood</option>
+            <option value="Synchrony">Synchrony</option>
             <option value="Bilt">Bilt</option>
             <option value="Discover">Discover</option>
             <option value="U.S. Bank">U.S. Bank</option>
@@ -343,8 +348,10 @@
     </div>
   </div>
 
-  <!-- Application Scripts -->
-  <script src="data.js"></script>
+  <!-- Application Scripts: Clean Modular Architecture -->
+  <script src="bank-data.js"></script>
+  <script src="cards-data.js"></script>
+  <script src="wallet.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

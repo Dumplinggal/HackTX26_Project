@@ -2536,13 +2536,18 @@ select:focus, input[type="text"]:focus {
         <div class="filter-group">
           <label for="issuerSelect">Bank / Issuer</label>
           <select id="issuerSelect">
-            <option value="all">All Banks</option>
+            <option value="all">All Banks (14 Issuers)</option>
             <option value="Chase">Chase</option>
             <option value="American Express">American Express</option>
             <option value="Capital One">Capital One</option>
             <option value="Citi">Citi</option>
             <option value="Wells Fargo">Wells Fargo</option>
             <option value="Bank of America">Bank of America</option>
+            <option value="Barclays">Barclays</option>
+            <option value="Fidelity">Fidelity</option>
+            <option value="Navy Federal">Navy Federal</option>
+            <option value="Robinhood">Robinhood</option>
+            <option value="Synchrony">Synchrony</option>
             <option value="Bilt">Bilt</option>
             <option value="Discover">Discover</option>
             <option value="U.S. Bank">U.S. Bank</option>
@@ -2727,12 +2732,15 @@ select:focus, input[type="text"]:focus {
     </div>
   </div>
 
-  <!-- Application Scripts -->
+  <!-- Application Scripts: Clean Modular Architecture -->
+  
+  
   
   <script>
 /**
- * Card Finder Pro - Comprehensive Card Database & Bank Intelligence Profiles
- * Contains in-depth bank underwriting rules, credit bureau pull patterns, transfer partner ecosystems, and customer support data.
+ * Card Finder Pro - Bank Intelligence & Application Rulebook Database
+ * Comprehensive profiles for 14 major card issuers including proprietary underwriting rules,
+ * credit bureau pull trends, transfer partner networks, and direct reconsideration hotlines.
  */
 
 const BANK_PROFILES = {
@@ -2741,10 +2749,10 @@ const BANK_PROFILES = {
     shortName: "Chase",
     logoColor: "#117aca",
     rewardsEcosystem: "Chase Ultimate RewardsÂ®",
-    ecosystemDescription: "One of the most versatile point programs in the world. Points transfer 1:1 to premium partners or redeem with a 25%-50% bonus on Sapphire cards.",
+    ecosystemDescription: "One of the most versatile point programs in the world. Points transfer 1:1 to premium airline & hotel partners, or redeem with a 25%-50% bonus on Sapphire cards.",
     transferPartners: [
       { name: "World of Hyatt", type: "Hotel", ratio: "1:1", valueNote: "Best hotel transfer value (2.0Â¢+ avg)" },
-      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance network" },
+      { name: "United Airlines MileagePlus", type: "Airline", ratio: "1:1", valueNote: "Star Alliance global network" },
       { name: "Southwest Rapid Rewards", type: "Airline", ratio: "1:1", valueNote: "Domestic flights & 2 free checked bags" },
       { name: "Air Canada Aeroplan", type: "Airline", ratio: "1:1", valueNote: "Exceptional Star Alliance awards" },
       { name: "British Airways Avios", type: "Airline", ratio: "1:1", valueNote: "Oneworld short-haul sweet spots" },
@@ -2813,7 +2821,7 @@ const BANK_PROFILES = {
       { title: "Triple Bureau Pull", desc: "Capital One uniquely pulls all THREE major credit bureaus (Experian, TransUnion, Equifax) for every application." },
       { title: "1/6 Rule", desc: "You can generally only be approved for 1 Capital One card every 6 months." },
       { title: "2 Personal Card Limit", desc: "Capital One generally limits cardholders to 2 personal cards in their core lineup (Venture, Savor, Quicksilver)." },
-      { title: "Subprime vs Prime Sensitivity", desc: "Prefers applicants who actually carry modest balances or have active revolving utilization rather than spotless 800+ credit churners." }
+      { title: "Subprime vs Prime Sensitivity", desc: "Prefers applicants who carry modest balances or have active revolving utilization rather than spotless 800+ credit churners." }
     ],
     bureauPulled: "All 3 bureaus pulled simultaneously (Experian, TransUnion, Equifax)",
     hasPreApproval: true,
@@ -2904,6 +2912,133 @@ const BANK_PROFILES = {
     headquarters: "Charlotte, NC",
     instantCardNumber: "Instant card provisioning to Apple Pay/Google Pay via BofA Mobile app"
   },
+  "Barclays": {
+    name: "Barclays Bank Delaware",
+    shortName: "Barclays",
+    logoColor: "#00aeef",
+    rewardsEcosystem: "Barclays Rewards & Airline Travel",
+    ecosystemDescription: "Famous for cobranded travel partnerships with JetBlue, Wyndham Rewards, Hawaiian Airlines, and AAdvantage Aviator cards.",
+    transferPartners: [
+      { name: "JetBlue TrueBlue", type: "Airline", ratio: "Direct Earning", valueNote: "Free checked bags and 5k anniversary points" },
+      { name: "Wyndham Rewards", type: "Hotel", ratio: "Direct Earning", valueNote: "Vacasa rental homes and Caesars status match" },
+      { name: "American Airlines AAdvantage", type: "Airline", ratio: "Direct Earning", valueNote: "Flight award redemptions" }
+    ],
+    underwritingRules: [
+      { title: "6/24 Velocity Sensitivity", desc: "Barclays is notoriously inquiry and new account sensitive. Applicants with 6 or more new cards in 24 months are frequently denied." },
+      { title: "Existing Card Activity Rule", desc: "Barclays often denies applicants for new cards if their existing Barclays credit card has had low or zero spending over the past 6 months." },
+      { title: "Same Product Restriction", desc: "You generally cannot hold two of the exact same credit card concurrently." }
+    ],
+    bureauPulled: "TransUnion (almost exclusively nationwide)",
+    hasPreApproval: false,
+    preApprovalNote: "Barclays rarely offers soft-pull pre-approvals for co-branded cards.",
+    customerServicePhone: "1-888-232-0780",
+    reconsiderationPhone: "1-866-408-4064",
+    customerSatisfaction: "4.4/5 - Excellent cobranded airline perks like free companion certificates",
+    mobileAppRating: "4.7â˜… iOS (1M+ reviews) / 4.5â˜… Android",
+    headquarters: "Wilmington, DE",
+    instantCardNumber: "Instant card access provided for select cobrand airline tickets"
+  },
+  "Fidelity": {
+    name: "Fidelity Investments / Elan Financial Services",
+    shortName: "Fidelity",
+    logoColor: "#437b38",
+    rewardsEcosystem: "Fidelity Automatic Investment Rewards",
+    ecosystemDescription: "Industry favorite for automated wealth accumulation. Earn unlimited 2% cash back deposited automatically into your Brokerage, Roth IRA, 529, or HSA.",
+    transferPartners: [
+      { name: "Fidelity Brokerage Account", type: "Investment", ratio: "1:1", valueNote: "Direct cash deposit for stocks, ETFs, or index funds" },
+      { name: "Roth IRA / Traditional IRA", type: "Retirement", ratio: "1:1", valueNote: "Tax-advantaged retirement compounding" },
+      { name: "Fidelity Health Savings Account (HSA)", type: "Health", ratio: "1:1", valueNote: "Triple-tax advantaged medical savings" },
+      { name: "529 College Savings", type: "Education", ratio: "1:1", valueNote: "Tax-free growth for future education expenses" }
+    ],
+    underwritingRules: [
+      { title: "Elan Financial Underwriting", desc: "Issued by Elan Financial Services (a division of U.S. Bank), known for conservative, steady underwriting standards." },
+      { title: "Inquiry Sensitive", desc: "Prefers applicants with fewer than 2 hard inquiries on the pulled bureau in the prior 6 months." },
+      { title: "Clean Credit History", desc: "Typically requires a FICO score of 690+ and no recent late payments or derogatory marks." }
+    ],
+    bureauPulled: "TransUnion (common) or Experian (depending on state)",
+    hasPreApproval: false,
+    preApprovalNote: "No standalone pre-approval tool, but pre-qualified offers sometimes appear inside Fidelity investor accounts.",
+    customerServicePhone: "1-888-551-5147",
+    reconsiderationPhone: "1-800-364-9648",
+    customerSatisfaction: "4.9/5 - Top rated no-nonsense 2% cash back card with zero category tracking",
+    mobileAppRating: "4.8â˜… iOS (2.5M+ reviews) / 4.7â˜… Android",
+    headquarters: "Boston, MA",
+    instantCardNumber: "Digital card push to Apple Pay & Google Pay inside Fidelity app"
+  },
+  "Navy Federal": {
+    name: "Navy Federal Credit Union",
+    shortName: "Navy Federal",
+    logoColor: "#002d62",
+    rewardsEcosystem: "Navy Federal Member Rewards",
+    ecosystemDescription: "The largest credit union in the world, famous for exceptionally high credit limits, low interest rates, and generous relationship bonuses.",
+    transferPartners: [
+      { name: "Cash Back / Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Instant cash deposit to savings or checking" },
+      { name: "Travel Redemptions", type: "Travel", ratio: "1.0Â¢ per pt", valueNote: "Flights and hotels with no blackout dates" }
+    ],
+    underwritingRules: [
+      { title: "Membership Eligibility Required", desc: "Must be active duty military, veteran, Department of Defense civilian, or an immediate family member of an eligible member." },
+      { title: "91/3 Velocity Rule", desc: "Must wait at least 91 days and 3 full billing statements between new credit card applications with Navy Federal." },
+      { title: "$80,000 Combined Credit Limit", desc: "NFCU caps total combined revolving credit limits across all personal credit cards at $80,000 per member." },
+      { title: "Internal Relationship Score", desc: "NFCU calculates an internal score (100 to 450) where holding savings deposits and direct deposit boosts approval odds." }
+    ],
+    bureauPulled: "TransUnion (majority) or Equifax",
+    hasPreApproval: true,
+    preApprovalNote: "Offers an online pre-qualification tool for members that uses a soft credit inquiry.",
+    customerServicePhone: "1-888-842-6328",
+    reconsiderationPhone: "1-888-842-6328",
+    customerSatisfaction: "4.95/5 - Consistently ranked highest in the nation for customer loyalty & high limits",
+    mobileAppRating: "4.9â˜… iOS (1.2M+ reviews) / 4.8â˜… Android",
+    headquarters: "Vienna, VA",
+    instantCardNumber: "Virtual card details available immediately in NFCU mobile app"
+  },
+  "Robinhood": {
+    name: "Robinhood Credit / Coastal Community Bank",
+    shortName: "Robinhood",
+    logoColor: "#00c805",
+    rewardsEcosystem: "Robinhood Gold Cash Back",
+    ecosystemDescription: "Modern flat-rate powerhouse offering 3% cash back on ALL purchases with no category limits, or 5% back on travel through Robinhood.",
+    transferPartners: [
+      { name: "Robinhood Brokerage Cash", type: "Investment", ratio: "1:1", valueNote: "Deposit into brokerage account to invest in stocks, crypto, or earn high APY" },
+      { name: "Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Erase card charges directly" }
+    ],
+    underwritingRules: [
+      { title: "Robinhood Gold Subscription Required", desc: "Cardholders MUST maintain an active Robinhood Gold membership ($50/year or $5/month) to receive the 3% cash back rate." },
+      { title: "Strict Debt-to-Income Underwriting", desc: "Underwritten by Coastal Community Bank; requires verified income and a healthy credit profile (typically 700+ FICO)." },
+      { title: "Waitlist Access", desc: "Account rollout is managed through an active rolling invitation list." }
+    ],
+    bureauPulled: "Experian (majority)",
+    hasPreApproval: false,
+    preApprovalNote: "Invitations are sent to eligible Robinhood Gold subscribers.",
+    customerServicePhone: "In-App 24/7 Phone Support Callback",
+    reconsiderationPhone: "In-App Support Ticket & Chat",
+    customerSatisfaction: "4.7/5 - Beautiful heavy stainless steel card and industry-leading 3% flat rate",
+    mobileAppRating: "4.8â˜… iOS (4.5M+ reviews) / 4.7â˜… Android",
+    headquarters: "Menlo Park, CA",
+    instantCardNumber: "Disposable virtual card numbers and instant Apple Pay upon approval"
+  },
+  "Synchrony": {
+    name: "Synchrony Financial",
+    shortName: "Synchrony",
+    logoColor: "#ffc836",
+    rewardsEcosystem: "Synchrony Cashback & Retail Rewards",
+    ecosystemDescription: "One of the largest issuers of retail cobranded and consumer cards in the US, known for accessible underwriting and straightforward cash back.",
+    transferPartners: [
+      { name: "Automatic Statement Credit", type: "Cash", ratio: "1:1", valueNote: "Automatically applies to monthly statement balance" }
+    ],
+    underwritingRules: [
+      { title: "Inquiry Velocity Limits", desc: "Synchrony can be sensitive to rapid account openings and high numbers of recent hard inquiries within the past 6-12 months." },
+      { title: "Credit Line Review Sensitivities", desc: "Monitors overall consumer credit reports and may adjust limits if credit card balances rise substantially across other banks." }
+    ],
+    bureauPulled: "TransUnion (majority of states)",
+    hasPreApproval: true,
+    preApprovalNote: "Many Synchrony cards offer an online pre-qualification check without affecting your credit score.",
+    customerServicePhone: "1-866-419-4096",
+    reconsiderationPhone: "1-800-480-0186",
+    customerSatisfaction: "4.5/5 - Generous starting limits and zero-annual-fee 2% cash back",
+    mobileAppRating: "4.7â˜… iOS (500k+ reviews) / 4.5â˜… Android",
+    headquarters: "Stamford, CT",
+    instantCardNumber: "Digital temporary account number provided upon approval"
+  },
   "Bilt": {
     name: "Bilt Rewards / Wells Fargo",
     shortName: "Bilt",
@@ -2981,6 +3116,11 @@ const BANK_PROFILES = {
     instantCardNumber: "Virtual card instant push to digital wallet for eligible applicants"
   }
 };
+
+/**
+ * Card Finder Pro - Credit Cards Database & Spending Presets
+ * Contains 27 credit cards across 14 major card issuers and multiple credit tiers.
+ */
 
 const CARDS_DATABASE = [
   {
@@ -3114,6 +3254,165 @@ const CARDS_DATABASE = [
     bestFor: "Luxury Frequent Travelers & Airport Lounges"
   },
   {
+    id: "robinhood-gold-card",
+    name: "Robinhood Gold Card",
+    issuer: "Robinhood",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (700+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 3.0 },
+    specialNotes: "Flat 3% cash back on EVERYTHING with no categories to track; 5% on travel booked via Robinhood Travel portal. Requires $50/yr Robinhood Gold membership.",
+    bonusValue: 0,
+    bonusText: "No welcome bonus, but offers the highest flat-rate cash back in the industry (3% on all categories).",
+    pointValuation: 1.0,
+    perks: [
+      "Flat 3% cash back on all purchases with no rotating categories or spend caps",
+      "5% cash back on hotels & flights booked through Robinhood Travel",
+      "Heavy stainless steel card (17g) with custom cardholder engraving",
+      "Virtual disposable card numbers to prevent subscription recurring charges",
+      "No foreign transaction fees"
+    ],
+    cardColor: "linear-gradient(135deg, #022c22 0%, #064e3b 50%, #022c22 100%)",
+    accentColor: "#34d399",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.95,
+    bestFor: "Highest Flat Cash Back (3% on Everything)"
+  },
+  {
+    id: "fidelity-rewards-visa",
+    name: "FidelityÂ® Rewards Visa SignatureÂ®",
+    issuer: "Fidelity",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Unlimited 2% cash back on all purchases automatically deposited into your Fidelity brokerage, Roth IRA, 529, or HSA account.",
+    bonusValue: 150,
+    bonusText: "$150 bonus after spending $1,500 in the first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Unlimited 2% cash back deposited automatically into investment accounts",
+      "Auto rental collision damage waiver and zero fraud liability",
+      "Visa Signature luxury hotel & concierge privileges",
+      "Compound your rewards in stock market index funds"
+    ],
+    cardColor: "linear-gradient(135deg, #14532d 0%, #166534 60%, #15803d 100%)",
+    accentColor: "#86efac",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.88,
+    bestFor: "Investors & Automatic Roth IRA / Stock Compounding"
+  },
+  {
+    id: "navy-federal-more-rewards",
+    name: "Navy Federal More Rewards AmexÂ®",
+    issuer: "Navy Federal",
+    network: "Amex",
+    tier: 2,
+    tierName: "Average to Good (660+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 1.0, other: 1.0 },
+    specialNotes: "3x points on dining, food delivery, supermarkets, gas stations, and transit with no caps; 1x on other purchases. Requires military/defense family membership.",
+    bonusValue: 200,
+    bonusText: "20,000 points ($200 value) after spending $2,000 in first 90 days",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee & no foreign transaction fee",
+      "3x points on 4 everyday categories: Supermarkets, Dining, Gas, Transit",
+      "Generous credit lines often exceeding $20,000+",
+      "Exclusive discounts with American Express Connect",
+      "Points never expire as long as account remains open"
+    ],
+    cardColor: "linear-gradient(135deg, #02224d 0%, #003366 50%, #001f3f 100%)",
+    accentColor: "#93c5fd",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR on purchases for 12 months",
+    rating: 4.85,
+    bestFor: "Military, Veterans & Families (3% Groceries/Gas/Dining)"
+  },
+  {
+    id: "barclays-jetblue-plus",
+    name: "JetBlue Plus Card from Barclays",
+    issuer: "Barclays",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good (690+)",
+    type: "travel",
+    annualFee: 99,
+    annualCredits: 60, // 5,000 anniversary points (~$65-75 value)
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 1.0, travel: 6.0, other: 1.0 },
+    specialNotes: "6x on JetBlue purchases; 2x at restaurants & grocery stores; 1x other. 5,000 bonus points each year on your account anniversary ($65+ value).",
+    bonusValue: 600,
+    bonusText: "50,000 bonus points after spending $1,000 in first 90 days (~$650 travel value)",
+    pointValuation: 1.3,
+    perks: [
+      "First checked bag free for you and up to 3 companions on JetBlue flights (save $70/roundtrip per person)",
+      "5,000 bonus points every year after account anniversary",
+      "10% points rebate on all award flight redemptions",
+      "$100 statement credit after purchasing a JetBlue Vacations package",
+      "50% savings on eligible inflight food & cocktails"
+    ],
+    cardColor: "linear-gradient(135deg, #002b49 0%, #004d7a 50%, #002b49 100%)",
+    accentColor: "#38bdf8",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.75,
+    bestFor: "JetBlue Flyers (Free Bags & 10% Points Rebate)"
+  },
+  {
+    id: "synchrony-premier-world",
+    name: "Synchrony Premier World MastercardÂ®",
+    issuer: "Synchrony",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Fair to Good (670+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Unlimited 2% cash back automatically credited to your monthly statement on every purchase with no redemption minimums.",
+    bonusValue: 0,
+    bonusText: "No standard signup bonus, but guarantees effortless automatic 2% statement credits on every swipe.",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Automatic statement credit payout every single billing cycle",
+      "Mastercard ID Theft Protection & Zero Liability",
+      "No caps or category tracking required"
+    ],
+    cardColor: "linear-gradient(135deg, #854d0e 0%, #ca8a04 50%, #a16207 100%)",
+    accentColor: "#fde047",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.6,
+    bestFor: "Zero-Hassle Automatic 2% Cash Back"
+  },
+  {
     id: "capital-one-savor",
     name: "Capital One Savor",
     issuer: "Capital One",
@@ -3215,7 +3514,7 @@ const CARDS_DATABASE = [
     tierName: "Excellent (750+)",
     type: "travel",
     annualFee: 95,
-    annualCredits: 100, // $100 airline incidental credit
+    annualCredits: 100,
     foreignFee: false,
     rewards: { dining: 2.0, groceries: 1.5, gas: 1.5, travel: 2.0, other: 1.5 },
     specialNotes: "Unlimited 2x on travel and dining, 1.5x on everything else. With Preferred Rewards Platinum Honors, this jumps to 3.5% on travel/dining and 2.62% on all purchases!",
@@ -3732,13 +4031,269 @@ const SPEND_PRESETS = {
 };
 
 /**
+ * Card Finder Pro - My Wallet & Checkout Swipe Guide Module
+ * Manages user's owned cards, calculates checkout category swipe recommendations,
+ * and analyzes missed rewards opportunities.
+ */
+
+// Global Wallet State
+window.walletState = {
+  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '["citi-double-cash", "capital-one-savor"]'))
+};
+
+// Toggle a card into or out of the user's active wallet
+function toggleWalletCard(cardId) {
+  if (window.walletState.myWallet.has(cardId)) {
+    window.walletState.myWallet.delete(cardId);
+  } else {
+    window.walletState.myWallet.add(cardId);
+  }
+  localStorage.setItem("card_finder_my_wallet", JSON.stringify(Array.from(window.walletState.myWallet)));
+  renderWalletBadge();
+  
+  if (typeof state !== "undefined" && state.activeView === "wallet") {
+    renderWalletView();
+  }
+  if (typeof renderCardResults === "function") {
+    renderCardResults();
+  }
+}
+
+// Update the numerical badge in the top navigation
+function renderWalletBadge() {
+  const badge = document.getElementById("walletBadge");
+  if (badge && window.walletState) {
+    badge.textContent = window.walletState.myWallet.size;
+  }
+}
+
+// Render the complete "My Wallet & Checkout Swipe Guide" interface
+function renderWalletView() {
+  const container = document.getElementById("walletView");
+  if (!container || typeof CARDS_DATABASE === "undefined") return;
+
+  const ownedCards = Array.from(window.walletState.myWallet)
+    .map(id => CARDS_DATABASE.find(c => c.id === id))
+    .filter(Boolean);
+
+  if (ownedCards.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>ðŸ’¼ Your Wallet is Empty</h3>
+        <p>Select cards you currently own below to unlock your custom "What-to-Swipe" cheat sheet and see if you're leaving money on the table!</p>
+        <div class="wallet-picker-grid" style="max-width:800px; margin:24px auto 0;">
+          ${CARDS_DATABASE.map(c => `
+            <div class="wallet-pick-item" onclick="toggleWalletCard('${c.id}')">
+              <div class="pick-item-info">
+                <span class="pick-item-name">${c.name}</span>
+                <span class="pick-item-sub">${c.issuer} &bull; ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
+</body>
+</html>
+ + c.annualFee + '/yr'}</span>
+              </div>
+              <span class="btn-primary" style="padding:4px 10px; font-size:0.75rem;">+ Add</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // Calculate current wallet rewards per category
+  let currentWalletTotalEarned = 0;
+  let currentWalletTotalFees = 0;
+  let swipeGuide = {};
+
+  const currentSpending = (typeof state !== "undefined" && state.spending) ? state.spending : {
+    dining: 350, groceries: 550, gas: 160, travel: 120, other: 650
+  };
+
+  const categories = (typeof CATEGORIES !== "undefined") ? CATEGORIES : [
+    { key: "dining", label: "Dining & Takeout", icon: "ðŸ½ï¸" },
+    { key: "groceries", label: "Groceries & Supermarkets", icon: "ðŸ›’" },
+    { key: "gas", label: "Gas & EV Charging", icon: "â›½" },
+    { key: "travel", label: "Travel (Flights/Hotels)", icon: "âœˆï¸" },
+    { key: "other", label: "All Other Spending", icon: "ðŸ›ï¸" }
+  ];
+
+  categories.forEach(({ key }) => {
+    let bestOwnedRate = 0;
+    let bestOwnedCard = ownedCards[0];
+
+    ownedCards.forEach(c => {
+      const rate = c.rewards[key] || 1.0;
+      if (rate > bestOwnedRate) {
+        bestOwnedRate = rate;
+        bestOwnedCard = c;
+      }
+    });
+
+    const monthly = currentSpending[key] || 0;
+    const dollars = monthly * 12 * (bestOwnedRate / 100);
+    currentWalletTotalEarned += dollars;
+
+    // Find best potential card in whole database
+    let bestCatalogRate = 0;
+    let bestCatalogCard = null;
+    CARDS_DATABASE.forEach(c => {
+      const rate = c.rewards[key] || 1.0;
+      if (rate > bestCatalogRate) {
+        bestCatalogRate = rate;
+        bestCatalogCard = c;
+      }
+    });
+
+    swipeGuide[key] = {
+      card: bestOwnedCard,
+      rate: bestOwnedRate,
+      dollars,
+      upgrade: (bestCatalogRate > bestOwnedRate) ? { card: bestCatalogCard, rate: bestCatalogRate } : null
+    };
+  });
+
+  const useCredits = (typeof state !== "undefined") ? state.useCredits : true;
+  ownedCards.forEach(c => {
+    const fee = useCredits ? Math.max(0, c.annualFee - (c.annualCredits || 0)) : c.annualFee;
+    currentWalletTotalFees += fee;
+  });
+
+  const currentWalletNet = currentWalletTotalEarned - currentWalletTotalFees;
+
+  const optimalCombo = (typeof findOptimalCombo === "function") ? findOptimalCombo(CARDS_DATABASE, currentSpending) : null;
+  const potentialNet = optimalCombo ? optimalCombo.net : currentWalletNet;
+  const missedAmount = Math.max(0, Math.round(potentialNet - currentWalletNet));
+
+  container.innerHTML = `
+    <!-- Wallet KPI Summary Hero -->
+    <div class="wallet-dashboard-hero">
+      <div>
+        <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:4px;">ðŸ’¼ My Wallet & Rewards Optimizer</h2>
+        <p style="font-size:0.85rem; color:var(--text-muted);">
+          You have <strong>${ownedCards.length} card${ownedCards.length === 1 ? '' : 's'}</strong> in your active wallet.
+        </p>
+      </div>
+      <div class="wallet-summary-kpis">
+        <div class="kpi-block">
+          <span class="kpi-lbl">Current Annual Rewards</span>
+          <span class="kpi-val highlight">${Math.round(currentWalletTotalEarned).toLocaleString()}/yr</span>
+        </div>
+        <div class="kpi-block">
+          <span class="kpi-lbl">Total Annual Fees</span>
+          <span class="kpi-val">${currentWalletTotalFees}/yr</span>
+        </div>
+        <div class="kpi-block">
+          <span class="kpi-lbl">Net Take-Home Value</span>
+          <span class="kpi-val positive">${Math.round(currentWalletNet).toLocaleString()}/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Missed Rewards Alert if user is leaving money on the table -->
+    ${missedAmount > 50 ? `
+      <div class="missed-rewards-banner">
+        <div class="missed-alert-text">
+          <h4>âš ï¸ You're Leaving Cash On The Table!</h4>
+          <p>By upgrading or adding the recommended card to your wallet, you could earn an additional <strong>+${missedAmount.toLocaleString()}</strong> every single year on your current spending.</p>
+        </div>
+        <div class="missed-alert-badge">
+          +${missedAmount.toLocaleString()} / yr Potential
+        </div>
+      </div>
+    ` : `
+      <div class="missed-rewards-banner" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08);">
+        <div class="missed-alert-text">
+          <h4 style="color:var(--accent-green);">ðŸŽ‰ Excellent Wallet Setup!</h4>
+          <p>Your current card combination is already extracting near-peak value for your spending habits!</p>
+        </div>
+      </div>
+    `}
+
+    <!-- Swipe Guide Cheat Sheet -->
+    <div class="swipe-guide-card">
+      <div class="swipe-guide-header">
+        <h3>ðŸ’³ What to Swipe: Instant Checkout Cheat Sheet</h3>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Always pull out this card when paying in these categories to guarantee maximum cash back or points.</p>
+      </div>
+
+      <div class="swipe-grid">
+        ${categories.map(c => {
+          const guide = swipeGuide[c.key];
+          return `
+            <div class="swipe-item">
+              <div class="swipe-item-top">
+                <span class="swipe-cat-icon">${c.icon}</span>
+                <div class="swipe-cat-info">
+                  <h4>${c.label}</h4>
+                  <span>Monthly spend: ${currentSpending[c.key] || 0}</span>
+                </div>
+              </div>
+
+              <div class="swipe-recommendation">
+                <span class="swipe-rec-lbl">Swipe This Card:</span>
+                <span class="swipe-rec-card">${guide.card.name}</span>
+                <span class="swipe-rec-rate">${guide.rate}% Back &bull; ${Math.round(guide.dollars)}/yr</span>
+              </div>
+
+              ${guide.upgrade ? `
+                <div style="font-size:0.72rem; color:var(--text-muted); background:var(--bg-surface); padding:6px 10px; border-radius:var(--radius-sm); border:1px dashed var(--border-color);">
+                  <strong style="color:var(--accent-amber);">ðŸ’¡ Upgrade Tip:</strong> ${guide.upgrade.card.name.split(' ')[0]} gets <strong>${guide.upgrade.rate}%</strong>
+                </div>
+              ` : `
+                <div style="font-size:0.72rem; color:var(--accent-green); font-weight:700;">
+                  âœ“ Maximized for this category!
+                </div>
+              `}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Interactive Card Selector / Manage My Wallet -->
+    <div class="wallet-card-selector">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3>Manage Cards in Your Wallet</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Click any card to add or remove it from your active wallet:</p>
+        </div>
+        <button onclick="window.walletState.myWallet.clear(); localStorage.removeItem('card_finder_my_wallet'); renderApp();" class="btn-secondary" style="font-size:0.75rem;">Clear All</button>
+      </div>
+
+      <div class="wallet-picker-grid">
+        ${CARDS_DATABASE.map(c => {
+          const isOwned = window.walletState.myWallet.has(c.id);
+          return `
+            <div class="wallet-pick-item ${isOwned ? 'active' : ''}" onclick="toggleWalletCard('${c.id}')">
+              <div class="pick-item-info">
+                <span class="pick-item-name">${c.name}</span>
+                <span class="pick-item-sub">${c.issuer} &bull; ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
+</body>
+</html>
+ + c.annualFee + '/yr'}</span>
+              </div>
+              <span style="font-size:0.85rem; font-weight:700; color:${isOwned ? 'var(--primary)' : 'var(--text-muted)'};">
+                ${isOwned ? 'âœ“ In Wallet' : '+ Add'}
+              </span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// Global exports
+window.toggleWalletCard = toggleWalletCard;
+window.renderWalletBadge = renderWalletBadge;
+window.renderWalletView = renderWalletView;
+
+/**
  * Card Finder Pro - Main Application Logic
- * Comprehensive Features:
- * - 3D Flip Cards & Holographic Sheen
- * - My Wallet & Checkout Swipe Guide
- * - Bank Intelligence Dossiers & Approval Rules
- * - SVG Donut Charts & Return on Spend (ROI)
- * - CSV Spreadsheet Export & Print View
+ * Integrates:
+ * - bank-data.js (14 Bank Profiles & Underwriting Rules)
+ * - cards-data.js (27 Credit Cards Database)
+ * - wallet.js (My Wallet & Checkout Swipe Guide)
  */
 
 // Application State
@@ -3759,7 +4314,6 @@ const state = {
   sortBy: "net", // "net" | "firstYear" | "feeAsc" | "name"
   onlyFavorites: false,
   favorites: new Set(JSON.parse(localStorage.getItem("card_finder_favs") || "[]")),
-  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '["citi-double-cash", "capital-one-savor"]')),
   comparedCards: new Set(),
   spending: {
     dining: 350,
@@ -3778,7 +4332,7 @@ const CATEGORIES = [
   { key: "other", label: "All Other Spending", icon: "ðŸ›ï¸", color: "#8b5cf6" }
 ];
 
-// Helper: Calculate net earnings for a single card
+// Calculate rewards and net value for a single card
 function calculateCardValue(card, spending, options = {}) {
   const useCredits = options.useCredits ?? state.useCredits;
   const pointMultiplier = card.type === "travel" ? (options.pointMultiplier ?? state.pointMultiplier) : 1.0;
@@ -3786,9 +4340,8 @@ function calculateCardValue(card, spending, options = {}) {
   let breakdown = {};
   let totalEarned = 0;
 
-  // Custom calculation for special cards
   if (card.id === "citi-custom-cash") {
-    // 5% on top spend category up to $500/mo ($6,000/yr), 1% on excess & all others
+    // 5% on highest category up to $500/mo ($6,000/yr), 1% on excess and others
     const spendCats = ["dining", "groceries", "gas", "travel"];
     let topCat = "groceries";
     let maxSpend = -1;
@@ -3844,7 +4397,7 @@ function calculateCardValue(card, spending, options = {}) {
   // First year match for Discover cards
   let bonus = card.bonusValue;
   if (card.id.includes("discover")) {
-    bonus = totalEarned; // Discover matches 100% of cash back year 1
+    bonus = totalEarned;
   }
 
   const effectiveFee = useCredits 
@@ -3919,25 +4472,18 @@ function findOptimalCombo(cards, spending) {
 
 // Filter and Sort Cards with Deep Bank & Ecosystem Search
 function getFilteredAndSortedCards() {
-  return CARDS_DATABASE
+  const db = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE : [];
+
+  return db
     .filter(card => {
-      // Credit Tier
       if (card.tier > state.tier) return false;
-      // Max Fee
       if (card.annualFee > state.maxFee) return false;
-      // Reward Type
       if (state.type !== "all" && card.type !== state.type) return false;
-      // Bank / Issuer Filter
       if (state.issuer !== "all" && card.issuer !== state.issuer) return false;
-      // Card Network
       if (state.network !== "all" && card.network !== state.network) return false;
-      // Foreign Transaction Fee
       if (state.noFtf && card.foreignFee) return false;
-      // Lounge Access
       if (state.hasLounge && !card.hasLounge) return false;
-      // Intro APR
       if (state.hasIntroApr && !card.hasIntroApr) return false;
-      // Favorites Only
       if (state.onlyFavorites && !state.favorites.has(card.id)) return false;
 
       // Deep Multi-Field Search (Card name, bank, ecosystem, transfer partners, underwriting rules, bureaus)
@@ -4013,7 +4559,7 @@ function initViewSwitcher() {
     if (walletView) walletView.hidden = (view !== "wallet");
     if (bankHubView) bankHubView.hidden = (view !== "banks");
 
-    if (view === "wallet") {
+    if (view === "wallet" && typeof renderWalletView === "function") {
       renderWalletView();
     } else if (view === "banks") {
       renderBankHubView();
@@ -4023,28 +4569,6 @@ function initViewSwitcher() {
   tabFinder.addEventListener("click", () => setView("finder"));
   tabWallet.addEventListener("click", () => setView("wallet"));
   if (tabBanks) tabBanks.addEventListener("click", () => setView("banks"));
-}
-
-// Wallet Card Toggle
-function toggleWalletCard(cardId) {
-  if (state.myWallet.has(cardId)) {
-    state.myWallet.delete(cardId);
-  } else {
-    state.myWallet.add(cardId);
-  }
-  localStorage.setItem("card_finder_my_wallet", JSON.stringify(Array.from(state.myWallet)));
-  renderWalletBadge();
-  if (state.activeView === "wallet") {
-    renderWalletView();
-  }
-  renderCardResults();
-}
-
-function renderWalletBadge() {
-  const badge = document.getElementById("walletBadge");
-  if (badge) {
-    badge.textContent = state.myWallet.size;
-  }
 }
 
 // Initialize Theme
@@ -4077,7 +4601,7 @@ function updateThemeIcon(theme) {
 // Preset Spending Handlers
 function initPresetButtons() {
   const container = document.getElementById("presetButtons");
-  if (!container) return;
+  if (!container || typeof SPEND_PRESETS === "undefined") return;
 
   container.innerHTML = Object.entries(SPEND_PRESETS).map(([key, p]) => `
     <button class="preset-pill" data-preset="${key}" title="${p.desc}">
@@ -4173,7 +4697,6 @@ function initFilterControls() {
     });
   }
 
-  // Issuer/Bank dropdown
   const issuerSelect = document.getElementById("issuerSelect");
   if (issuerSelect) {
     issuerSelect.value = state.issuer;
@@ -4433,7 +4956,7 @@ function flipCard(event, cardId) {
   }
 }
 
-// Open Bank Intelligence & Rules Modal
+// Open Bank Intelligence & Rules Modal (Uses bank-data.js)
 function openBankModal(issuerName) {
   const bank = (typeof BANK_PROFILES !== "undefined" && BANK_PROFILES[issuerName]) ? BANK_PROFILES[issuerName] : null;
   if (!bank) return;
@@ -4442,7 +4965,7 @@ function openBankModal(issuerName) {
   const content = document.getElementById("bankModalContent");
   if (!modal || !content) return;
 
-  const bankCards = CARDS_DATABASE.filter(c => c.issuer === issuerName);
+  const bankCards = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.filter(c => c.issuer === issuerName) : [];
 
   content.innerHTML = `
     <div class="bank-modal-header" style="background: ${bank.logoColor || '#1e3a8a'}">
@@ -4464,12 +4987,12 @@ function openBankModal(issuerName) {
       <div style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
           <div>
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--primary); display:block;">Primary Rewards Ecosystem</span>
+            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--primary); display:block;">Primary Rewards Currency</span>
             <strong style="font-size:1.15rem; color:var(--text-main);">${bank.rewardsEcosystem}</strong>
           </div>
           <div>
             <span class="preapproval-status-tag ${bank.hasPreApproval ? '' : 'unavailable'}">
-              ${bank.hasPreApproval ? 'âœ“ Soft-Pull Pre-Approval Tool Available' : 'No Official Soft-Pull Tool'}
+              ${bank.hasPreApproval ? 'âœ“ Soft-Pull Pre-Approval Tool' : 'No Official Soft-Pull Tool'}
             </span>
           </div>
         </div>
@@ -4520,7 +5043,7 @@ function openBankModal(issuerName) {
                 <div>
                   <div class="partner-name">
                     <span>${p.name}</span>
-                    <span class="partner-tag ${p.type.toLowerCase().includes('airline') ? 'airline' : p.type.toLowerCase().includes('hotel') ? 'hotel' : 'cash'}">${p.type}</span>
+                    <span class="partner-tag ${p.type.toLowerCase().includes('airline') ? 'airline' : p.type.toLowerCase().includes('hotel') ? 'hotel' : p.type.toLowerCase().includes('invest') ? 'cash' : 'cash'}">${p.type}</span>
                   </div>
                   <span class="partner-note">${p.valueNote}</span>
                 </div>
@@ -4583,7 +5106,7 @@ function renderBankHubView() {
 
     <div class="bank-hub-grid">
       ${Object.entries(BANK_PROFILES).map(([key, bank]) => {
-        const count = CARDS_DATABASE.filter(c => c.issuer === key).length;
+        const count = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.filter(c => c.issuer === key).length : 0;
         const topRule = bank.underwritingRules[0] || {};
         return `
           <div class="bank-hub-card" onclick="openBankModal('${key}')">
@@ -4629,8 +5152,9 @@ function renderApp() {
   renderCardResults();
   renderComboRecommendation();
   renderCompareDrawer();
-  renderWalletBadge();
-  if (state.activeView === "wallet") {
+  if (typeof renderWalletBadge === "function") renderWalletBadge();
+
+  if (state.activeView === "wallet" && typeof renderWalletView === "function") {
     renderWalletView();
   } else if (state.activeView === "banks") {
     renderBankHubView();
@@ -4651,7 +5175,7 @@ function renderSpendSummary() {
 // Render Optimal 2-Card Combo Section
 function renderComboRecommendation() {
   const comboContainer = document.getElementById("comboSection");
-  if (!comboContainer) return;
+  if (!comboContainer || typeof CARDS_DATABASE === "undefined") return;
 
   const combo = findOptimalCombo(CARDS_DATABASE, state.spending);
   if (!combo) {
@@ -4659,7 +5183,7 @@ function renderComboRecommendation() {
     return;
   }
 
-  const { cardA, cardB, net, combinedEarned, assignment } = combo;
+  const { cardA, cardB, net, assignment } = combo;
 
   const filtered = getFilteredAndSortedCards();
   const topSingleNet = filtered.length > 0 ? filtered[0].ongoingNet : 0;
@@ -4678,13 +5202,13 @@ function renderComboRecommendation() {
           <div class="mini-card-preview" style="background:${cardA.cardColor}">
             <div class="mini-card-issuer">${cardA.issuer}</div>
             <div class="mini-card-name">${cardA.name}</div>
-            <div class="mini-card-role">Primary Spend</div>
+            <div class="mini-card-role">Primary Multiplier</div>
           </div>
           <div class="combo-plus">+</div>
           <div class="mini-card-preview" style="background:${cardB.cardColor}">
             <div class="mini-card-issuer">${cardB.issuer}</div>
             <div class="mini-card-name">${cardB.name}</div>
-            <div class="mini-card-role">Catch-All</div>
+            <div class="mini-card-role">Flat Catch-All</div>
           </div>
         </div>
 
@@ -4732,10 +5256,10 @@ function renderCardResults() {
   if (emptyEl) emptyEl.hidden = true;
 
   if (gridEl) {
-    gridEl.innerHTML = cards.map(({ card, totalEarned, effectiveFee, ongoingNet, firstYearNet, breakdown, bonus, roiPct }, idx) => {
+    gridEl.innerHTML = cards.map(({ card, totalEarned, ongoingNet, firstYearNet, breakdown, bonus, roiPct }, idx) => {
       const isFav = state.favorites.has(card.id);
       const isCompared = state.comparedCards.has(card.id);
-      const inWallet = state.myWallet.has(card.id);
+      const inWallet = (window.walletState && window.walletState.myWallet) ? window.walletState.myWallet.has(card.id) : false;
       const displayValue = state.valueMode === "ongoing" ? Math.round(ongoingNet) : Math.round(firstYearNet);
       const valueLabel = state.valueMode === "ongoing" ? "net / year" : "1st year total";
 
@@ -4969,239 +5493,9 @@ function generateDonutChartSvg(breakdown, totalEarned, totalAnnualSpend) {
   `;
 }
 
-// Render "My Wallet & What-to-Swipe Guide"
-function renderWalletView() {
-  const container = document.getElementById("walletView");
-  if (!container) return;
-
-  const ownedCards = Array.from(state.myWallet).map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
-
-  if (ownedCards.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <h3>ðŸ’¼ Your Wallet is Empty</h3>
-        <p>Select cards you currently own below to unlock your custom "What-to-Swipe" cheat sheet and see if you're leaving money on the table!</p>
-        <div class="wallet-picker-grid" style="max-width:800px; margin:24px auto 0;">
-          ${CARDS_DATABASE.map(c => `
-            <div class="wallet-pick-item" onclick="toggleWalletCard('${c.id}')">
-              <div class="pick-item-info">
-                <span class="pick-item-name">${c.name}</span>
-                <span class="pick-item-sub">${c.issuer} Â· ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
-</body>
-</html>
- + c.annualFee + '/yr'}</span>
-              </div>
-              <span class="btn-primary" style="padding:4px 10px; font-size:0.75rem;">+ Add</span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  // Calculate current wallet rewards per category
-  let currentWalletTotalEarned = 0;
-  let currentWalletTotalFees = 0;
-  let swipeGuide = {};
-
-  CATEGORIES.forEach(({ key }) => {
-    let bestOwnedRate = 0;
-    let bestOwnedCard = ownedCards[0];
-
-    ownedCards.forEach(c => {
-      const rate = c.rewards[key] || 1.0;
-      if (rate > bestOwnedRate) {
-        bestOwnedRate = rate;
-        bestOwnedCard = c;
-      }
-    });
-
-    const monthly = state.spending[key];
-    const dollars = monthly * 12 * (bestOwnedRate / 100);
-    currentWalletTotalEarned += dollars;
-
-    // Find best potential card in whole database
-    let bestCatalogRate = 0;
-    let bestCatalogCard = null;
-    CARDS_DATABASE.forEach(c => {
-      const rate = c.rewards[key] || 1.0;
-      if (rate > bestCatalogRate) {
-        bestCatalogRate = rate;
-        bestCatalogCard = c;
-      }
-    });
-
-    swipeGuide[key] = {
-      card: bestOwnedCard,
-      rate: bestOwnedRate,
-      dollars,
-      upgrade: (bestCatalogRate > bestOwnedRate) ? { card: bestCatalogCard, rate: bestCatalogRate } : null
-    };
-  });
-
-  ownedCards.forEach(c => {
-    const fee = state.useCredits ? Math.max(0, c.annualFee - (c.annualCredits || 0)) : c.annualFee;
-    currentWalletTotalFees += fee;
-  });
-
-  const currentWalletNet = currentWalletTotalEarned - currentWalletTotalFees;
-
-  const optimalCombo = findOptimalCombo(CARDS_DATABASE, state.spending);
-  const potentialNet = optimalCombo ? optimalCombo.net : currentWalletNet;
-  const missedAmount = Math.max(0, Math.round(potentialNet - currentWalletNet));
-
-  container.innerHTML = `
-    <!-- Wallet KPI Summary Hero -->
-    <div class="wallet-dashboard-hero">
-      <div>
-        <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:4px;">ðŸ’¼ My Wallet & Rewards Optimizer</h2>
-        <p style="font-size:0.85rem; color:var(--text-muted);">
-          You have <strong>${ownedCards.length} card${ownedCards.length === 1 ? '' : 's'}</strong> in your active wallet.
-        </p>
-      </div>
-      <div class="wallet-summary-kpis">
-        <div class="kpi-block">
-          <span class="kpi-lbl">Current Annual Rewards</span>
-          <span class="kpi-val highlight">${Math.round(currentWalletTotalEarned).toLocaleString()}/yr</span>
-        </div>
-        <div class="kpi-block">
-          <span class="kpi-lbl">Total Annual Fees</span>
-          <span class="kpi-val">${currentWalletTotalFees}/yr</span>
-        </div>
-        <div class="kpi-block">
-          <span class="kpi-lbl">Net Take-Home Value</span>
-          <span class="kpi-val positive">${Math.round(currentWalletNet).toLocaleString()}/yr</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Missed Rewards Alert if user is leaving money on the table -->
-    ${missedAmount > 50 ? `
-      <div class="missed-rewards-banner">
-        <div class="missed-alert-text">
-          <h4>âš ï¸ You're Leaving Cash On The Table!</h4>
-          <p>By upgrading or adding the recommended card to your wallet, you could earn an additional <strong>+${missedAmount.toLocaleString()}</strong> every single year on your current spending.</p>
-        </div>
-        <div class="missed-alert-badge">
-          +${missedAmount.toLocaleString()} / yr Potential
-        </div>
-      </div>
-    ` : `
-      <div class="missed-rewards-banner" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08);">
-        <div class="missed-alert-text">
-          <h4 style="color:var(--accent-green);">ðŸŽ‰ Excellent Wallet Setup!</h4>
-          <p>Your current card combination is already extracting near-peak value for your spending habits!</p>
-        </div>
-      </div>
-    `}
-
-    <!-- Swipe Guide Cheat Sheet -->
-    <div class="swipe-guide-card">
-      <div class="swipe-guide-header">
-        <h3>ðŸ’³ What to Swipe: Instant Checkout Cheat Sheet</h3>
-        <p style="font-size:0.85rem; color:var(--text-muted);">Always pull out this card when paying in these categories to guarantee maximum cash back or points.</p>
-      </div>
-
-      <div class="swipe-grid">
-        ${CATEGORIES.map(c => {
-          const guide = swipeGuide[c.key];
-          return `
-            <div class="swipe-item">
-              <div class="swipe-item-top">
-                <span class="swipe-cat-icon">${c.icon}</span>
-                <div class="swipe-cat-info">
-                  <h4>${c.label}</h4>
-                  <span>Monthly spend: ${state.spending[c.key]}</span>
-                </div>
-              </div>
-
-              <div class="swipe-recommendation">
-                <span class="swipe-rec-lbl">Swipe This Card:</span>
-                <span class="swipe-rec-card">${guide.card.name}</span>
-                <span class="swipe-rec-rate">${guide.rate}% Back &bull; ${Math.round(guide.dollars)}/yr</span>
-              </div>
-
-              ${guide.upgrade ? `
-                <div style="font-size:0.72rem; color:var(--text-muted); background:var(--bg-surface); padding:6px 10px; border-radius:var(--radius-sm); border:1px dashed var(--border-color);">
-                  <strong style="color:var(--accent-amber);">ðŸ’¡ Upgrade Tip:</strong> ${guide.upgrade.card.name.split(' ')[0]} gets <strong>${guide.upgrade.rate}%</strong>
-                </div>
-              ` : `
-                <div style="font-size:0.72rem; color:var(--accent-green); font-weight:700;">
-                  âœ“ Maximized for this category!
-                </div>
-              `}
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-
-    <!-- Interactive Card Selector / Manage My Wallet -->
-    <div class="wallet-card-selector">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3>Manage Cards in Your Wallet</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted);">Click any card to add or remove it from your active wallet:</p>
-        </div>
-        <button onclick="state.myWallet.clear(); localStorage.removeItem('card_finder_my_wallet'); renderApp();" class="btn-secondary" style="font-size:0.75rem;">Clear All</button>
-      </div>
-
-      <div class="wallet-picker-grid">
-        ${CARDS_DATABASE.map(c => {
-          const isOwned = state.myWallet.has(c.id);
-          return `
-            <div class="wallet-pick-item ${isOwned ? 'active' : ''}" onclick="toggleWalletCard('${c.id}')">
-              <div class="pick-item-info">
-                <span class="pick-item-name">${c.name}</span>
-                <span class="pick-item-sub">${c.issuer} &bull; ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
-</body>
-</html>
- + c.annualFee + '/yr'}</span>
-              </div>
-              <span style="font-size:0.85rem; font-weight:700; color:${isOwned ? 'var(--primary)' : 'var(--text-muted)'};">
-                ${isOwned ? 'âœ“ In Wallet' : '+ Add'}
-              </span>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    </div>
-  `;
-}
-
-// Card Detail Modal Handlers
-function initModals() {
-  const detailModal = document.getElementById("cardDetailModal");
-  const compareModal = document.getElementById("comparisonModal");
-  const bankModal = document.getElementById("bankModal");
-
-  document.querySelectorAll(".modal-close-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      if (detailModal) detailModal.classList.remove("open");
-      if (compareModal) compareModal.classList.remove("open");
-      if (bankModal) bankModal.classList.remove("open");
-    });
-  });
-
-  window.addEventListener("click", (e) => {
-    if (e.target === detailModal) detailModal.classList.remove("open");
-    if (e.target === compareModal) compareModal.classList.remove("open");
-    if (e.target === bankModal) bankModal.classList.remove("open");
-  });
-
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (detailModal) detailModal.classList.remove("open");
-      if (compareModal) compareModal.classList.remove("open");
-      if (bankModal) bankModal.classList.remove("open");
-    }
-  });
-}
-
-// Open Single Card Details Modal
+// Single Card Details Modal with Clean Non-Duplicated Bank Integration
 function openCardModal(cardId) {
-  const card = CARDS_DATABASE.find(c => c.id === cardId);
+  const card = (typeof CARDS_DATABASE !== "undefined") ? CARDS_DATABASE.find(c => c.id === cardId) : null;
   if (!card) return;
 
   const val = calculateCardValue(card, state.spending);
@@ -5244,19 +5538,19 @@ function openCardModal(cardId) {
         </div>
       </div>
 
-      <!-- Bank Intel Preview Section -->
+      <!-- Bank Intelligence & Underwriting Overview (Unified & Single Source of Truth) -->
       ${bankInfo ? `
-        <div class="modal-section" style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:14px 18px;">
+        <div class="modal-section" style="background:var(--bg-surface-alt); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
             <div>
               <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--text-muted); display:block;">Issuing Bank & Rules</span>
               <strong style="font-size:1.05rem; color:var(--text-main);">ðŸ›ï¸ ${bankInfo.name}</strong>
               <div style="font-size:0.78rem; color:var(--text-muted); margin-top:2px;">
-                Bureau: ${bankInfo.bureauPulled.split(' ')[0]} &bull; Top Rule: ${bankInfo.underwritingRules[0].title}
+                Bureau: <strong>${bankInfo.bureauPulled.split(' ')[0]}</strong> &bull; Key Rule: <strong style="color:var(--accent-rose);">${bankInfo.underwritingRules[0].title}</strong>
               </div>
             </div>
             <button class="btn-primary" style="font-size:0.76rem; padding:6px 14px;" onclick="openBankModal('${card.issuer}')">
-              View ${card.issuer} Rules & Partners &rarr;
+              View Complete ${card.issuer} Rules & Partners &rarr;
             </button>
           </div>
         </div>
@@ -5291,27 +5585,46 @@ function openCardModal(cardId) {
           ${card.perks.map(p => `<li><span class="check-icon">âœ“</span> <span>${p}</span></li>`).join('')}
         </ul>
       </div>
-
-      <!-- Quick Tips -->
-      <div class="modal-section tips-box">
-        <h4>ðŸ’¡ Application Pro-Tip</h4>
-        <p>${card.issuer === 'Chase' ? 'Chase cards are subject to the 5/24 rule: You will typically not be approved if you have opened 5 or more personal cards across any bank in the past 24 months.' : 
-             card.issuer === 'American Express' ? 'Amex has a once-in-a-lifetime rule for welcome bonuses. Check if you are eligible for the welcome offer via their Apply with Confidence tool.' :
-             card.issuer === 'Capital One' ? 'Capital One generally pulls all three credit bureaus and limits applicants to at most 1 card every 6 months.' :
-             card.issuer === 'Bank of America' ? 'Bank of America enforces the 2/3/4 rule and limits approvals to 7 new cards in 12 months for depositors (or 3 in 12 months without deposits).' :
-             'Ensure your credit score meets or exceeds the recommended tier before applying for the best approval odds.'}</p>
-      </div>
     </div>
   `;
 
   modal.classList.add("open");
 }
 
+// Modals management
+function initModals() {
+  const detailModal = document.getElementById("cardDetailModal");
+  const compareModal = document.getElementById("comparisonModal");
+  const bankModal = document.getElementById("bankModal");
+
+  document.querySelectorAll(".modal-close-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === detailModal) detailModal.classList.remove("open");
+    if (e.target === compareModal) compareModal.classList.remove("open");
+    if (e.target === bankModal) bankModal.classList.remove("open");
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+      if (bankModal) bankModal.classList.remove("open");
+    }
+  });
+}
+
 // Open Multi-Card Comparison Matrix
 function openComparisonModal() {
   const modal = document.getElementById("comparisonModal");
   const tableContainer = document.getElementById("comparisonTableContainer");
-  if (!modal || !tableContainer) return;
+  if (!modal || !tableContainer || typeof CARDS_DATABASE === "undefined") return;
 
   const cards = Array.from(state.comparedCards).map(id => {
     const card = CARDS_DATABASE.find(c => c.id === id);
@@ -5543,7 +5856,6 @@ function loadStateFromUrl() {
 // Global exports for inline HTML event handlers
 window.toggleCompare = toggleCompare;
 window.toggleFavorite = toggleFavorite;
-window.toggleWalletCard = toggleWalletCard;
 window.flipCard = flipCard;
 window.openCardModal = openCardModal;
 window.openBankModal = openBankModal;
