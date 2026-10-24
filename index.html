@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Card Finder Pro | Smart Credit Card Optimizer & Rewards Calculator</title>
+  <meta name="description" content="Calculate and rank the best credit cards based on your actual spending habits, signup bonuses, and annual fee credits.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+            <line x1="6" y1="15" x2="8" y2="15"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Card Finder Pro</h1>
+          <p>Personalized Rewards Calculator & Card Maximizer</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs: Finder vs My Wallet -->
+      <nav class="view-tabs" role="tablist">
+        <button class="view-tab-btn active" id="tabFinder" role="tab" data-view="finder">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Card Finder
+        </button>
+        <button class="view-tab-btn" id="tabWallet" role="tab" data-view="wallet">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          My Wallet & Swipe Guide
+          <span id="walletBadge" class="wallet-badge-count">0</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="downloadCsvBtn" class="btn-header" title="Download spreadsheet of all card comparisons">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          CSV
+        </button>
+        <button id="shareBtn" class="btn-header" title="Share your custom spend setup">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+          Share
+        </button>
+        <button id="printBtn" class="btn-header" title="Print or save as PDF">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Export
+        </button>
+        <button id="themeToggle" class="btn-header btn-icon-only" aria-label="Toggle Dark/Light Mode">
+          <!-- Populated by JS -->
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+
+    <!-- Left Column: Spending & Filters Sidebar -->
+    <aside class="sidebar">
+
+      <!-- Spending Presets Section -->
+      <section class="sidebar-block">
+        <div class="sidebar-section-title">
+          <span>1. Monthly Spending Profile</span>
+          <span class="section-badge">Presets</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+          Choose a lifestyle preset or dial in your exact monthly spend:
+        </p>
+        <div id="presetButtons" class="presets-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Spend Inputs with sliders -->
+        <div id="spendingInputs">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Live Monthly / Annual Summary -->
+        <div class="spend-summary-box">
+          <div class="spend-summary-item">
+            <span class="summary-lbl">Total / Month</span>
+            <span class="summary-val" id="totalMonthlySpend">$0</span>
+          </div>
+          <div class="spend-summary-item">
+            <span class="summary-lbl">Total / Year</span>
+            <span class="summary-val" id="totalAnnualSpend">$0</span>
+          </div>
+        </div>
+      </section>
+
+      <hr style="border:0; border-top:1px solid var(--border-color);">
+
+      <!-- Card Filters Section -->
+      <section class="sidebar-block">
+        <div class="sidebar-section-title">
+          <span>2. Filter Cards</span>
+          <button id="resetFiltersBtn" class="details-btn" style="font-size:0.75rem;">Reset All</button>
+        </div>
+
+        <!-- Credit Level -->
+        <div class="filter-group">
+          <label for="tier">Your Credit Score Tier</label>
+          <select id="tier">
+            <option value="0">🌱 Building / Secured (300 - 620)</option>
+            <option value="1">📈 Fair / Rebuilding (620 - 689)</option>
+            <option value="2" selected>⭐ Good (690 - 749)</option>
+            <option value="3">🏆 Excellent (750+)</option>
+          </select>
+        </div>
+
+        <!-- Reward Type Tabs -->
+        <div class="filter-group">
+          <label>Reward Type</label>
+          <div class="tab-group">
+            <button class="tab-btn active" data-type-tab="all">All</button>
+            <button class="tab-btn" data-type-tab="cashback">Cash Back</button>
+            <button class="tab-btn" data-type-tab="travel">Travel</button>
+          </div>
+        </div>
+
+        <!-- Max Annual Fee Slider -->
+        <div class="filter-group">
+          <div class="slider-group-header">
+            <label for="maxFee" style="margin-bottom:0;">Max Annual Fee</label>
+            <span id="maxFeeVal" class="slider-val-tag">$700</span>
+          </div>
+          <input type="range" id="maxFee" min="0" max="700" step="25" value="700" class="spend-slider">
+        </div>
+
+        <!-- Card Network -->
+        <div class="filter-group">
+          <label for="networkSelect">Payment Network</label>
+          <select id="networkSelect">
+            <option value="all">Any Network (Visa, Mastercard, Amex, Discover)</option>
+            <option value="Visa">Visa</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="Amex">American Express</option>
+            <option value="Discover">Discover</option>
+          </select>
+        </div>
+
+        <!-- Travel Point Valuation -->
+        <div class="filter-group">
+          <div class="slider-group-header">
+            <label for="pointMultiplier" style="margin-bottom:0;">Travel Point Value</label>
+            <span id="pointVal" class="slider-val-tag">1.25¢</span>
+          </div>
+          <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">
+            1.00¢ = statement cash rate; 1.25¢ - 1.80¢ = airline/hotel transfer partners.
+          </p>
+          <input type="range" id="pointMultiplier" min="1.0" max="1.8" step="0.05" value="1.25" class="spend-slider">
+        </div>
+
+        <!-- Feature Toggles -->
+        <div style="margin-top: 14px;">
+          <label class="checkbox-item">
+            <input type="checkbox" id="noFtf">
+            <span>✈️ No Foreign Transaction Fee</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="hasLounge">
+            <span>🍸 Airport Lounge Access Included</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="hasIntroApr">
+            <span>⏳ 0% Intro APR Offer</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="useCredits" checked>
+            <span>💳 Offset Fees with Annual Statement Credits</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="onlyFavorites">
+            <span>❤️ Show Saved Favorites Only</span>
+          </label>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- Right Column: Results & Combos -->
+    <div class="content-area">
+
+      <!-- View 1: Card Finder & Catalog -->
+      <div id="finderView">
+        <!-- Optimal 2-Card Combo Recommendation Banner -->
+        <section id="comboSection">
+          <!-- Rendered by JS -->
+        </section>
+
+        <!-- Results Toolbar (Search, Value Mode, Sorting) -->
+        <section class="toolbar-bar">
+          <!-- Search bar -->
+          <div class="toolbar-search">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="searchCards" placeholder="Search cards by name, bank, or perk...">
+          </div>
+
+          <div class="toolbar-controls">
+            <!-- Ongoing vs 1st Year Switcher -->
+            <div class="value-mode-toggle">
+              <button class="mode-btn active" data-value-mode="ongoing" title="Rewards minus annual fee on an ongoing yearly basis">
+                Ongoing Net / Year
+              </button>
+              <button class="mode-btn" data-value-mode="firstYear" title="Includes signup welcome bonus and first-year fee waivers">
+                First Year (w/ Bonus)
+              </button>
+            </div>
+
+            <!-- Sort Select -->
+            <div class="sort-select-wrap">
+              <label for="sortBy">Sort:</label>
+              <select id="sortBy">
+                <option value="net">Highest Net Value</option>
+                <option value="firstYear">Highest 1st Year Value</option>
+                <option value="feeAsc">Lowest Annual Fee</option>
+                <option value="name">Card Name (A-Z)</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Results Count Status -->
+        <div class="results-meta-bar" style="margin-top:16px; margin-bottom:12px;">
+          <span id="resultsCount">Loading cards...</span>
+          <span style="font-size:0.75rem; color:var(--text-dim);">Rates updated for 2025/2026</span>
+        </div>
+
+        <!-- Ranked Cards Grid -->
+        <section id="resultsGrid" class="cards-grid">
+          <!-- Dynamically populated cards -->
+        </section>
+
+        <!-- Empty State View -->
+        <div id="emptyState" class="empty-state" hidden>
+          <h3>No cards match your current filters</h3>
+          <p>Try increasing the max annual fee slider, adjusting your credit score tier, or resetting filters.</p>
+          <button onclick="resetAllFilters()" class="btn-primary" style="margin-top:14px;">Reset All Filters</button>
+        </div>
+      </div>
+
+      <!-- View 2: My Wallet & What-to-Swipe Guide -->
+      <div id="walletView" class="wallet-view-container" hidden>
+        <!-- Injected and managed by JS -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Sticky Comparison Floating Drawer (Visible when cards are checked) -->
+  <div id="compareDrawer" class="compare-drawer">
+    <div class="drawer-inner">
+      <div class="drawer-left">
+        <span class="drawer-title">Selected for Comparison (<span id="compareCount">0</span>/4):</span>
+        <div id="compareChips" class="compare-chips">
+          <!-- Card chips -->
+        </div>
+      </div>
+      <div class="drawer-actions">
+        <button id="clearCompareBtn" class="btn-secondary">Clear All</button>
+        <button id="openCompareModalBtn" class="btn-primary">View Side-by-Side Matrix &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Single Card Detail Modal -->
+  <div id="cardDetailModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div id="cardDetailContent">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Card Comparison Matrix Modal -->
+  <div id="comparisonModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container large-matrix">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div class="matrix-modal-header">
+        <h2 style="font-size:1.4rem; font-weight:800;">Side-by-Side Card Comparison</h2>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Comparing rewards, fees, perks, and calculated return on your spend.</p>
+      </div>
+      <div class="matrix-table-wrap" id="comparisonTableContainer">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

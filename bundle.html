@@ -1,0 +1,4628 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Card Finder Pro | Smart Credit Card Optimizer & Rewards Calculator</title>
+  <meta name="description" content="Calculate and rank the best credit cards based on your actual spending habits, signup bonuses, and annual fee credits.">
+  <style>
+/* ==========================================================================
+   Card Finder Pro - Modern Fintech Design System & Styles
+   ========================================================================== */
+
+:root {
+  /* Light Theme */
+  --bg-primary: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #f1f5f9;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --border-focus: #0284c7;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+  
+  --primary: #0284c7;
+  --primary-hover: #0369a1;
+  --primary-light: #e0f2fe;
+  --accent-green: #10b981;
+  --accent-green-bg: #ecfdf5;
+  --accent-amber: #f59e0b;
+  --accent-amber-bg: #fffbeb;
+  --accent-rose: #f43f5e;
+  --accent-rose-bg: #fff1f2;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.08);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.12), 0 8px 10px -6px rgb(0 0 0 / 0.06);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #090d16;
+  --bg-surface: #111827;
+  --bg-surface-alt: #1e293b;
+  --bg-card: #151e2e;
+  --border-color: #243247;
+  --border-focus: #38bdf8;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --primary: #38bdf8;
+  --primary-hover: #7dd3fc;
+  --primary-light: #082f49;
+  --accent-green: #34d399;
+  --accent-green-bg: #064e3b;
+  --accent-amber: #fbbf24;
+  --accent-amber-bg: #451a03;
+  --accent-rose: #fb7185;
+  --accent-rose-bg: #4c0519;
+
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.6);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   Header & Navbar
+   ========================================================================== */
+.site-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(12px);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #0284c7, #6366f1);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(2, 132, 199, 0.35);
+}
+
+.brand-text h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--text-main), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.brand-text p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: var(--bg-surface-alt);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-header:hover {
+  background: var(--border-color);
+  color: var(--primary);
+}
+
+.btn-icon-only {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Main Layout Structure
+   ========================================================================== */
+.main-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .main-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Sidebar: Spending & Filters
+   ========================================================================== */
+.sidebar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 86px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.sidebar-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.sidebar-section-title .section-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: var(--primary-light);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Preset Lifestyle Buttons */
+.presets-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.preset-pill {
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preset-pill:hover {
+  border-color: var(--primary);
+  color: var(--text-main);
+}
+
+.preset-pill.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* Spending inputs */
+.spend-field {
+  margin-bottom: 14px;
+}
+
+.spend-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.spend-field-header label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.spend-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 0.85rem;
+}
+
+.spend-input-wrap:focus-within {
+  border-color: var(--border-focus);
+}
+
+.currency-sym {
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+.spend-input-wrap input[type="number"] {
+  width: 65px;
+  border: 0;
+  background: transparent;
+  color: var(--text-main);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: right;
+  outline: none;
+}
+
+.per-mo {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-left: 2px;
+}
+
+.spend-slider {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+  height: 5px;
+}
+
+/* Spend Total Summary Box */
+.spend-summary-box {
+  background: linear-gradient(135deg, var(--bg-surface-alt), var(--bg-surface));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.spend-summary-item .summary-lbl {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: block;
+}
+
+.spend-summary-item .summary-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Filters Inputs */
+.filter-group {
+  margin-bottom: 14px;
+}
+
+.filter-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+select, input[type="text"] {
+  width: 100%;
+  padding: 8px 12px;
+  background: var(--bg-surface-alt);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+select:focus, input[type="text"]:focus {
+  border-color: var(--border-focus);
+}
+
+/* Reward Type Tab Selector */
+.tab-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--bg-surface-alt);
+  padding: 3px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  margin-bottom: 14px;
+}
+
+.tab-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 0;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tab-btn.active {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Checkboxes & Toggles */
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  cursor: pointer;
+  margin-bottom: 8px;
+  user-select: none;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.slider-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.slider-val-tag {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   Content Area & Top Maximizer Combo Banner
+   ========================================================================== */
+.content-area {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Combo Banner */
+.combo-card-banner {
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(99, 102, 241, 0.08) 100%);
+  border: 1px solid rgba(2, 132, 199, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.combo-header {
+  margin-bottom: 18px;
+}
+
+.combo-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.combo-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.combo-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.combo-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .combo-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.combo-cards-visual {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mini-card-preview {
+  width: 140px;
+  height: 86px;
+  border-radius: var(--radius-md);
+  padding: 10px;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mini-card-issuer {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.mini-card-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mini-card-role {
+  font-size: 0.62rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1px 6px;
+  border-radius: 999px;
+  align-self: flex-start;
+}
+
+.combo-plus {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.combo-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.combo-stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.stat-lbl {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 170px;
+}
+
+.stat-val {
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.stat-val.highlight {
+  color: var(--primary);
+}
+
+.stat-val.positive {
+  color: var(--accent-green);
+  font-size: 1.15rem;
+}
+
+.combo-strategy-guide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.route-pill {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Toolbar (Search, Mode, Sorting)
+   ========================================================================== */
+.toolbar-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  padding: 14px 18px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.toolbar-search {
+  flex: 1;
+  min-width: 220px;
+  position: relative;
+}
+
+.toolbar-search input {
+  padding-left: 36px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.toolbar-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Value Mode Selector */
+.value-mode-toggle {
+  display: flex;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 3px;
+}
+
+.mode-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.mode-btn.active {
+  background: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.sort-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.sort-select-wrap select {
+  width: auto;
+  padding: 6px 10px;
+}
+
+.results-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 0 4px;
+}
+
+/* ==========================================================================
+   Cards Grid
+   ========================================================================== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+.card-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.card-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-focus);
+}
+
+.card-item.top-ranked {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary), var(--shadow-md);
+}
+
+.rank-ribbon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+}
+
+/* Realistic Card Art Mockup Header */
+.card-art-mockup {
+  height: 120px;
+  padding: 14px 18px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  border-top: 3px solid #38bdf8;
+  user-select: none;
+}
+
+.card-art-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.card-art-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.9;
+}
+
+.contactless-icon {
+  opacity: 0.8;
+}
+
+.card-art-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-art-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.card-art-type {
+  font-size: 0.68rem;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Card Content Area */
+.card-content {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.card-header-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  line-height: 1.3;
+}
+
+.card-title:hover {
+  color: var(--primary);
+}
+
+.card-best-for {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.icon-action-btn {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--text-dim);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+.icon-action-btn:hover {
+  color: var(--accent-rose);
+}
+
+/* Card Value Box */
+.card-value-box {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+
+.value-amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1.1;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.value-amount.positive {
+  color: var(--accent-green);
+}
+
+.value-amount.negative {
+  color: var(--accent-rose);
+}
+
+.value-sub {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.value-formula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.credit-offset {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.bonus-offset {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Reward Rates Grid */
+.card-reward-rates {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  background: var(--bg-surface-alt);
+  border-radius: var(--radius-sm);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.rate-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.rate-num {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.rate-lbl {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+/* Top Earner Pill */
+.top-earner-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  background: rgba(2, 132, 199, 0.05);
+  border: 1px solid rgba(2, 132, 199, 0.15);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.earner-tag {
+  color: var(--text-muted);
+}
+
+.earner-val {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Feature Pills */
+.card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+}
+
+.pill.good {
+  background: var(--accent-green-bg);
+  color: var(--accent-green);
+  border-color: transparent;
+}
+
+.pill.warn {
+  background: var(--accent-rose-bg);
+  color: var(--accent-rose);
+  border-color: transparent;
+}
+
+.pill.fee {
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+}
+
+.pill.perk {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-color: transparent;
+}
+
+/* Sign-up Bonus Snippet */
+.card-bonus-snippet {
+  display: flex;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  background: var(--bg-surface-alt);
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.bonus-icon {
+  font-size: 1rem;
+}
+
+/* Card Actions Footer */
+.card-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+
+.compare-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.compare-checkbox-label input {
+  accent-color: var(--primary);
+  width: 15px;
+  height: 15px;
+}
+
+.details-btn {
+  background: transparent;
+  border: 0;
+  color: var(--primary);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: transform 0.15s ease;
+}
+
+.details-btn:hover {
+  text-decoration: underline;
+  transform: translateX(2px);
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: var(--bg-surface);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+}
+
+.empty-state h3 {
+  font-size: 1.2rem;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   Compare Drawer (Floating Sticky Bottom Bar)
+   ========================================================================== */
+.compare-drawer {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  box-shadow: var(--shadow-xl);
+  padding: 12px 24px;
+  z-index: 50;
+  transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(12px);
+}
+
+.compare-drawer.visible {
+  bottom: 0;
+}
+
+.drawer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.drawer-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.drawer-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.compare-chips {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.compare-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.chip-color-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.chip-remove {
+  border: 0;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.chip-remove:hover {
+  color: var(--accent-rose);
+}
+
+.drawer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Modals (Card Detail & Comparison Matrix)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  animation: modalScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-container.large-matrix {
+  max-width: 1100px;
+}
+
+@keyframes modalScale {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Modal Content Styling */
+.modal-card-header {
+  padding: 36px 28px 24px;
+  color: #fff;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.modal-card-badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.modal-badge {
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.modal-card-header h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.modal-card-sub {
+  font-size: 0.88rem;
+  opacity: 0.9;
+}
+
+.modal-card-body {
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.modal-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.modal-stat-card {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.modal-stat-card .lbl {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.modal-stat-card .val {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.modal-stat-card .val.highlight {
+  color: var(--primary);
+}
+
+.modal-stat-card .val.positive {
+  color: var(--accent-green);
+}
+
+/* Breakdown Progress Bars */
+.breakdown-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.bar-amt {
+  font-weight: 700;
+}
+
+.bar-track {
+  height: 8px;
+  background: var(--bg-surface-alt);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.modal-section h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-main);
+}
+
+.modal-section.highlight-box {
+  background: rgba(2, 132, 199, 0.06);
+  border: 1px solid rgba(2, 132, 199, 0.2);
+  padding: 16px;
+  border-radius: var(--radius-md);
+}
+
+.modal-section.credit-box {
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 16px;
+  border-radius: var(--radius-md);
+}
+
+.perks-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.perks-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+}
+
+.check-icon {
+  color: var(--accent-green);
+  font-weight: 800;
+}
+
+.tips-box {
+  background: var(--bg-surface-alt);
+  border-left: 4px solid var(--primary);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: 0.85rem;
+}
+
+.tips-box h4 {
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+/* Comparison Matrix Modal */
+.matrix-modal-header {
+  padding: 24px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.matrix-table-wrap {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.comparison-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.comparison-matrix th,
+.comparison-matrix td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.matrix-feature-col {
+  width: 220px;
+  font-weight: 700;
+  background: var(--bg-surface-alt);
+  position: sticky;
+  left: 0;
+  z-index: 5;
+}
+
+.matrix-card-thumb {
+  padding: 14px;
+  border-radius: var(--radius-md);
+  color: #fff;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.matrix-thumb-issuer {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+}
+
+.matrix-thumb-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.matrix-val.highlight {
+  color: var(--primary);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.matrix-val.positive {
+  color: var(--accent-green);
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.matrix-small {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Print Stylesheet
+   ========================================================================== */
+@media print {
+  .site-header,
+  .sidebar,
+  .toolbar-bar,
+  .compare-drawer,
+  .modal-overlay,
+  .card-footer-actions,
+  .card-quick-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .main-wrapper {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .card-item {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    margin-bottom: 16px;
+  }
+}
+
+
+/* ==========================================================================
+   New Features: View Switcher, 3D Cards, Holographic Sheen, My Wallet, Charts
+   ========================================================================== */
+
+/* Top View Switcher in Navbar */
+.view-tabs {
+  display: flex;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  gap: 4px;
+}
+
+.view-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-tab-btn:hover {
+  color: var(--text-main);
+}
+
+.view-tab-btn.active {
+  background: var(--bg-surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.wallet-badge-count {
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+/* 3D Card Animation & Holographic Sheen */
+.card-art-3d-wrapper {
+  perspective: 1200px;
+  height: 155px;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-art-3d-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.card-art-3d-inner.flipped {
+  transform: rotateY(180deg) !important;
+}
+
+.card-art-front,
+.card-art-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: 16px 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.card-art-back {
+  transform: rotateY(180deg);
+  background: #1e293b;
+  padding: 14px 18px;
+}
+
+.card-mag-stripe {
+  height: 32px;
+  background: #0f172a;
+  margin: -14px -18px 10px -18px;
+  width: calc(100% + 36px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.card-signature-strip {
+  background: #f1f5f9;
+  height: 24px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  color: #0f172a;
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.card-back-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+/* Holographic dynamic sheen */
+.card-holographic-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.15) 65%,
+    transparent 100%
+  );
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 0.3s ease;
+  z-index: 5;
+}
+
+.card-art-3d-wrapper:hover .card-holographic-sheen {
+  opacity: 1;
+}
+
+.flip-hint-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.15s ease;
+}
+
+.flip-hint-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Add to Wallet Button on Cards */
+.wallet-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.wallet-toggle-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.wallet-toggle-btn.in-wallet {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   Donut Charts & Visual ROI Gauge
+   ========================================================================== */
+.roi-visual-container {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-top: 6px;
+}
+
+.donut-chart-svg {
+  width: 130px;
+  height: 130px;
+  transform: rotate(-90deg);
+  border-radius: 50%;
+}
+
+.donut-segment {
+  fill: transparent;
+  stroke-width: 22;
+  transition: stroke-width 0.2s ease, stroke 0.2s ease;
+  cursor: pointer;
+}
+
+.donut-segment:hover {
+  stroke-width: 26;
+}
+
+.donut-center-group {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.donut-center-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  display: block;
+}
+
+.donut-center-lbl {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.donut-legend-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+}
+
+.donut-legend-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-main);
+}
+
+.donut-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.donut-legend-right {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Card ROI Badge */
+.roi-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-green);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   "My Wallet" & Swipe Guide View
+   ========================================================================== */
+.wallet-view-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wallet-dashboard-hero {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-alt));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .wallet-dashboard-hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wallet-summary-kpis {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.kpi-block .kpi-lbl {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.kpi-block .kpi-val {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+}
+
+.kpi-block .kpi-val.highlight {
+  color: var(--primary);
+}
+
+/* Swipe Guide Cheat Sheet Table */
+.swipe-guide-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.swipe-guide-header {
+  margin-bottom: 18px;
+}
+
+.swipe-guide-header h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.swipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.swipe-item {
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.swipe-item-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.swipe-cat-icon {
+  font-size: 1.6rem;
+}
+
+.swipe-cat-info h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.swipe-cat-info span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.swipe-recommendation {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.swipe-rec-lbl {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  display: block;
+}
+
+.swipe-rec-card {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.swipe-rec-rate {
+  font-size: 0.8rem;
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+/* Missed Rewards Alert */
+.missed-rewards-banner {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.missed-alert-text h4 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--accent-rose);
+  margin-bottom: 2px;
+}
+
+.missed-alert-text p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.missed-alert-badge {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--accent-rose);
+  background: var(--bg-surface);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 6px 16px;
+  border-radius: var(--radius-md);
+  white-space: nowrap;
+}
+
+/* Wallet Card Selector Chips */
+.wallet-card-selector {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.wallet-card-selector h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.wallet-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.wallet-pick-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wallet-pick-item:hover {
+  border-color: var(--primary);
+}
+
+.wallet-pick-item.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.pick-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pick-item-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pick-item-sub {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="brand-wrapper">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+            <line x1="6" y1="15" x2="8" y2="15"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>Card Finder Pro</h1>
+          <p>Personalized Rewards Calculator & Card Maximizer</p>
+        </div>
+      </div>
+
+      <!-- Main Navigation Tabs: Finder vs My Wallet -->
+      <nav class="view-tabs" role="tablist">
+        <button class="view-tab-btn active" id="tabFinder" role="tab" data-view="finder">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Card Finder
+        </button>
+        <button class="view-tab-btn" id="tabWallet" role="tab" data-view="wallet">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          My Wallet & Swipe Guide
+          <span id="walletBadge" class="wallet-badge-count">0</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="downloadCsvBtn" class="btn-header" title="Download spreadsheet of all card comparisons">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          CSV
+        </button>
+        <button id="shareBtn" class="btn-header" title="Share your custom spend setup">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+          </svg>
+          Share
+        </button>
+        <button id="printBtn" class="btn-header" title="Print or save as PDF">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Export
+        </button>
+        <button id="themeToggle" class="btn-header btn-icon-only" aria-label="Toggle Dark/Light Mode">
+          <!-- Populated by JS -->
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+
+    <!-- Left Column: Spending & Filters Sidebar -->
+    <aside class="sidebar">
+
+      <!-- Spending Presets Section -->
+      <section class="sidebar-block">
+        <div class="sidebar-section-title">
+          <span>1. Monthly Spending Profile</span>
+          <span class="section-badge">Presets</span>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+          Choose a lifestyle preset or dial in your exact monthly spend:
+        </p>
+        <div id="presetButtons" class="presets-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Spend Inputs with sliders -->
+        <div id="spendingInputs">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Live Monthly / Annual Summary -->
+        <div class="spend-summary-box">
+          <div class="spend-summary-item">
+            <span class="summary-lbl">Total / Month</span>
+            <span class="summary-val" id="totalMonthlySpend">$0</span>
+          </div>
+          <div class="spend-summary-item">
+            <span class="summary-lbl">Total / Year</span>
+            <span class="summary-val" id="totalAnnualSpend">$0</span>
+          </div>
+        </div>
+      </section>
+
+      <hr style="border:0; border-top:1px solid var(--border-color);">
+
+      <!-- Card Filters Section -->
+      <section class="sidebar-block">
+        <div class="sidebar-section-title">
+          <span>2. Filter Cards</span>
+          <button id="resetFiltersBtn" class="details-btn" style="font-size:0.75rem;">Reset All</button>
+        </div>
+
+        <!-- Credit Level -->
+        <div class="filter-group">
+          <label for="tier">Your Credit Score Tier</label>
+          <select id="tier">
+            <option value="0">ðŸŒ± Building / Secured (300 - 620)</option>
+            <option value="1">ðŸ“ˆ Fair / Rebuilding (620 - 689)</option>
+            <option value="2" selected>â­ Good (690 - 749)</option>
+            <option value="3">ðŸ† Excellent (750+)</option>
+          </select>
+        </div>
+
+        <!-- Reward Type Tabs -->
+        <div class="filter-group">
+          <label>Reward Type</label>
+          <div class="tab-group">
+            <button class="tab-btn active" data-type-tab="all">All</button>
+            <button class="tab-btn" data-type-tab="cashback">Cash Back</button>
+            <button class="tab-btn" data-type-tab="travel">Travel</button>
+          </div>
+        </div>
+
+        <!-- Max Annual Fee Slider -->
+        <div class="filter-group">
+          <div class="slider-group-header">
+            <label for="maxFee" style="margin-bottom:0;">Max Annual Fee</label>
+            <span id="maxFeeVal" class="slider-val-tag">$700</span>
+          </div>
+          <input type="range" id="maxFee" min="0" max="700" step="25" value="700" class="spend-slider">
+        </div>
+
+        <!-- Card Network -->
+        <div class="filter-group">
+          <label for="networkSelect">Payment Network</label>
+          <select id="networkSelect">
+            <option value="all">Any Network (Visa, Mastercard, Amex, Discover)</option>
+            <option value="Visa">Visa</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="Amex">American Express</option>
+            <option value="Discover">Discover</option>
+          </select>
+        </div>
+
+        <!-- Travel Point Valuation -->
+        <div class="filter-group">
+          <div class="slider-group-header">
+            <label for="pointMultiplier" style="margin-bottom:0;">Travel Point Value</label>
+            <span id="pointVal" class="slider-val-tag">1.25Â¢</span>
+          </div>
+          <p style="font-size:0.72rem; color:var(--text-muted); margin-bottom:4px;">
+            1.00Â¢ = statement cash rate; 1.25Â¢ - 1.80Â¢ = airline/hotel transfer partners.
+          </p>
+          <input type="range" id="pointMultiplier" min="1.0" max="1.8" step="0.05" value="1.25" class="spend-slider">
+        </div>
+
+        <!-- Feature Toggles -->
+        <div style="margin-top: 14px;">
+          <label class="checkbox-item">
+            <input type="checkbox" id="noFtf">
+            <span>âœˆï¸ No Foreign Transaction Fee</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="hasLounge">
+            <span>ðŸ¸ Airport Lounge Access Included</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="hasIntroApr">
+            <span>â³ 0% Intro APR Offer</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="useCredits" checked>
+            <span>ðŸ’³ Offset Fees with Annual Statement Credits</span>
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="onlyFavorites">
+            <span>â¤ï¸ Show Saved Favorites Only</span>
+          </label>
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- Right Column: Results & Combos -->
+    <div class="content-area">
+
+      <!-- View 1: Card Finder & Catalog -->
+      <div id="finderView">
+        <!-- Optimal 2-Card Combo Recommendation Banner -->
+        <section id="comboSection">
+          <!-- Rendered by JS -->
+        </section>
+
+        <!-- Results Toolbar (Search, Value Mode, Sorting) -->
+        <section class="toolbar-bar">
+          <!-- Search bar -->
+          <div class="toolbar-search">
+            <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="searchCards" placeholder="Search cards by name, bank, or perk...">
+          </div>
+
+          <div class="toolbar-controls">
+            <!-- Ongoing vs 1st Year Switcher -->
+            <div class="value-mode-toggle">
+              <button class="mode-btn active" data-value-mode="ongoing" title="Rewards minus annual fee on an ongoing yearly basis">
+                Ongoing Net / Year
+              </button>
+              <button class="mode-btn" data-value-mode="firstYear" title="Includes signup welcome bonus and first-year fee waivers">
+                First Year (w/ Bonus)
+              </button>
+            </div>
+
+            <!-- Sort Select -->
+            <div class="sort-select-wrap">
+              <label for="sortBy">Sort:</label>
+              <select id="sortBy">
+                <option value="net">Highest Net Value</option>
+                <option value="firstYear">Highest 1st Year Value</option>
+                <option value="feeAsc">Lowest Annual Fee</option>
+                <option value="name">Card Name (A-Z)</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Results Count Status -->
+        <div class="results-meta-bar" style="margin-top:16px; margin-bottom:12px;">
+          <span id="resultsCount">Loading cards...</span>
+          <span style="font-size:0.75rem; color:var(--text-dim);">Rates updated for 2025/2026</span>
+        </div>
+
+        <!-- Ranked Cards Grid -->
+        <section id="resultsGrid" class="cards-grid">
+          <!-- Dynamically populated cards -->
+        </section>
+
+        <!-- Empty State View -->
+        <div id="emptyState" class="empty-state" hidden>
+          <h3>No cards match your current filters</h3>
+          <p>Try increasing the max annual fee slider, adjusting your credit score tier, or resetting filters.</p>
+          <button onclick="resetAllFilters()" class="btn-primary" style="margin-top:14px;">Reset All Filters</button>
+        </div>
+      </div>
+
+      <!-- View 2: My Wallet & What-to-Swipe Guide -->
+      <div id="walletView" class="wallet-view-container" hidden>
+        <!-- Injected and managed by JS -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Sticky Comparison Floating Drawer (Visible when cards are checked) -->
+  <div id="compareDrawer" class="compare-drawer">
+    <div class="drawer-inner">
+      <div class="drawer-left">
+        <span class="drawer-title">Selected for Comparison (<span id="compareCount">0</span>/4):</span>
+        <div id="compareChips" class="compare-chips">
+          <!-- Card chips -->
+        </div>
+      </div>
+      <div class="drawer-actions">
+        <button id="clearCompareBtn" class="btn-secondary">Clear All</button>
+        <button id="openCompareModalBtn" class="btn-primary">View Side-by-Side Matrix &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Single Card Detail Modal -->
+  <div id="cardDetailModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div id="cardDetailContent">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi-Card Comparison Matrix Modal -->
+  <div id="comparisonModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container large-matrix">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div class="matrix-modal-header">
+        <h2 style="font-size:1.4rem; font-weight:800;">Side-by-Side Card Comparison</h2>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Comparing rewards, fees, perks, and calculated return on your spend.</p>
+      </div>
+      <div class="matrix-table-wrap" id="comparisonTableContainer">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Scripts -->
+  
+  <script>
+/**
+ * Card Finder Pro - Comprehensive Card Database
+ * Rewards are base percentages or point-rates per dollar spent.
+ * minTier: 0 (Building / Secured, 300-620), 1 (Fair, 620-689), 2 (Good, 690-749), 3 (Excellent, 750+)
+ */
+
+const CARDS_DATABASE = [
+  {
+    id: "chase-sapphire-preferred",
+    name: "Chase Sapphire PreferredÂ®",
+    issuer: "Chase",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "travel",
+    annualFee: 95,
+    annualCredits: 50, // $50 annual Chase Travel hotel credit
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 1.0, travel: 2.0, other: 1.0 },
+    specialNotes: "3x on dining & online groceries; 2x on general travel (5x via Chase Travel portal). $50 hotel credit annually.",
+    bonusValue: 750, // 60,000 pts @ 1.25Â¢ redemption via portal
+    bonusText: "60,000 points after $4,000 spend in first 3 months (~$750 towards travel)",
+    pointValuation: 1.25,
+    perks: [
+      "$50 annual Chase Travel hotel credit",
+      "Primary auto rental collision damage waiver",
+      "Trip cancellation & interruption insurance",
+      "25% more value when redeemed for travel through Chase",
+      "1:1 point transfers to Hyatt, United, Southwest, etc."
+    ],
+    cardColor: "linear-gradient(135deg, #0f2b5c 0%, #1e498f 60%, #17366d 100%)",
+    accentColor: "#38bdf8",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.9,
+    bestFor: "Best Overall Starter Travel Card"
+  },
+  {
+    id: "capital-one-venture-x",
+    name: "Capital One Venture X",
+    issuer: "Capital One",
+    network: "Visa",
+    tier: 3,
+    tierName: "Excellent (750+)",
+    type: "travel",
+    annualFee: 395,
+    annualCredits: 400, // $300 travel portal credit + 10,000 bonus miles ($100)
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "2x miles flat on all purchases; 10x on hotels & rental cars, 5x on flights via Capital One Travel.",
+    bonusValue: 750, // 75,000 miles @ 1.0Â¢ baseline
+    bonusText: "75,000 bonus miles after $4,000 spend in first 3 months ($750 value)",
+    pointValuation: 1.0,
+    perks: [
+      "$300 annual credit for bookings through Capital One Travel",
+      "10,000 bonus miles every year starting on first anniversary ($100 value)",
+      "Complimentary Priority Pass & Capital One Lounge access (+2 free guests)",
+      "$100 credit for Global Entry or TSA PreCheck every 4 years",
+      "Add up to 4 authorized users for free with their own lounge access",
+      "Cell phone protection up to $800"
+    ],
+    cardColor: "linear-gradient(135deg, #18202b 0%, #293847 60%, #1c2733 100%)",
+    accentColor: "#f59e0b",
+    hasLounge: true,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.95,
+    bestFor: "Best Value Premium Travel Card"
+  },
+  {
+    id: "american-express-gold",
+    name: "American ExpressÂ® Gold Card",
+    issuer: "American Express",
+    network: "Amex",
+    tier: 3,
+    tierName: "Good to Excellent (690+)",
+    type: "travel",
+    annualFee: 325,
+    annualCredits: 424, // $120 dining + $120 Uber + $100 Resy + $84 Dunkin
+    foreignFee: false,
+    rewards: { dining: 4.0, groceries: 4.0, gas: 1.0, travel: 3.0, other: 1.0 },
+    specialNotes: "4x points on Dining worldwide; 4x at US supermarkets (up to $25k/yr); 3x on flights booked directly or on amextravel.com.",
+    bonusValue: 600, // 60,000 MR pts
+    bonusText: "60,000 Membership Rewards points after $6,000 spend in first 6 months",
+    pointValuation: 1.0,
+    perks: [
+      "Up to $120 annual dining credit ($10/mo at Grubhub, Cheesecake Factory, etc.)",
+      "Up to $120 annual Uber Cash ($10/mo for US Uber rides or Uber Eats)",
+      "Up to $100 annual Resy credit ($50 semi-annually)",
+      "Up to $84 annual Dunkin' credit ($7/mo)",
+      "Baggage insurance plan & Car rental loss/damage insurance"
+    ],
+    cardColor: "linear-gradient(135deg, #a16207 0%, #ca8a04 40%, #eab308 70%, #854d0e 100%)",
+    accentColor: "#fef08a",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.85,
+    bestFor: "Best for Foodies, Groceries & Dining"
+  },
+  {
+    id: "chase-sapphire-reserve",
+    name: "Chase Sapphire ReserveÂ®",
+    issuer: "Chase",
+    network: "Visa",
+    tier: 3,
+    tierName: "Excellent (750+)",
+    type: "travel",
+    annualFee: 550,
+    annualCredits: 300, // $300 automatic travel statement credit
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 1.0, gas: 1.0, travel: 3.0, other: 1.0 },
+    specialNotes: "3x on dining & general travel after $300 credit; 10x hotels/cars & 5x flights via Chase portal.",
+    bonusValue: 900, // 60,000 pts @ 1.5Â¢ redemption
+    bonusText: "60,000 points after $4,000 spend in 3 months ($900 value via Chase Travel)",
+    pointValuation: 1.5,
+    perks: [
+      "$300 annual travel statement credit automatically applied",
+      "Priority Pass Select membership + Chase Sapphire Lounge access",
+      "$100 TSA PreCheck, Global Entry, or NEXUS fee credit",
+      "Points worth 50% more on travel bookings through Chase",
+      "Primary auto rental collision damage waiver up to $75,000",
+      "Trip delay reimbursement up to $500 per ticket after 6hr delay"
+    ],
+    cardColor: "linear-gradient(135deg, #09131e 0%, #15293d 50%, #050b12 100%)",
+    accentColor: "#60a5fa",
+    hasLounge: true,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.75,
+    bestFor: "Luxury Frequent Travelers & Airport Lounges"
+  },
+  {
+    id: "capital-one-savor",
+    name: "Capital One Savor",
+    issuer: "Capital One",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 1.0, travel: 1.0, other: 1.0 },
+    specialNotes: "Unlimited 3% on dining, entertainment, popular streaming services, and grocery stores. 5% on hotels/rental cars via Capital One Travel.",
+    bonusValue: 200,
+    bonusText: "$200 cash bonus after spending $500 in the first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee & no foreign transaction fees",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "3% cash back on entertainment & streaming services",
+      "Extended warranty and travel accident insurance"
+    ],
+    cardColor: "linear-gradient(135deg, #7c2d12 0%, #c2410c 60%, #ea580c 100%)",
+    accentColor: "#fb923c",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.9,
+    bestFor: "Best <script src="app.js"></script> Fee Card for Dining & Groceries"
+  },
+  {
+    id: "citi-double-cash",
+    name: "Citi Double CashÂ® Card",
+    issuer: "Citi",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true, // 3% foreign fee
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Flat 2% on everything: 1% when you buy plus 1% as you pay off purchases.",
+    bonusValue: 200,
+    bonusText: "$200 cash back after spending $1,500 on purchases in first 6 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Flat 2% catch-all rewards on all purchase categories with no caps",
+      "0% intro APR on balance transfers for 18 months",
+      "Earns Citi ThankYou Points which can be pooled with Citi Premier"
+    ],
+    cardColor: "linear-gradient(135deg, #0369a1 0%, #0284c7 60%, #38bdf8 100%)",
+    accentColor: "#bae6fd",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR on balance transfers for 18 mo",
+    rating: 4.8,
+    bestFor: "Best Simple 2% Flat Catch-All Card"
+  },
+  {
+    id: "wells-fargo-active-cash",
+    name: "Wells Fargo Active CashÂ® Card",
+    issuer: "Wells Fargo",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 2.0, other: 2.0 },
+    specialNotes: "Unlimited 2% cash rewards on all purchases with no category tracking.",
+    bonusValue: 200,
+    bonusText: "$200 cash rewards bonus after spending $500 in first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Unlimited 2% cash rewards on purchases",
+      "Up to $600 cell phone protection (subject to $25 deductible)",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "Visa Signature concierge & luxury hotel collection benefits"
+    ],
+    cardColor: "linear-gradient(135deg, #991b1b 0%, #b91c1c 60%, #dc2626 100%)",
+    accentColor: "#f87171",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.8,
+    bestFor: "Flat 2% Cash Back + Cell Phone Protection"
+  },
+  {
+    id: "blue-cash-preferred-amex",
+    name: "Blue Cash PreferredÂ® Card from Amex",
+    issuer: "American Express",
+    network: "Amex",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 95, // <script src="app.js"></script> intro 1st yr, then $95
+    annualCredits: 84, // $7/mo Disney Bundle statement credit ($84/yr)
+    foreignFee: true, // 2.7%
+    rewards: { dining: 1.0, groceries: 6.0, gas: 3.0, travel: 1.0, other: 1.0 },
+    specialNotes: "6% back at US supermarkets (on up to $6,000/yr, then 1%); 6% on select US streaming; 3% on gas and transit.",
+    bonusValue: 250,
+    bonusText: "$250 statement credit after $3,000 spend in first 6 months (<script src="app.js"></script> intro fee year 1)",
+    pointValuation: 1.0,
+    perks: [
+      "<script src="app.js"></script> intro annual fee for the first year, then $95",
+      "6% cash back on US supermarkets (up to $6,000/year)",
+      "6% cash back on select US streaming subscriptions",
+      "3% cash back on US gas stations & transit (taxis, trains, tolls, buses)",
+      "Up to $84/year Disney Bundle credit ($7/month)"
+    ],
+    cardColor: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%)",
+    accentColor: "#93c5fd",
+    hasLounge: false,
+    hasCredits: true,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 12 months",
+    rating: 4.75,
+    bestFor: "Highest US Supermarket & Streaming Rewards"
+  },
+  {
+    id: "bilt-mastercard",
+    name: "Bilt World Elite MastercardÂ®",
+    issuer: "Bilt",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "travel",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 1.0, gas: 1.0, travel: 2.0, other: 1.0 },
+    specialNotes: "1x on rent with <script src="app.js"></script> fee (up to 100k pts/yr); 3x dining; 2x travel. Points double on 1st of month (Rent Day) up to 10k bonus pts.",
+    bonusValue: 0,
+    bonusText: "No standard public welcome bonus, but earns points on monthly rent with no transaction fee!",
+    pointValuation: 1.3,
+    perks: [
+      "Pay rent with credit card with zero transaction fee (earn up to 100,000 pts/yr)",
+      "3x points on dining, 2x points on travel, 1x on rent & other",
+      "Point values double on the 1st of every month (Rent Day: 6x dining, 4x travel)",
+      "Transfer points 1:1 to World of Hyatt, United, Alaska Airlines, Flying Blue, etc.",
+      "Cell phone protection up to $800 ($25 deductible)",
+      "No foreign transaction fee & <script src="app.js"></script> annual fee"
+    ],
+    cardColor: "linear-gradient(135deg, #111827 0%, #1f2937 50%, #030712 100%)",
+    accentColor: "#e5e7eb",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.9,
+    bestFor: "Best Card for Renters & Transfer Partners"
+  },
+  {
+    id: "citi-custom-cash",
+    name: "Citi Custom CashÂ® Card",
+    issuer: "Citi",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 5.0, groceries: 5.0, gas: 5.0, travel: 1.0, other: 1.0 }, // Calculated dynamically: 5% on top spend category up to $500/mo
+    specialNotes: "5% back automatically on your highest eligible spend category each billing cycle up to $500 spend (e.g. Restaurants, Groceries, Gas, Travel), 1% on all other.",
+    bonusValue: 200,
+    bonusText: "$200 cash back after spending $1,500 in first 6 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Automatic 5% cash back on your top category up to $500/month ($300/year cash back)",
+      "No need to activate quarterly rotating categories - automatically adjusts",
+      "0% intro APR on balance transfers & purchases for 15 months"
+    ],
+    cardColor: "linear-gradient(135deg, #0284c7 0%, #0369a1 60%, #075985 100%)",
+    accentColor: "#38bdf8",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.85,
+    bestFor: "Automatic 5% on Your Top Spend Category"
+  },
+  {
+    id: "chase-freedom-flex",
+    name: "Chase Freedom FlexÂ®",
+    issuer: "Chase",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 3.0, groceries: 1.0, gas: 1.0, travel: 1.0, other: 1.0 },
+    specialNotes: "5% on up to $1,500 in combined purchases in bonus categories each quarter you activate; 5% travel via Chase; 3% dining & drugstores; 1% other.",
+    bonusValue: 200,
+    bonusText: "$200 bonus after spending $500 in first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "5% cash back on quarterly rotating categories (up to $1,500/quarter)",
+      "3% cash back on dining and drugstores",
+      "Cell phone protection up to $800 per claim ($50 deductible)",
+      "0% intro APR for 15 months on purchases and balance transfers",
+      "Pairs with Sapphire cards for points transfer to airlines and hotels"
+    ],
+    cardColor: "linear-gradient(135deg, #0e7490 0%, #155e75 60%, #164e63 100%)",
+    accentColor: "#67e8f9",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.8,
+    bestFor: "5% Rotating Bonus Categories + Cell Protection"
+  },
+  {
+    id: "wells-fargo-autograph",
+    name: "Wells Fargo Autographâ„  Card",
+    issuer: "Wells Fargo",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "travel",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 1.0, gas: 3.0, travel: 3.0, other: 1.0 },
+    specialNotes: "Unlimited 3x points on dining, travel, gas & EV charging, transit, popular streaming, and phone plans with no caps.",
+    bonusValue: 200,
+    bonusText: "20,000 bonus points ($200 value) after spending $1,000 in first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "<script src="app.js"></script> annual fee & no foreign transaction fee",
+      "Unlimited 3x points on 6 broad lifestyle categories",
+      "Up to $600 cell phone protection ($25 deductible)",
+      "Transfer points to partner airline and hotel programs",
+      "Auto rental collision damage waiver"
+    ],
+    cardColor: "linear-gradient(135deg, #b91c1c 0%, #7f1d1d 60%, #450a0a 100%)",
+    accentColor: "#fca5a5",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 12 months",
+    rating: 4.8,
+    bestFor: "<script src="app.js"></script> Fee Multi-Category 3x Rewards (Gas, Travel, Dining)"
+  },
+  {
+    id: "amex-platinum",
+    name: "The Platinum CardÂ® from American Express",
+    issuer: "American Express",
+    network: "Amex",
+    tier: 3,
+    tierName: "Excellent (750+)",
+    type: "travel",
+    annualFee: 695,
+    annualCredits: 840, // $200 hotel + $240 streaming + $200 airline fee + $200 Uber Cash
+    foreignFee: false,
+    rewards: { dining: 1.0, groceries: 1.0, gas: 1.0, travel: 5.0, other: 1.0 },
+    specialNotes: "5x points on flights booked directly with airlines or amextravel.com (up to $500k/yr); 5x on prepaid hotels booked on amextravel.com.",
+    bonusValue: 800,
+    bonusText: "80,000 Membership Rewards points after $8,000 spend in first 6 months",
+    pointValuation: 1.0,
+    perks: [
+      "Access to The American Express Global Lounge Collection (Centurion Lounges, Delta SkyClub, Priority Pass)",
+      "$200 annual hotel statement credit on prepaid Fine Hotels + Resorts bookings",
+      "$240 annual digital entertainment credit ($20/month)",
+      "$200 annual airline incidental fee statement credit",
+      "$200 annual Uber Cash ($15/mo + $20 in Dec)",
+      "Hilton Honors Gold & Marriott Bonvoy Gold Elite Status"
+    ],
+    cardColor: "linear-gradient(135deg, #4b5563 0%, #6b7280 40%, #9ca3af 70%, #d1d5db 100%)",
+    accentColor: "#f3f4f6",
+    hasLounge: true,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.65,
+    bestFor: "Ultimate VIP Luxury Airport Lounge & Travel Perks"
+  },
+  {
+    id: "chase-freedom-unlimited",
+    name: "Chase Freedom UnlimitedÂ®",
+    issuer: "Chase",
+    network: "Visa",
+    tier: 2,
+    tierName: "Good to Excellent (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: true,
+    rewards: { dining: 3.0, groceries: 1.5, gas: 1.5, travel: 1.5, other: 1.5 },
+    specialNotes: "Unlimited 1.5% on all other purchases; 3% on dining & drugstores; 5% travel via Chase.",
+    bonusValue: 200,
+    bonusText: "$200 cash back after spending $500 in first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee",
+      "Unlimited 1.5% flat cash back on non-bonus purchases",
+      "3% cash back on dining at restaurants including takeout and eligible delivery",
+      "3% cash back on drugstore purchases",
+      "0% intro APR on purchases and balance transfers for 15 months"
+    ],
+    cardColor: "linear-gradient(135deg, #1d4ed8 0%, #1e40af 60%, #172554 100%)",
+    accentColor: "#60a5fa",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.75,
+    bestFor: "Solid 1.5% Everyday Card + 3% Dining"
+  },
+  {
+    id: "discover-it-cashback",
+    name: "Discover itÂ® Cash Back",
+    issuer: "Discover",
+    network: "Discover",
+    tier: 2,
+    tierName: "Average to Good (670+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 2.0, gas: 2.0, travel: 1.0, other: 1.0 }, // Effective average with rotating 5%
+    specialNotes: "5% cash back on everyday purchases at different places each quarter (up to quarterly maximum of $1,500 when activated); 1% on all other.",
+    bonusValue: 300, // Estimated match bonus value
+    bonusText: "Unlimited Cashback Match: Discover matches all cash back earned at the end of your first year!",
+    pointValuation: 1.0,
+    perks: [
+      "Automatic Cashback Match for entire first year (doubles all earnings)",
+      "No annual fee & no foreign transaction fee",
+      "0% intro APR for 15 months on purchases and balance transfers",
+      "Free FICO credit score updates and identity alerts"
+    ],
+    cardColor: "linear-gradient(135deg, #ea580c 0%, #c2410c 60%, #9a3412 100%)",
+    accentColor: "#fdba74",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.7,
+    bestFor: "Rotating 5% Categories + 1st Year Cashback Match"
+  },
+  {
+    id: "us-bank-altitude-reserve",
+    name: "U.S. Bank AltitudeÂ® Reserve",
+    issuer: "U.S. Bank",
+    network: "Visa",
+    tier: 3,
+    tierName: "Excellent (750+)",
+    type: "travel",
+    annualFee: 400,
+    annualCredits: 325, // $325 automatic dining/travel credit (effective fee $75)
+    foreignFee: false,
+    rewards: { dining: 3.0, groceries: 3.0, gas: 3.0, travel: 3.0, other: 1.0 }, // 3x points on mobile wallet tap-to-pay (worth 4.5% on travel)
+    specialNotes: "3x points on eligible travel and mobile wallet purchases (Apple Pay, Google Pay); 5x on prepaid hotels and car rentals. Points worth 1.5Â¢ each for travel.",
+    bonusValue: 750, // 50,000 pts @ 1.5Â¢
+    bonusText: "50,000 bonus points after spending $4,500 in first 90 days ($750 travel value)",
+    pointValuation: 1.5,
+    perks: [
+      "$325 annual statement credit for eligible travel & dining purchases automatically",
+      "Effective annual fee is just $75 after easy-to-use credits",
+      "3x points on ALL mobile wallet purchases (effectively 4.5% back on travel redemptions!)",
+      "Priority Pass Select (4 complimentary visits per year)",
+      "TSA PreCheck or Global Entry $100 credit"
+    ],
+    cardColor: "linear-gradient(135deg, #1e293b 0%, #334155 60%, #0f172a 100%)",
+    accentColor: "#94a3b8",
+    hasLounge: true,
+    hasCredits: true,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.85,
+    bestFor: "Top Mobile Wallet / Apple Pay Earner (4.5% on Travel)"
+  },
+  {
+    id: "capital-one-quicksilver",
+    name: "Capital One Quicksilver Cash Rewards",
+    issuer: "Capital One",
+    network: "Mastercard",
+    tier: 2,
+    tierName: "Good (690+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 1.5, groceries: 1.5, gas: 1.5, travel: 1.5, other: 1.5 },
+    specialNotes: "Unlimited 1.5% cash back on every purchase, every day. 5% on hotels & rental cars through Capital One Travel.",
+    bonusValue: 200,
+    bonusText: "$200 cash bonus after spending $500 in first 3 months",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee and no foreign transaction fees",
+      "0% intro APR on purchases and balance transfers for 15 months",
+      "Straightforward flat 1.5% with no categories or expiration dates"
+    ],
+    cardColor: "linear-gradient(135deg, #374151 0%, #4b5563 60%, #1f2937 100%)",
+    accentColor: "#9ca3af",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: true,
+    introAprText: "0% intro APR for 15 months",
+    rating: 4.65,
+    bestFor: "No Annual Fee & No Foreign Fee Everyday 1.5%"
+  },
+  {
+    id: "capital-one-quicksilverone",
+    name: "Capital One QuicksilverOne",
+    issuer: "Capital One",
+    network: "Mastercard",
+    tier: 1,
+    tierName: "Fair / Average (620-689)",
+    type: "cashback",
+    annualFee: 39,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 1.5, groceries: 1.5, gas: 1.5, travel: 1.5, other: 1.5 },
+    specialNotes: "Unlimited 1.5% cash back on all purchases for people rebuilding or with fair credit.",
+    bonusValue: 0,
+    bonusText: "No welcome bonus, but accessible with fair credit and builds credit history.",
+    pointValuation: 1.0,
+    perks: [
+      "Accessible with fair / average credit",
+      "Earn 1.5% cash back on every purchase",
+      "Automatic credit line review in as little as 6 months",
+      "No foreign transaction fees"
+    ],
+    cardColor: "linear-gradient(135deg, #475569 0%, #334155 60%, #1e293b 100%)",
+    accentColor: "#cbd5e1",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.3,
+    bestFor: "Fair Credit Earners Wanting Cash Back"
+  },
+  {
+    id: "discover-it-secured",
+    name: "Discover itÂ® Secured Credit Card",
+    issuer: "Discover",
+    network: "Discover",
+    tier: 0,
+    tierName: "Building / No Credit History (300+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 2.0, groceries: 1.0, gas: 2.0, travel: 1.0, other: 1.0 },
+    specialNotes: "2% cash back at Gas Stations and Restaurants on up to $1,000 in combined purchases each quarter; 1% on all other purchases.",
+    bonusValue: 80,
+    bonusText: "Unlimited Cashback Match for your first year â€” Discover matches all cash back earned!",
+    pointValuation: 1.0,
+    perks: [
+      "No credit score required to apply; builds credit with all 3 major bureaus",
+      "No annual fee and no foreign transaction fee",
+      "Refundable security deposit ($200 minimum)",
+      "Automatic monthly reviews starting at 7 months to graduate to an unsecured card"
+    ],
+    cardColor: "linear-gradient(135deg, #0d9488 0%, #0f766e 60%, #115e59 100%)",
+    accentColor: "#5eead4",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.9,
+    bestFor: "Best Secured Card to Build Credit with Rewards"
+  },
+  {
+    id: "capital-one-platinum-secured",
+    name: "Capital One Platinum Secured Card",
+    issuer: "Capital One",
+    network: "Mastercard",
+    tier: 0,
+    tierName: "Building / Rebuilding (300+)",
+    type: "cashback",
+    annualFee: 0,
+    annualCredits: 0,
+    foreignFee: false,
+    rewards: { dining: 0.0, groceries: 0.0, gas: 0.0, travel: 0.0, other: 0.0 },
+    specialNotes: "Designed strictly for credit building with <script src="app.js"></script> annual fee and low deposit options.",
+    bonusValue: 0,
+    bonusText: "No welcome bonus. Put down a $49, $99 or $200 refundable deposit based on creditworthiness.",
+    pointValuation: 1.0,
+    perks: [
+      "No annual fee or hidden fees",
+      "Deposit $49, $99, or $200 for an initial $200 credit line",
+      "Automatic credit line increases with responsible use in as little as 6 months",
+      "Build credit with TransUnion, Experian, and Equifax"
+    ],
+    cardColor: "linear-gradient(135deg, #334155 0%, #1e293b 60%, #0f172a 100%)",
+    accentColor: "#94a3b8",
+    hasLounge: false,
+    hasCredits: false,
+    hasIntroApr: false,
+    introAprText: "None",
+    rating: 4.4,
+    bestFor: "Low Initial Deposit Credit Builder"
+  }
+];
+
+// Preset spending lifestyles for quick exploration
+const SPEND_PRESETS = {
+  student: {
+    label: "ðŸŽ“ Student / Lean",
+    desc: "Low budget, transit, groceries and casual dining",
+    dining: 150,
+    groceries: 200,
+    gas: 40,
+    travel: 20,
+    other: 200
+  },
+  average: {
+    label: "ðŸ  Average Household",
+    desc: "Balanced spend on groceries, gas, utilities and dining",
+    dining: 350,
+    groceries: 550,
+    gas: 160,
+    travel: 120,
+    other: 650
+  },
+  foodie: {
+    label: "ðŸ½ï¸ Urban Foodie",
+    desc: "High restaurant, takeout, delivery & entertainment spend",
+    dining: 750,
+    groceries: 350,
+    gas: 60,
+    travel: 200,
+    other: 550
+  },
+  traveler: {
+    label: "âœˆï¸ Jetsetter / Frequent Flyer",
+    desc: "Frequent flights, hotels, dining, and global purchases",
+    dining: 650,
+    groceries: 350,
+    gas: 100,
+    travel: 850,
+    other: 700
+  },
+  family: {
+    label: "ðŸ‘¨â€ðŸ‘©â€ðŸ‘§â€ðŸ‘¦ Suburban Family",
+    desc: "Heavy supermarket, gas, home improvement and school spend",
+    dining: 450,
+    groceries: 950,
+    gas: 300,
+    travel: 250,
+    other: 1200
+  }
+};
+
+/**
+ * Card Finder Pro - Main Application Logic
+ * Comprehensive Features: 3D Flip Cards, Holographic Sheen, My Wallet Swipe Guide, SVG Charts, CSV Export
+ */
+
+// Application State
+const state = {
+  activeView: "finder", // "finder" | "wallet"
+  tier: 2, // Good by default
+  maxFee: 700,
+  type: "all", // "all" | "cashback" | "travel"
+  network: "all", // "all" | "Visa" | "Mastercard" | "Amex" | "Discover"
+  noFtf: false,
+  hasLounge: false,
+  hasIntroApr: false,
+  useCredits: true, // Offset fee with statement credits
+  valueMode: "ongoing", // "ongoing" | "firstYear"
+  pointMultiplier: 1.25, // 1.0 to 1.8 for travel points
+  searchQuery: "",
+  sortBy: "net", // "net" | "firstYear" | "feeAsc" | "name"
+  onlyFavorites: false,
+  favorites: new Set(JSON.parse(localStorage.getItem("card_finder_favs") || "[]")),
+  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '["citi-double-cash", "capital-one-savor"]')),
+  comparedCards: new Set(),
+  spending: {
+    dining: 350,
+    groceries: 550,
+    gas: 160,
+    travel: 120,
+    other: 650
+  }
+};
+
+const CATEGORIES = [
+  { key: "dining", label: "Dining & Takeout", icon: "ðŸ½ï¸", color: "#f59e0b" },
+  { key: "groceries", label: "Groceries & Supermarkets", icon: "ðŸ›’", color: "#10b981" },
+  { key: "gas", label: "Gas & EV Charging", icon: "â›½", color: "#ef4444" },
+  { key: "travel", label: "Travel (Flights/Hotels)", icon: "âœˆï¸", color: "#0ea5e9" },
+  { key: "other", label: "All Other Spending", icon: "ðŸ›ï¸", color: "#8b5cf6" }
+];
+
+// Helper: Calculate net earnings for a single card
+function calculateCardValue(card, spending, options = {}) {
+  const useCredits = options.useCredits ?? state.useCredits;
+  const pointMultiplier = card.type === "travel" ? (options.pointMultiplier ?? state.pointMultiplier) : 1.0;
+  
+  let breakdown = {};
+  let totalEarned = 0;
+
+  // Custom calculation for special cards
+  if (card.id === "citi-custom-cash") {
+    // 5% on top spend category up to $500/mo ($6,000/yr), 1% on excess & all others
+    const spendCats = ["dining", "groceries", "gas", "travel"];
+    let topCat = "groceries";
+    let maxSpend = -1;
+    spendCats.forEach(c => {
+      if (spending[c] > maxSpend) {
+        maxSpend = spending[c];
+        topCat = c;
+      }
+    });
+
+    CATEGORIES.forEach(({ key }) => {
+      const monthly = spending[key];
+      if (key === topCat) {
+        const capped5Pct = Math.min(monthly, 500);
+        const excess1Pct = Math.max(0, monthly - 500);
+        const earned = (capped5Pct * 12 * 0.05) + (excess1Pct * 12 * 0.01);
+        breakdown[key] = earned;
+        totalEarned += earned;
+      } else {
+        const earned = monthly * 12 * 0.01;
+        breakdown[key] = earned;
+        totalEarned += earned;
+      }
+    });
+  } else if (card.id === "blue-cash-preferred-amex") {
+    // 6% on groceries up to $6,000/yr ($500/mo), 1% beyond
+    const groceryMonthly = spending.groceries;
+    const cappedGrocery = Math.min(groceryMonthly, 500);
+    const excessGrocery = Math.max(0, groceryMonthly - 500);
+    const groceryEarned = (cappedGrocery * 12 * 0.06) + (excessGrocery * 12 * 0.01);
+    breakdown.groceries = groceryEarned;
+    totalEarned += groceryEarned;
+
+    CATEGORIES.forEach(({ key }) => {
+      if (key !== "groceries") {
+        const rate = card.rewards[key] || 1.0;
+        const earned = spending[key] * 12 * (rate / 100);
+        breakdown[key] = earned;
+        totalEarned += earned;
+      }
+    });
+  } else {
+    // Standard calculation with point valuation adjustment
+    CATEGORIES.forEach(({ key }) => {
+      const rate = card.rewards[key] || 1.0;
+      // Points valuation boost applies if card is travel points
+      const effectiveRate = card.type === "travel" ? rate * pointMultiplier : rate;
+      const earned = spending[key] * 12 * (effectiveRate / 100);
+      breakdown[key] = earned;
+      totalEarned += earned;
+    });
+  }
+
+  // First year match for Discover cards
+  let bonus = card.bonusValue;
+  if (card.id.includes("discover")) {
+    bonus = totalEarned; // Discover matches 100% of cash back year 1
+  }
+
+  const effectiveFee = useCredits 
+    ? Math.max(0, card.annualFee - (card.annualCredits || 0))
+    : card.annualFee;
+
+  const ongoingNet = totalEarned - effectiveFee;
+  const firstYearNet = totalEarned - card.annualFee + bonus + (useCredits ? (card.annualCredits || 0) : 0);
+
+  // Return on total spend percentage (ROI)
+  const totalAnnualSpend = Object.values(spending).reduce((a, b) => a + b, 0) * 12;
+  const roiPct = totalAnnualSpend > 0 ? ((totalEarned / totalAnnualSpend) * 100).toFixed(2) : "0.00";
+
+  return {
+    totalEarned,
+    breakdown,
+    effectiveFee,
+    ongoingNet,
+    firstYearNet,
+    bonus,
+    roiPct
+  };
+}
+
+// Find Optimal 2-Card Combo based on current spending
+function findOptimalCombo(cards, spending) {
+  const eligible = cards.filter(c => c.tier <= state.tier && c.annualFee <= 400);
+  if (eligible.length < 2) return null;
+
+  let bestCombo = null;
+  let maxNet = -Infinity;
+
+  for (let i = 0; i < eligible.length; i++) {
+    for (let j = i + 1; j < eligible.length; j++) {
+      const cardA = eligible[i];
+      const cardB = eligible[j];
+
+      let combinedEarned = 0;
+      let assignment = {};
+
+      CATEGORIES.forEach(({ key }) => {
+        const valA = calculateCardValue(cardA, { ...spending, [key]: spending[key] }, { useCredits: false }).breakdown[key];
+        const valB = calculateCardValue(cardB, { ...spending, [key]: spending[key] }, { useCredits: false }).breakdown[key];
+
+        if (valA >= valB) {
+          combinedEarned += valA;
+          assignment[key] = cardA.name;
+        } else {
+          combinedEarned += valB;
+          assignment[key] = cardB.name;
+        }
+      });
+
+      const feeA = state.useCredits ? Math.max(0, cardA.annualFee - (cardA.annualCredits || 0)) : cardA.annualFee;
+      const feeB = state.useCredits ? Math.max(0, cardB.annualFee - (cardB.annualCredits || 0)) : cardB.annualFee;
+      const net = combinedEarned - feeA - feeB;
+
+      if (net > maxNet) {
+        maxNet = net;
+        bestCombo = {
+          cardA,
+          cardB,
+          combinedEarned,
+          net,
+          assignment
+        };
+      }
+    }
+  }
+
+  return bestCombo;
+}
+
+// Filter and Sort Cards
+function getFilteredAndSortedCards() {
+  return CARDS_DATABASE
+    .filter(card => {
+      if (card.tier > state.tier) return false;
+      if (card.annualFee > state.maxFee) return false;
+      if (state.type !== "all" && card.type !== state.type) return false;
+      if (state.network !== "all" && card.network !== state.network) return false;
+      if (state.noFtf && card.foreignFee) return false;
+      if (state.hasLounge && !card.hasLounge) return false;
+      if (state.hasIntroApr && !card.hasIntroApr) return false;
+      if (state.onlyFavorites && !state.favorites.has(card.id)) return false;
+      if (state.searchQuery.trim() !== "") {
+        const q = state.searchQuery.toLowerCase();
+        const matchesName = card.name.toLowerCase().includes(q);
+        const matchesIssuer = card.issuer.toLowerCase().includes(q);
+        const matchesPerks = card.perks.some(p => p.toLowerCase().includes(q));
+        const matchesBestFor = card.bestFor.toLowerCase().includes(q);
+        if (!matchesName && !matchesIssuer && !matchesPerks && !matchesBestFor) return false;
+      }
+      return true;
+    })
+    .map(card => {
+      const val = calculateCardValue(card, state.spending);
+      return { card, ...val };
+    })
+    .sort((a, b) => {
+      if (state.sortBy === "net") {
+        return b.ongoingNet - a.ongoingNet;
+      } else if (state.sortBy === "firstYear") {
+        return b.firstYearNet - a.firstYearNet;
+      } else if (state.sortBy === "feeAsc") {
+        return a.card.annualFee - b.card.annualFee;
+      } else if (state.sortBy === "name") {
+        return a.card.name.localeCompare(b.card.name);
+      }
+      return 0;
+    });
+}
+
+// App Initialization
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  initViewSwitcher();
+  initPresetButtons();
+  initSpendingInputs();
+  initFilterControls();
+  initCompareDrawer();
+  initModals();
+  initCsvExport();
+  loadStateFromUrl();
+  renderApp();
+});
+
+// View Switcher: Card Finder vs My Wallet
+function initViewSwitcher() {
+  const tabFinder = document.getElementById("tabFinder");
+  const tabWallet = document.getElementById("tabWallet");
+  const finderView = document.getElementById("finderView");
+  const walletView = document.getElementById("walletView");
+
+  if (!tabFinder || !tabWallet) return;
+
+  const setView = (view) => {
+    state.activeView = view;
+    if (view === "finder") {
+      tabFinder.classList.add("active");
+      tabWallet.classList.remove("active");
+      if (finderView) finderView.hidden = false;
+      if (walletView) walletView.hidden = true;
+    } else {
+      tabWallet.classList.add("active");
+      tabFinder.classList.remove("active");
+      if (finderView) finderView.hidden = true;
+      if (walletView) walletView.hidden = false;
+      renderWalletView();
+    }
+  };
+
+  tabFinder.addEventListener("click", () => setView("finder"));
+  tabWallet.addEventListener("click", () => setView("wallet"));
+}
+
+// Wallet Card Toggle
+function toggleWalletCard(cardId) {
+  if (state.myWallet.has(cardId)) {
+    state.myWallet.delete(cardId);
+  } else {
+    state.myWallet.add(cardId);
+  }
+  localStorage.setItem("card_finder_my_wallet", JSON.stringify(Array.from(state.myWallet)));
+  renderWalletBadge();
+  if (state.activeView === "wallet") {
+    renderWalletView();
+  }
+  renderCardResults();
+}
+
+function renderWalletBadge() {
+  const badge = document.getElementById("walletBadge");
+  if (badge) {
+    badge.textContent = state.myWallet.size;
+  }
+}
+
+// Initialize Theme
+function initTheme() {
+  const savedTheme = localStorage.getItem("card_finder_theme") || 
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", savedTheme);
+
+  const themeToggle = document.getElementById("themeToggle");
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("card_finder_theme", next);
+      updateThemeIcon(next);
+    });
+    updateThemeIcon(savedTheme);
+  }
+}
+
+function updateThemeIcon(theme) {
+  const themeToggle = document.getElementById("themeToggle");
+  if (!themeToggle) return;
+  themeToggle.innerHTML = theme === "dark" 
+    ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>` 
+    : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+}
+
+// Preset Spending Handlers
+function initPresetButtons() {
+  const container = document.getElementById("presetButtons");
+  if (!container) return;
+
+  container.innerHTML = Object.entries(SPEND_PRESETS).map(([key, p]) => `
+    <button class="preset-pill" data-preset="${key}" title="${p.desc}">
+      ${p.label}
+    </button>
+  `).join("");
+
+  container.querySelectorAll(".preset-pill").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const presetKey = btn.dataset.preset;
+      const preset = SPEND_PRESETS[presetKey];
+      if (!preset) return;
+
+      CATEGORIES.forEach(c => {
+        state.spending[c.key] = preset[c.key];
+        const numInput = document.getElementById(`spend-${c.key}`);
+        const sliderInput = document.getElementById(`slider-${c.key}`);
+        if (numInput) numInput.value = preset[c.key];
+        if (sliderInput) sliderInput.value = preset[c.key];
+      });
+
+      container.querySelectorAll(".preset-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      renderApp();
+    });
+  });
+}
+
+// Spending inputs with dual slider & number sync
+function initSpendingInputs() {
+  const container = document.getElementById("spendingInputs");
+  if (!container) return;
+
+  container.innerHTML = CATEGORIES.map(c => `
+    <div class="spend-field">
+      <div class="spend-field-header">
+        <label for="spend-${c.key}">
+          <span class="spend-icon">${c.icon}</span> ${c.label}
+        </label>
+        <div class="spend-input-wrap">
+          <span class="currency-sym">$</span>
+          <input type="number" id="spend-${c.key}" data-cat="${c.key}" min="0" max="5000" step="25" value="${state.spending[c.key]}">
+          <span class="per-mo">/mo</span>
+        </div>
+      </div>
+      <input type="range" class="spend-slider" id="slider-${c.key}" data-cat="${c.key}" min="0" max="3000" step="25" value="${state.spending[c.key]}">
+    </div>
+  `).join("");
+
+  CATEGORIES.forEach(c => {
+    const numInput = document.getElementById(`spend-${c.key}`);
+    const sliderInput = document.getElementById(`slider-${c.key}`);
+
+    const updateVal = (val) => {
+      const cleanVal = Math.max(0, Number(val) || 0);
+      state.spending[c.key] = cleanVal;
+      if (numInput) numInput.value = cleanVal;
+      if (sliderInput) sliderInput.value = cleanVal;
+      document.querySelectorAll(".preset-pill").forEach(b => b.classList.remove("active"));
+      renderApp();
+    };
+
+    if (numInput) {
+      numInput.addEventListener("input", (e) => updateVal(e.target.value));
+    }
+    if (sliderInput) {
+      sliderInput.addEventListener("input", (e) => updateVal(e.target.value));
+    }
+  });
+}
+
+// Filter and Control Event Listeners
+function initFilterControls() {
+  const tierSelect = document.getElementById("tier");
+  if (tierSelect) {
+    tierSelect.value = state.tier;
+    tierSelect.addEventListener("change", (e) => {
+      state.tier = Number(e.target.value);
+      renderApp();
+    });
+  }
+
+  const maxFeeInput = document.getElementById("maxFee");
+  const maxFeeVal = document.getElementById("maxFeeVal");
+  if (maxFeeInput) {
+    maxFeeInput.value = state.maxFee;
+    if (maxFeeVal) maxFeeVal.textContent = `${state.maxFee}`;
+    maxFeeInput.addEventListener("input", (e) => {
+      state.maxFee = Number(e.target.value);
+      if (maxFeeVal) maxFeeVal.textContent = `${state.maxFee}`;
+      renderApp();
+    });
+  }
+
+  document.querySelectorAll("[data-type-tab]").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll("[data-type-tab]").forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      state.type = tab.dataset.typeTab;
+      renderApp();
+    });
+  });
+
+  const networkSelect = document.getElementById("networkSelect");
+  if (networkSelect) {
+    networkSelect.addEventListener("change", (e) => {
+      state.network = e.target.value;
+      renderApp();
+    });
+  }
+
+  const sortBySelect = document.getElementById("sortBy");
+  if (sortBySelect) {
+    sortBySelect.addEventListener("change", (e) => {
+      state.sortBy = e.target.value;
+      renderApp();
+    });
+  }
+
+  document.querySelectorAll("[data-value-mode]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("[data-value-mode]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      state.valueMode = btn.dataset.valueMode;
+      renderApp();
+    });
+  });
+
+  const toggleMap = [
+    { id: "noFtf", key: "noFtf" },
+    { id: "hasLounge", key: "hasLounge" },
+    { id: "hasIntroApr", key: "hasIntroApr" },
+    { id: "useCredits", key: "useCredits" },
+    { id: "onlyFavorites", key: "onlyFavorites" }
+  ];
+
+  toggleMap.forEach(({ id, key }) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.checked = state[key];
+      el.addEventListener("change", (e) => {
+        state[key] = e.target.checked;
+        renderApp();
+      });
+    }
+  });
+
+  const pointSlider = document.getElementById("pointMultiplier");
+  const pointVal = document.getElementById("pointVal");
+  if (pointSlider) {
+    pointSlider.value = state.pointMultiplier;
+    if (pointVal) pointVal.textContent = `${state.pointMultiplier.toFixed(2)}Â¢`;
+    pointSlider.addEventListener("input", (e) => {
+      state.pointMultiplier = parseFloat(e.target.value);
+      if (pointVal) pointVal.textContent = `${state.pointMultiplier.toFixed(2)}Â¢`;
+      renderApp();
+    });
+  }
+
+  const searchInput = document.getElementById("searchCards");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      state.searchQuery = e.target.value;
+      renderApp();
+    });
+  }
+
+  const resetBtn = document.getElementById("resetFiltersBtn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", resetAllFilters);
+  }
+
+  const shareBtn = document.getElementById("shareBtn");
+  if (shareBtn) {
+    shareBtn.addEventListener("click", shareConfiguration);
+  }
+  const printBtn = document.getElementById("printBtn");
+  if (printBtn) {
+    printBtn.addEventListener("click", () => window.print());
+  }
+}
+
+// Reset filters to defaults
+function resetAllFilters() {
+  state.tier = 3;
+  state.maxFee = 700;
+  state.type = "all";
+  state.network = "all";
+  state.noFtf = false;
+  state.hasLounge = false;
+  state.hasIntroApr = false;
+  state.useCredits = true;
+  state.searchQuery = "";
+  state.onlyFavorites = false;
+
+  const tierSelect = document.getElementById("tier");
+  if (tierSelect) tierSelect.value = 3;
+  const maxFeeInput = document.getElementById("maxFee");
+  if (maxFeeInput) maxFeeInput.value = 700;
+  const maxFeeVal = document.getElementById("maxFeeVal");
+  if (maxFeeVal) maxFeeVal.textContent = "$700";
+
+  document.querySelectorAll("[data-type-tab]").forEach(t => {
+    t.classList.toggle("active", t.dataset.typeTab === "all");
+  });
+
+  const networkSelect = document.getElementById("networkSelect");
+  if (networkSelect) networkSelect.value = "all";
+
+  const searchInput = document.getElementById("searchCards");
+  if (searchInput) searchInput.value = "";
+
+  ["noFtf", "hasLounge", "hasIntroApr", "onlyFavorites"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.checked = false;
+  });
+  const useCreditsEl = document.getElementById("useCredits");
+  if (useCreditsEl) useCreditsEl.checked = true;
+
+  renderApp();
+}
+
+// Compare Drawer Management
+function initCompareDrawer() {
+  const drawer = document.getElementById("compareDrawer");
+  const openCompareModalBtn = document.getElementById("openCompareModalBtn");
+  const clearCompareBtn = document.getElementById("clearCompareBtn");
+
+  if (openCompareModalBtn) {
+    openCompareModalBtn.addEventListener("click", openComparisonModal);
+  }
+  if (clearCompareBtn) {
+    clearCompareBtn.addEventListener("click", () => {
+      state.comparedCards.clear();
+      renderCompareDrawer();
+      renderApp();
+    });
+  }
+}
+
+function toggleCompare(cardId) {
+  if (state.comparedCards.has(cardId)) {
+    state.comparedCards.delete(cardId);
+  } else {
+    if (state.comparedCards.size >= 4) {
+      alert("You can compare up to 4 cards simultaneously.");
+      return;
+    }
+    state.comparedCards.add(cardId);
+  }
+  renderCompareDrawer();
+  renderApp();
+}
+
+function renderCompareDrawer() {
+  const drawer = document.getElementById("compareDrawer");
+  const chipsContainer = document.getElementById("compareChips");
+  const compareCount = document.getElementById("compareCount");
+  if (!drawer || !chipsContainer) return;
+
+  if (state.comparedCards.size === 0) {
+    drawer.classList.remove("visible");
+    return;
+  }
+
+  drawer.classList.add("visible");
+  if (compareCount) compareCount.textContent = state.comparedCards.size;
+
+  const cards = Array.from(state.comparedCards).map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+
+  chipsContainer.innerHTML = cards.map(c => `
+    <div class="compare-chip">
+      <span class="chip-color-dot" style="background:${c.accentColor || '#38bdf8'}"></span>
+      <span class="chip-name">${c.name}</span>
+      <button class="chip-remove" onclick="toggleCompare('${c.id}')" title="Remove">&times;</button>
+    </div>
+  `).join("");
+}
+
+// Favorites management
+function toggleFavorite(cardId) {
+  if (state.favorites.has(cardId)) {
+    state.favorites.delete(cardId);
+  } else {
+    state.favorites.add(cardId);
+  }
+  localStorage.setItem("card_finder_favs", JSON.stringify(Array.from(state.favorites)));
+  renderApp();
+}
+
+// 3D Card Hover Tilt & Holographic Reflection Effects
+function setup3DEffects() {
+  document.querySelectorAll(".card-art-3d-wrapper").forEach(wrapper => {
+    const inner = wrapper.querySelector(".card-art-3d-inner");
+    const sheen = wrapper.querySelector(".card-holographic-sheen");
+    if (!inner) return;
+
+    wrapper.addEventListener("mousemove", (e) => {
+      if (inner.classList.contains("flipped")) return;
+      const rect = wrapper.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+
+      inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      
+      if (sheen) {
+        const xPct = Math.round((x / rect.width) * 100);
+        const yPct = Math.round((y / rect.height) * 100);
+        sheen.style.background = `radial-gradient(circle at ${xPct}% ${yPct}%, rgba(255, 255, 255, 0.45), transparent 60%)`;
+      }
+    });
+
+    wrapper.addEventListener("mouseleave", () => {
+      if (inner.classList.contains("flipped")) {
+        inner.style.transform = "rotateY(180deg)";
+      } else {
+        inner.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+      }
+    });
+  });
+}
+
+function flipCard(event, cardId) {
+  event.stopPropagation();
+  const wrapper = document.querySelector(`.card-item[data-card-id="${cardId}"] .card-art-3d-inner`);
+  if (wrapper) {
+    wrapper.classList.toggle("flipped");
+    if (wrapper.classList.contains("flipped")) {
+      wrapper.style.transform = "rotateY(180deg)";
+    } else {
+      wrapper.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+    }
+  }
+}
+
+// Main Render Function
+function renderApp() {
+  renderSpendSummary();
+  renderCardResults();
+  renderComboRecommendation();
+  renderCompareDrawer();
+  renderWalletBadge();
+  if (state.activeView === "wallet") {
+    renderWalletView();
+  }
+}
+
+// Render monthly and annual spend summary
+function renderSpendSummary() {
+  const totalMonthly = Object.values(state.spending).reduce((a, b) => a + b, 0);
+  const totalAnnual = totalMonthly * 12;
+
+  const monthlyEl = document.getElementById("totalMonthlySpend");
+  const annualEl = document.getElementById("totalAnnualSpend");
+  if (monthlyEl) monthlyEl.textContent = `${totalMonthly.toLocaleString()}`;
+  if (annualEl) annualEl.textContent = `${totalAnnual.toLocaleString()}`;
+}
+
+// Render Optimal 2-Card Combo Section
+function renderComboRecommendation() {
+  const comboContainer = document.getElementById("comboSection");
+  if (!comboContainer) return;
+
+  const combo = findOptimalCombo(CARDS_DATABASE, state.spending);
+  if (!combo) {
+    comboContainer.innerHTML = "";
+    return;
+  }
+
+  const { cardA, cardB, net, combinedEarned, assignment } = combo;
+
+  const filtered = getFilteredAndSortedCards();
+  const topSingleNet = filtered.length > 0 ? filtered[0].ongoingNet : 0;
+  const difference = Math.round(net - topSingleNet);
+
+  comboContainer.innerHTML = `
+    <div class="combo-card-banner">
+      <div class="combo-header">
+        <div class="combo-badge">ðŸ”¥ Maximizer Strategy</div>
+        <h3>The Optimal 2-Card Combo for Your Spend</h3>
+        <p class="combo-sub">Using a specialized multiplier card alongside a flat catch-all card earns you significantly more than any single card alone.</p>
+      </div>
+
+      <div class="combo-body">
+        <div class="combo-cards-visual">
+          <div class="mini-card-preview" style="background:${cardA.cardColor}">
+            <div class="mini-card-issuer">${cardA.issuer}</div>
+            <div class="mini-card-name">${cardA.name}</div>
+            <div class="mini-card-role">Primary Spend</div>
+          </div>
+          <div class="combo-plus">+</div>
+          <div class="mini-card-preview" style="background:${cardB.cardColor}">
+            <div class="mini-card-issuer">${cardB.issuer}</div>
+            <div class="mini-card-name">${cardB.name}</div>
+            <div class="mini-card-role">Catch-All</div>
+          </div>
+        </div>
+
+        <div class="combo-stats">
+          <div class="combo-stat-item">
+            <span class="stat-lbl">Estimated Yearly Net Value</span>
+            <span class="stat-val highlight">${Math.round(net).toLocaleString()}<small>/yr</small></span>
+          </div>
+          <div class="combo-stat-item">
+            <span class="stat-lbl">Extra vs. Best Single Card</span>
+            <span class="stat-val positive">+${difference > 0 ? '
+</body>
+</html>
+ + difference.toLocaleString() : '<script src="app.js"></script>'}/yr</span>
+          </div>
+          <div class="combo-strategy-guide">
+            <strong>Spending Routing:</strong>
+            ${CATEGORIES.map(c => `
+              <span class="route-pill">${c.icon} ${c.label.split(' ')[0]}: <strong>${assignment[c.key] === cardA.name ? cardA.name.split(' ')[0] : cardB.name.split(' ')[0]}</strong></span>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Render Card Grid Results
+function renderCardResults() {
+  const cards = getFilteredAndSortedCards();
+  const countEl = document.getElementById("resultsCount");
+  const gridEl = document.getElementById("resultsGrid");
+  const emptyEl = document.getElementById("emptyState");
+
+  if (countEl) {
+    countEl.textContent = `Showing ${cards.length} card${cards.length === 1 ? "" : "s"} ranked by estimated ${state.valueMode === "ongoing" ? "ongoing net annual value" : "first year total value"}`;
+  }
+
+  if (cards.length === 0) {
+    if (gridEl) gridEl.innerHTML = "";
+    if (emptyEl) emptyEl.hidden = false;
+    return;
+  }
+
+  if (emptyEl) emptyEl.hidden = true;
+
+  if (gridEl) {
+    gridEl.innerHTML = cards.map(({ card, totalEarned, effectiveFee, ongoingNet, firstYearNet, breakdown, bonus, roiPct }, idx) => {
+      const isFav = state.favorites.has(card.id);
+      const isCompared = state.comparedCards.has(card.id);
+      const inWallet = state.myWallet.has(card.id);
+      const displayValue = state.valueMode === "ongoing" ? Math.round(ongoingNet) : Math.round(firstYearNet);
+      const valueLabel = state.valueMode === "ongoing" ? "net / year" : "1st year total";
+
+      const topCat = Object.entries(breakdown).sort((a, b) => b[1] - a[1])[0];
+      const topCatInfo = CATEGORIES.find(c => c.key === topCat[0]);
+
+      return `
+        <article class="card-item ${idx === 0 ? 'top-ranked' : ''}" data-card-id="${card.id}">
+          ${idx === 0 ? '<div class="rank-ribbon">ðŸ† #1 Best Value Match</div>' : ''}
+          
+          <!-- 3D Interactive Styled Credit Card Mockup Header -->
+          <div class="card-art-3d-wrapper" onclick="openCardModal('${card.id}')" title="Click to view details or hover for 3D tilt">
+            <button class="flip-hint-btn" onclick="flipCard(event, '${card.id}')" title="Flip to see back of card">
+              ðŸ”„ Flip
+            </button>
+            <div class="card-art-3d-inner">
+              
+              <!-- Front Face -->
+              <div class="card-art-front" style="background:${card.cardColor}; border-top: 3px solid ${card.accentColor || '#38bdf8'}">
+                <div class="card-holographic-sheen"></div>
+                <div class="card-art-top">
+                  <span class="card-art-issuer">${card.issuer}</span>
+                  <span class="card-art-network">${card.network}</span>
+                </div>
+                <div class="card-art-chip">
+                  <svg width="28" height="22" viewBox="0 0 28 22" fill="none">
+                    <rect width="28" height="22" rx="3" fill="#e2e8f0" fill-opacity="0.85"/>
+                    <path d="M0 7H28M0 15H28M9 0V22M19 0V22" stroke="#64748b" stroke-width="0.8"/>
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="contactless-icon">
+                    <path d="M8.5 16.5a5 5 0 0 1 0-7"/>
+                    <path d="M12 19a8.5 8.5 0 0 0 0-14"/>
+                    <path d="M15.5 21.5a12 12 0 0 0 0-19"/>
+                  </svg>
+                </div>
+                <div class="card-art-bottom">
+                  <span class="card-art-name">${card.name}</span>
+                  <span class="card-art-type">${card.type === "travel" ? "Travel Points" : "Cash Back"}</span>
+                </div>
+              </div>
+
+              <!-- Back Face -->
+              <div class="card-art-back">
+                <div class="card-mag-stripe"></div>
+                <div class="card-signature-strip">
+                  <span>CVV â€¢â€¢â€¢</span>
+                </div>
+                <div class="card-back-meta">
+                  <span>Authorized Signature</span>
+                  <span>Cust. Svc: 1-800-${card.issuer.toUpperCase().replace(/\s+/g,'')}</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="card-header-meta">
+              <div class="card-titles">
+                <h3 class="card-title" onclick="openCardModal('${card.id}')">${card.name}</h3>
+                <span class="card-best-for">${card.bestFor}</span>
+              </div>
+              <div class="card-quick-actions">
+                <button class="wallet-toggle-btn ${inWallet ? 'in-wallet' : ''}" onclick="toggleWalletCard('${card.id}')" title="Toggle card in My Wallet">
+                  ${inWallet ? 'âœ“ In Wallet' : '+ My Wallet'}
+                </button>
+                <button class="icon-action-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite('${card.id}')" title="Save to favorites">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="${isFav ? '#ef4444' : 'none'}" stroke="${isFav ? '#ef4444' : 'currentColor'}" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Value Display Badge -->
+            <div class="card-value-box">
+              <div class="value-amount ${displayValue >= 0 ? 'positive' : 'negative'}">
+                ${displayValue.toLocaleString()}
+                <span class="value-sub">${valueLabel}</span>
+                <span class="roi-metric-pill" title="Estimated return on your total annual spend">ðŸ“ˆ ${roiPct}% ROI</span>
+              </div>
+              <div class="value-formula">
+                <span>${Math.round(totalEarned).toLocaleString()} earned</span>
+                <span>âˆ’</span>
+                <span>${card.annualFee} fee</span>
+                ${state.useCredits && card.annualCredits > 0 ? `<span class="credit-offset">+ ${card.annualCredits} credits</span>` : ''}
+                ${state.valueMode === "firstYear" && bonus > 0 ? `<span class="bonus-offset">+ ${bonus} bonus</span>` : ''}
+              </div>
+            </div>
+
+            <!-- Key Reward Rates -->
+            <div class="card-reward-rates">
+              <div class="rate-col">
+                <span class="rate-num">${card.rewards.dining}%</span>
+                <span class="rate-lbl">Dining</span>
+              </div>
+              <div class="rate-col">
+                <span class="rate-num">${card.rewards.groceries}%</span>
+                <span class="rate-lbl">Groceries</span>
+              </div>
+              <div class="rate-col">
+                <span class="rate-num">${card.rewards.gas}%</span>
+                <span class="rate-lbl">Gas</span>
+              </div>
+              <div class="rate-col">
+                <span class="rate-num">${card.rewards.travel}%</span>
+                <span class="rate-lbl">Travel</span>
+              </div>
+              <div class="rate-col">
+                <span class="rate-num">${card.rewards.other}%</span>
+                <span class="rate-lbl">Other</span>
+              </div>
+            </div>
+
+            <!-- Category Top Earner Pill -->
+            <div class="top-earner-bar">
+              <span class="earner-tag">Top Earning Category:</span>
+              <span class="earner-val">${topCatInfo.icon} ${topCatInfo.label.split(' ')[0]} (${Math.round(topCat[1])}/yr)</span>
+            </div>
+
+            <!-- Feature Badges -->
+            <div class="card-pills">
+              <span class="pill ${card.foreignFee ? 'warn' : 'good'}">
+                ${card.foreignFee ? '3% Foreign Fee' : 'âœˆï¸ No Foreign Fee'}
+              </span>
+              <span class="pill ${card.annualFee === 0 ? 'good' : 'fee'}">
+                ${card.annualFee === 0 ? 'ðŸŽ‰ <script src="app.js"></script> Annual Fee' : `${card.annualFee}/yr fee`}
+              </span>
+              ${card.hasLounge ? '<span class="pill perk">ðŸ¸ Airport Lounges</span>' : ''}
+              ${card.hasIntroApr ? '<span class="pill perk">â³ 0% Intro APR</span>' : ''}
+            </div>
+
+            <!-- Sign-up Bonus Banner -->
+            <div class="card-bonus-snippet">
+              <span class="bonus-icon">ðŸŽ</span>
+              <span class="bonus-text"><strong>Welcome Bonus:</strong> ${card.bonusText}</span>
+            </div>
+
+            <!-- Action Buttons Footer -->
+            <div class="card-footer-actions">
+              <label class="compare-checkbox-label">
+                <input type="checkbox" ${isCompared ? 'checked' : ''} onchange="toggleCompare('${card.id}')">
+                <span>Compare</span>
+              </label>
+              <button class="details-btn" onclick="openCardModal('${card.id}')">
+                Details & Breakdown &rarr;
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    setup3DEffects();
+  }
+}
+
+// Generate SVG Donut Chart
+function generateDonutChartSvg(breakdown, totalEarned, totalAnnualSpend) {
+  if (totalEarned <= 0) {
+    return `<div style="text-align:center; padding:20px; color:var(--text-muted);">No earnings data to display</div>`;
+  }
+
+  const radius = 35;
+  const circumference = 2 * Math.PI * radius;
+  let accumulatedOffset = 0;
+
+  const slices = CATEGORIES.map(cat => {
+    const amount = breakdown[cat.key] || 0;
+    const pct = amount / totalEarned;
+    const strokeDash = pct * circumference;
+    const strokeOffset = accumulatedOffset;
+    accumulatedOffset += strokeDash;
+
+    return {
+      cat,
+      amount,
+      pct: (pct * 100).toFixed(1),
+      strokeDash,
+      strokeOffset
+    };
+  });
+
+  const roi = totalAnnualSpend > 0 ? ((totalEarned / totalAnnualSpend) * 100).toFixed(2) : "0.00";
+
+  return `
+    <div class="roi-visual-container">
+      <div style="position:relative; width:130px; height:130px; margin:0 auto;">
+        <svg class="donut-chart-svg" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="${radius}" fill="transparent" stroke="var(--border-color)" stroke-width="20"></circle>
+          ${slices.map(s => `
+            <circle 
+              class="donut-segment" 
+              cx="50" 
+              cy="50" 
+              r="${radius}" 
+              stroke="${s.cat.color}" 
+              stroke-dasharray="${s.strokeDash} ${circumference}" 
+              stroke-dashoffset="-${s.strokeOffset}">
+              <title>${s.cat.label}: ${Math.round(s.amount)} (${s.pct}%)</title>
+            </circle>
+          `).join('')}
+        </svg>
+        <div class="donut-center-group">
+          <span class="donut-center-val">${roi}%</span>
+          <span class="donut-center-lbl">Net ROI</span>
+        </div>
+      </div>
+
+      <div class="donut-legend">
+        ${slices.map(s => `
+          <div class="donut-legend-item">
+            <div class="donut-legend-left">
+              <span class="donut-color-dot" style="background:${s.cat.color}"></span>
+              <span>${s.cat.icon} ${s.cat.label.split(' ')[0]}</span>
+            </div>
+            <div class="donut-legend-right">
+              ${Math.round(s.amount)} <small style="color:var(--text-muted); font-weight:normal;">(${s.pct}%)</small>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// Render "My Wallet & What-to-Swipe Guide"
+function renderWalletView() {
+  const container = document.getElementById("walletView");
+  if (!container) return;
+
+  const ownedCards = Array.from(state.myWallet).map(id => CARDS_DATABASE.find(c => c.id === id)).filter(Boolean);
+
+  if (ownedCards.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>ðŸ’¼ Your Wallet is Empty</h3>
+        <p>Select cards you currently own below to unlock your custom "What-to-Swipe" cheat sheet and see if you're leaving money on the table!</p>
+        <div class="wallet-picker-grid" style="max-width:800px; margin:24px auto 0;">
+          ${CARDS_DATABASE.map(c => `
+            <div class="wallet-pick-item" onclick="toggleWalletCard('${c.id}')">
+              <div class="pick-item-info">
+                <span class="pick-item-name">${c.name}</span>
+                <span class="pick-item-sub">${c.issuer} Â· ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
+</body>
+</html>
+ + c.annualFee + '/yr'}</span>
+              </div>
+              <span class="btn-primary" style="padding:4px 10px; font-size:0.75rem;">+ Add</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // Calculate current wallet rewards per category
+  let currentWalletTotalEarned = 0;
+  let currentWalletTotalFees = 0;
+  let swipeGuide = {};
+
+  CATEGORIES.forEach(({ key }) => {
+    let bestOwnedRate = 0;
+    let bestOwnedCard = ownedCards[0];
+
+    ownedCards.forEach(c => {
+      const rate = c.rewards[key] || 1.0;
+      if (rate > bestOwnedRate) {
+        bestOwnedRate = rate;
+        bestOwnedCard = c;
+      }
+    });
+
+    const monthly = state.spending[key];
+    const dollars = monthly * 12 * (bestOwnedRate / 100);
+    currentWalletTotalEarned += dollars;
+
+    // Find best potential card in whole database
+    let bestCatalogRate = 0;
+    let bestCatalogCard = null;
+    CARDS_DATABASE.forEach(c => {
+      const rate = c.rewards[key] || 1.0;
+      if (rate > bestCatalogRate) {
+        bestCatalogRate = rate;
+        bestCatalogCard = c;
+      }
+    });
+
+    swipeGuide[key] = {
+      card: bestOwnedCard,
+      rate: bestOwnedRate,
+      dollars,
+      upgrade: (bestCatalogRate > bestOwnedRate) ? { card: bestCatalogCard, rate: bestCatalogRate } : null
+    };
+  });
+
+  ownedCards.forEach(c => {
+    const fee = state.useCredits ? Math.max(0, c.annualFee - (c.annualCredits || 0)) : c.annualFee;
+    currentWalletTotalFees += fee;
+  });
+
+  const currentWalletNet = currentWalletTotalEarned - currentWalletTotalFees;
+
+  // Potential optimal combo net
+  const optimalCombo = findOptimalCombo(CARDS_DATABASE, state.spending);
+  const potentialNet = optimalCombo ? optimalCombo.net : currentWalletNet;
+  const missedAmount = Math.max(0, Math.round(potentialNet - currentWalletNet));
+
+  container.innerHTML = `
+    <!-- Wallet KPI Summary Hero -->
+    <div class="wallet-dashboard-hero">
+      <div>
+        <h2 style="font-size:1.4rem; font-weight:800; margin-bottom:4px;">ðŸ’¼ My Wallet & Rewards Optimizer</h2>
+        <p style="font-size:0.85rem; color:var(--text-muted);">
+          You have <strong>${ownedCards.length} card${ownedCards.length === 1 ? '' : 's'}</strong> in your active wallet.
+        </p>
+      </div>
+      <div class="wallet-summary-kpis">
+        <div class="kpi-block">
+          <span class="kpi-lbl">Current Annual Rewards</span>
+          <span class="kpi-val highlight">${Math.round(currentWalletTotalEarned).toLocaleString()}/yr</span>
+        </div>
+        <div class="kpi-block">
+          <span class="kpi-lbl">Total Annual Fees</span>
+          <span class="kpi-val">${currentWalletTotalFees}/yr</span>
+        </div>
+        <div class="kpi-block">
+          <span class="kpi-lbl">Net Take-Home Value</span>
+          <span class="kpi-val positive">${Math.round(currentWalletNet).toLocaleString()}/yr</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Missed Rewards Alert if user is leaving money on the table -->
+    ${missedAmount > 50 ? `
+      <div class="missed-rewards-banner">
+        <div class="missed-alert-text">
+          <h4>âš ï¸ You're Leaving Cash On The Table!</h4>
+          <p>By upgrading or adding the recommended card to your wallet, you could earn an additional <strong>+${missedAmount.toLocaleString()}</strong> every single year on your current spending.</p>
+        </div>
+        <div class="missed-alert-badge">
+          +${missedAmount.toLocaleString()} / yr Potential
+        </div>
+      </div>
+    ` : `
+      <div class="missed-rewards-banner" style="border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.08);">
+        <div class="missed-alert-text">
+          <h4 style="color:var(--accent-green);">ðŸŽ‰ Excellent Wallet Setup!</h4>
+          <p>Your current card combination is already extracting near-peak value for your spending habits!</p>
+        </div>
+      </div>
+    `}
+
+    <!-- Swipe Guide Cheat Sheet -->
+    <div class="swipe-guide-card">
+      <div class="swipe-guide-header">
+        <h3>ðŸ’³ What to Swipe: Instant Checkout Cheat Sheet</h3>
+        <p style="font-size:0.85rem; color:var(--text-muted);">Always pull out this card when paying in these categories to guarantee maximum cash back or points.</p>
+      </div>
+
+      <div class="swipe-grid">
+        ${CATEGORIES.map(c => {
+          const guide = swipeGuide[c.key];
+          return `
+            <div class="swipe-item">
+              <div class="swipe-item-top">
+                <span class="swipe-cat-icon">${c.icon}</span>
+                <div class="swipe-cat-info">
+                  <h4>${c.label}</h4>
+                  <span>Monthly spend: ${state.spending[c.key]}</span>
+                </div>
+              </div>
+
+              <div class="swipe-recommendation">
+                <span class="swipe-rec-lbl">Swipe This Card:</span>
+                <span class="swipe-rec-card">${guide.card.name}</span>
+                <span class="swipe-rec-rate">${guide.rate}% Back &bull; ${Math.round(guide.dollars)}/yr</span>
+              </div>
+
+              ${guide.upgrade ? `
+                <div style="font-size:0.72rem; color:var(--text-muted); background:var(--bg-surface); padding:6px 10px; border-radius:var(--radius-sm); border:1px dashed var(--border-color);">
+                  <strong style="color:var(--accent-amber);">ðŸ’¡ Upgrade Tip:</strong> ${guide.upgrade.card.name.split(' ')[0]} gets <strong>${guide.upgrade.rate}%</strong>
+                </div>
+              ` : `
+                <div style="font-size:0.72rem; color:var(--accent-green); font-weight:700;">
+                  âœ“ Maximized for this category!
+                </div>
+              `}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Interactive Card Selector / Manage My Wallet -->
+    <div class="wallet-card-selector">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h3>Manage Cards in Your Wallet</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted);">Click any card to add or remove it from your active wallet:</p>
+        </div>
+        <button onclick="state.myWallet.clear(); localStorage.removeItem('card_finder_my_wallet'); renderApp();" class="btn-secondary" style="font-size:0.75rem;">Clear All</button>
+      </div>
+
+      <div class="wallet-picker-grid">
+        ${CARDS_DATABASE.map(c => {
+          const isOwned = state.myWallet.has(c.id);
+          return `
+            <div class="wallet-pick-item ${isOwned ? 'active' : ''}" onclick="toggleWalletCard('${c.id}')">
+              <div class="pick-item-info">
+                <span class="pick-item-name">${c.name}</span>
+                <span class="pick-item-sub">${c.issuer} &bull; ${c.annualFee === 0 ? '<script src="app.js"></script> Fee' : '
+</body>
+</html>
+ + c.annualFee + '/yr'}</span>
+              </div>
+              <span style="font-size:0.85rem; font-weight:700; color:${isOwned ? 'var(--primary)' : 'var(--text-muted)'};">
+                ${isOwned ? 'âœ“ In Wallet' : '+ Add'}
+              </span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// Card Detail Modal Handlers
+function initModals() {
+  const detailModal = document.getElementById("cardDetailModal");
+  const compareModal = document.getElementById("comparisonModal");
+
+  document.querySelectorAll(".modal-close-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+    });
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === detailModal) detailModal.classList.remove("open");
+    if (e.target === compareModal) compareModal.classList.remove("open");
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (detailModal) detailModal.classList.remove("open");
+      if (compareModal) compareModal.classList.remove("open");
+    }
+  });
+}
+
+// Open Single Card Details Modal
+function openCardModal(cardId) {
+  const card = CARDS_DATABASE.find(c => c.id === cardId);
+  if (!card) return;
+
+  const val = calculateCardValue(card, state.spending);
+  const totalAnnualSpend = Object.values(state.spending).reduce((a, b) => a + b, 0) * 12;
+  const modal = document.getElementById("cardDetailModal");
+  const content = document.getElementById("cardDetailContent");
+  if (!modal || !content) return;
+
+  content.innerHTML = `
+    <div class="modal-card-header" style="background:${card.cardColor}">
+      <div class="modal-card-badges">
+        <span class="modal-badge">${card.issuer}</span>
+        <span class="modal-badge">${card.network}</span>
+        <span class="modal-badge">${card.type === 'travel' ? 'Travel Rewards' : 'Cash Back'}</span>
+      </div>
+      <h2>${card.name}</h2>
+      <p class="modal-card-sub">${card.bestFor}</p>
+    </div>
+
+    <div class="modal-card-body">
+      <!-- High Level Stats -->
+      <div class="modal-stats-grid">
+        <div class="modal-stat-card">
+          <span class="lbl">Estimated Ongoing Net</span>
+          <span class="val highlight">${Math.round(val.ongoingNet).toLocaleString()}/yr</span>
+        </div>
+        <div class="modal-stat-card">
+          <span class="lbl">First Year Net (w/ Bonus)</span>
+          <span class="val positive">${Math.round(val.firstYearNet).toLocaleString()}</span>
+        </div>
+        <div class="modal-stat-card">
+          <span class="lbl">Effective Fee</span>
+          <span class="val">${val.effectiveFee}</span>
+        </div>
+        <div class="modal-stat-card">
+          <span class="lbl">Net Return (ROI)</span>
+          <span class="val highlight">${val.roiPct}%</span>
+        </div>
+      </div>
+
+      <!-- Donut Chart & Category Breakdown -->
+      <div class="modal-section">
+        <h3>ðŸ“Š Category Rewards Distribution & Net ROI</h3>
+        <p class="section-sub">Breakdown of your ${Math.round(val.totalEarned).toLocaleString()} yearly reward across spending categories:</p>
+        ${generateDonutChartSvg(val.breakdown, val.totalEarned, totalAnnualSpend)}
+      </div>
+
+      <!-- Welcome Bonus & Special Notes -->
+      <div class="modal-section highlight-box">
+        <h3>ðŸŽ Welcome Offer & Signup Bonus</h3>
+        <p><strong>${card.bonusText}</strong></p>
+        ${card.specialNotes ? `<p class="special-rate-note"><strong>Reward Details:</strong> ${card.specialNotes}</p>` : ''}
+      </div>
+
+      <!-- Annual Fee Offset Credits -->
+      ${card.annualCredits > 0 ? `
+        <div class="modal-section credit-box">
+          <h3>ðŸ’³ Annual Statement Credits (${card.annualCredits} Potential Value)</h3>
+          <p>By taking advantage of statement credits, your effective annual fee can drop to <strong>${Math.max(0, card.annualFee - card.annualCredits)}</strong>.</p>
+        </div>
+      ` : ''}
+
+      <!-- Perks List -->
+      <div class="modal-section">
+        <h3>â­ Key Cardholder Perks & Protections</h3>
+        <ul class="perks-checklist">
+          ${card.perks.map(p => `<li><span class="check-icon">âœ“</span> <span>${p}</span></li>`).join('')}
+        </ul>
+      </div>
+
+      <!-- Quick Tips -->
+      <div class="modal-section tips-box">
+        <h4>ðŸ’¡ Application Pro-Tip</h4>
+        <p>${card.issuer === 'Chase' ? 'Chase cards are subject to the 5/24 rule: You will typically not be approved if you have opened 5 or more personal cards across any bank in the past 24 months.' : 
+             card.issuer === 'American Express' ? 'Amex has a once-in-a-lifetime rule for welcome bonuses. Check if you are eligible for the welcome offer via their Apply with Confidence tool.' :
+             card.issuer === 'Capital One' ? 'Capital One generally pulls all three credit bureaus and limits applicants to at most 1 card every 6 months.' :
+             'Ensure your credit score meets or exceeds the recommended tier before applying for the best approval odds.'}</p>
+      </div>
+    </div>
+  `;
+
+  modal.classList.add("open");
+}
+
+// Open Multi-Card Comparison Matrix
+function openComparisonModal() {
+  const modal = document.getElementById("comparisonModal");
+  const tableContainer = document.getElementById("comparisonTableContainer");
+  if (!modal || !tableContainer) return;
+
+  const cards = Array.from(state.comparedCards).map(id => {
+    const card = CARDS_DATABASE.find(c => c.id === id);
+    const val = calculateCardValue(card, state.spending);
+    return { card, ...val };
+  });
+
+  if (cards.length === 0) return;
+
+  tableContainer.innerHTML = `
+    <table class="comparison-matrix">
+      <thead>
+        <tr>
+          <th class="matrix-feature-col">Feature</th>
+          ${cards.map(({ card }) => `
+            <th class="matrix-card-col">
+              <div class="matrix-card-thumb" style="background:${card.cardColor}">
+                <span class="matrix-thumb-issuer">${card.issuer}</span>
+                <span class="matrix-thumb-name">${card.name}</span>
+              </div>
+            </th>
+          `).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ongoing Net Value</strong></td>
+          ${cards.map(({ ongoingNet }) => `
+            <td class="matrix-val highlight">${Math.round(ongoingNet).toLocaleString()}/yr</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>1st Year Total (w/ Bonus)</strong></td>
+          ${cards.map(({ firstYearNet }) => `
+            <td class="matrix-val positive">${Math.round(firstYearNet).toLocaleString()}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Annual Fee</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.annualFee}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Annual Statement Credits</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.annualCredits > 0 ? '
+</body>
+</html>
+ + card.annualCredits + '/yr' : 'None'}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Foreign Transaction Fee</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.foreignFee ? 'âŒ Yes (3%)' : 'âœ… None (0%)'}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Dining Reward Rate</strong></td>
+          ${cards.map(({ card }) => `
+            <td><strong>${card.rewards.dining}%</strong></td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Groceries Reward Rate</strong></td>
+          ${cards.map(({ card }) => `
+            <td><strong>${card.rewards.groceries}%</strong></td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Gas & EV Reward Rate</strong></td>
+          ${cards.map(({ card }) => `
+            <td><strong>${card.rewards.gas}%</strong></td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Travel Reward Rate</strong></td>
+          ${cards.map(({ card }) => `
+            <td><strong>${card.rewards.travel}%</strong></td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Other Spending Rate</strong></td>
+          ${cards.map(({ card }) => `
+            <td><strong>${card.rewards.other}%</strong></td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Airport Lounge Access</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.hasLounge ? 'âœ… Included' : 'âŒ No'}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>0% Intro APR</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.hasIntroApr ? card.introAprText : 'None'}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Signup Bonus</strong></td>
+          ${cards.map(({ card }) => `
+            <td class="matrix-small">${card.bonusText}</td>
+          `).join('')}
+        </tr>
+        <tr>
+          <td><strong>Credit Tier Required</strong></td>
+          ${cards.map(({ card }) => `
+            <td>${card.tierName}</td>
+          `).join('')}
+        </tr>
+      </tbody>
+    </table>
+  `;
+
+  modal.classList.add("open");
+}
+
+// CSV Export Management
+function initCsvExport() {
+  const btn = document.getElementById("downloadCsvBtn");
+  if (btn) {
+    btn.addEventListener("click", exportToCsv);
+  }
+}
+
+function exportToCsv() {
+  const cards = getFilteredAndSortedCards();
+  if (cards.length === 0) {
+    alert("No cards to export under current filters.");
+    return;
+  }
+
+  const headers = [
+    "Rank",
+    "Card Name",
+    "Issuer",
+    "Network",
+    "Annual Fee ($)",
+    "Effective Fee ($)",
+    "Est. Ongoing Net ($/yr)",
+    "1st Year Total ($)",
+    "ROI (%)",
+    "Dining (%)",
+    "Groceries (%)",
+    "Gas (%)",
+    "Travel (%)",
+    "Other (%)",
+    "No Foreign Fee",
+    "Airport Lounge",
+    "Signup Bonus",
+    "Best For"
+  ];
+
+  const rows = cards.map(({ card, ongoingNet, firstYearNet, effectiveFee, roiPct }, idx) => [
+    idx + 1,
+    `"${card.name.replace(/"/g, '""')}"`,
+    `"${card.issuer}"`,
+    `"${card.network}"`,
+    card.annualFee,
+    effectiveFee,
+    Math.round(ongoingNet),
+    Math.round(firstYearNet),
+    roiPct,
+    card.rewards.dining,
+    card.rewards.groceries,
+    card.rewards.gas,
+    card.rewards.travel,
+    card.rewards.other,
+    card.foreignFee ? "No" : "Yes",
+    card.hasLounge ? "Yes" : "No",
+    `"${card.bonusText.replace(/"/g, '""')}"`,
+    `"${card.bestFor.replace(/"/g, '""')}"`
+  ]);
+
+  const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\r\n");
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `card-finder-rankings-${new Date().toISOString().slice(0,10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+// Share current configuration via URL Hash
+function shareConfiguration() {
+  const shareData = {
+    spend: state.spending,
+    tier: state.tier,
+    maxFee: state.maxFee,
+    type: state.type
+  };
+  const encoded = btoa(JSON.stringify(shareData));
+  const url = `${window.location.origin}${window.location.pathname}#config=${encoded}`;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      alert("Configuration link copied to clipboard! You can share this URL with anyone.");
+    }).catch(() => {
+      prompt("Copy your configuration URL:", url);
+    });
+  } else {
+    prompt("Copy your configuration URL:", url);
+  }
+}
+
+// Load configuration from URL Hash if present
+function loadStateFromUrl() {
+  if (window.location.hash.includes("config=")) {
+    try {
+      const b64 = window.location.hash.split("config=")[1];
+      const parsed = JSON.parse(atob(b64));
+      if (parsed.spend) state.spending = { ...state.spending, ...parsed.spend };
+      if (parsed.tier !== undefined) state.tier = parsed.tier;
+      if (parsed.maxFee !== undefined) state.maxFee = parsed.maxFee;
+      if (parsed.type) state.type = parsed.type;
+    } catch (err) {
+      console.warn("Failed to parse config from URL:", err);
+    }
+  }
+}
+
+// Global exports for inline HTML event handlers
+window.toggleCompare = toggleCompare;
+window.toggleFavorite = toggleFavorite;
+window.toggleWalletCard = toggleWalletCard;
+window.flipCard = flipCard;
+window.openCardModal = openCardModal;
+window.openComparisonModal = openComparisonModal;
+window.resetAllFilters = resetAllFilters;
+window.exportToCsv = exportToCsv;
+
+</script>
+</body>
+</html>
+
