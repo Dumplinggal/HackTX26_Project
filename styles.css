@@ -1,3 +1,9 @@
+/* Ensure the [hidden] attribute always wins over component display rules
+   (fixes Wallet & Swipe Guide and Bank Intel views rendering on top of each other) */
+[hidden] {
+  display: none !important;
+}
+
 /* ==========================================================================
    Card Finder Pro - Modern Fintech Design System & Styles
    ========================================================================== */
