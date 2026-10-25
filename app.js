@@ -26,7 +26,7 @@ const state = {
   sortBy: "net", // "net" | "firstYear" | "feeAsc" | "name"
   onlyFavorites: false,
   favorites: new Set(JSON.parse(localStorage.getItem("card_finder_favs") || "[]")),
-  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '["citi-double-cash", "capital-one-savor"]')),
+  myWallet: new Set(JSON.parse(localStorage.getItem("card_finder_my_wallet") || '[]')),
   comparedCards: new Set(),
   spending: {
     dining: 350,
@@ -279,6 +279,9 @@ function initViewSwitcher() {
     if (finderView) finderView.hidden = (view !== "finder");
     if (walletView) walletView.hidden = (view !== "wallet");
     if (bankHubView) bankHubView.hidden = (view !== "banks");
+
+    // new code added
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     if (view === "wallet") {
       renderWalletView();

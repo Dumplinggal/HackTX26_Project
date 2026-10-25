@@ -66,6 +66,11 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.7);
 }
 
+/* New Code Added*/
+[hidden]{
+  display: none !important;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

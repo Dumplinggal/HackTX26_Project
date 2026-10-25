@@ -953,7 +953,7 @@ const CARDS_DATABASE = [
 
 const SPEND_PRESETS = {
   student: {
-    label: "🎓 Student / Lean",
+    label: "🎓 Student",
     desc: "Low budget, transit, groceries and casual dining",
     dining: 150,
     groceries: 200,
@@ -971,7 +971,7 @@ const SPEND_PRESETS = {
     other: 650
   },
   foodie: {
-    label: "🍽️ Urban Foodie",
+    label: "🍽️ Foodie",
     desc: "High restaurant, takeout, delivery & entertainment spend",
     dining: 750,
     groceries: 350,
@@ -980,7 +980,7 @@ const SPEND_PRESETS = {
     other: 550
   },
   traveler: {
-    label: "✈️ Jetsetter / Frequent Flyer",
+    label: "✈️ Frequent Flyer",
     desc: "Frequent flights, hotels, dining, and global purchases",
     dining: 650,
     groceries: 350,
