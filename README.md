@@ -88,3 +88,17 @@ Click **Import from bank statement** above the spending sliders. Upload a CSV / 
 - Get a free key at https://aistudio.google.com/apikey and paste it in the dialog. It is stored only in your browser.
 - Models are listed in `AI_CONFIG.models` (default `gemini-3.5-flash`, falling back to `gemini-3-flash-preview`). Google retires models regularly, so check https://ai.google.dev/gemini-api/docs/models if you get a "model not available" error.
 - For CSV/pasted text only date, merchant and amount are sent, with long numbers masked. For a public deployment, proxy the call through your own server so the key is not exposed in the browser.
+
+---
+
+## 💬 AI Card Advisor (Google Gemini API)
+
+Click **Ask AI advisor** (bottom right). The chat assistant sees your monthly spending, your wallet, the top-ranked cards for you, the best 2-card combo and the relevant bank approval rules (5/24 etc.), and answers in the language you write in.
+
+| File | Purpose |
+| :--- | :--- |
+| `ai-advisor.js` | Self-contained chat widget: builds the context from live app state, calls Gemini (`system_instruction` + multi-turn), retries/falls back across models, renders safe markdown. |
+
+- It shares the Gemini key and model list with `ai-spending.js` (load it after that file). If no key is saved yet, the chat asks for one.
+- All numbers are computed by the app and given to Gemini as context; the model explains and plans, it does not do the math.
+- Chat history is kept in memory only (not saved).
