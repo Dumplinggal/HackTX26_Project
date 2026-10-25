@@ -91,6 +91,12 @@
           <!-- Populated by JS -->
         </div>
 
+        <!-- AI statement import (Gemini) -->
+        <button type="button" id="aiImportBtn" class="ai-import-btn">
+          <span class="ai-spark">&#10024;</span>
+          <span><strong>Import from bank statement</strong><small>AI fills this in for you &middot; Powered by Gemini</small></span>
+        </button>
+
         <!-- Spend Inputs with sliders -->
         <div id="spendingInputs">
           <!-- Populated by JS -->
@@ -224,6 +230,9 @@
     <!-- Right Column: Results & Combos -->
     <div class="content-area">
 
+      <!-- Data freshness status (filled by data-freshness.js) -->
+      <div id="dataStatusBar" class="data-status-bar" role="status"></div>
+
       <!-- View 1: Card Finder & Catalog -->
       <div id="finderView">
         <!-- Optimal 2-Card Combo Recommendation Banner -->
@@ -268,7 +277,7 @@
         <!-- Results Count Status -->
         <div class="results-meta-bar" style="margin-top:16px; margin-bottom:12px;">
           <span id="resultsCount">Loading cards...</span>
-          <span style="font-size:0.75rem; color:var(--text-dim);">Rates updated for 2025/2026</span>
+          <span id="ratesUpdatedLabel" style="font-size:0.75rem; color:var(--text-dim);">Rates updated</span>
         </div>
 
         <!-- Ranked Cards Grid -->
@@ -297,6 +306,54 @@
     </div>
 
   </main>
+
+  <footer class="site-footer">
+    <p>Card Finder Pro is for information only and is not financial advice. Offers, rates, fees and approval rules change without notice, so confirm the current terms with the issuer before you apply. Not affiliated with any card issuer.</p>
+  </footer>
+
+  <!-- AI Spending Import Modal (Gemini) -->
+  <div id="aiSpendModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div class="ai-modal-body">
+        <h2 class="di-title">&#10024; Import spending with AI</h2>
+        <p class="ai-lead">Upload a statement (CSV, PDF or screenshot) or paste your transactions. Gemini sorts each purchase into a category, and we add it up to fill in your monthly spending.</p>
+
+        <label class="ai-label" for="aiKey">Gemini API key
+          <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Get a free key</a>
+        </label>
+        <input type="password" id="aiKey" class="ai-input" placeholder="Paste your key (starts with AIza...)" autocomplete="off" spellcheck="false">
+        <div class="ai-row">
+          <label class="checkbox-item"><input type="checkbox" id="aiRemember"><span>Remember on this device</span></label>
+          <button type="button" class="ds-btn" id="aiClearKey">Remove saved key</button>
+        </div>
+
+        <label class="ai-label">Your statement</label>
+        <div class="ai-row">
+          <label class="ai-file-btn">Choose file
+            <input type="file" id="aiFile" accept=".csv,.tsv,.txt,.pdf,image/*" hidden>
+          </label>
+          <span id="aiFileName" class="ai-file-name"></span>
+          <button type="button" class="ds-btn" id="aiSampleBtn">Use a sample statement</button>
+        </div>
+        <textarea id="aiText" class="ai-input ai-textarea" placeholder="...or paste transactions here (any format)"></textarea>
+
+        <p class="ai-privacy">Your key is stored only in this browser. For CSV and pasted text, only the date, merchant and amount are sent to Google Gemini, and long numbers are masked. PDFs and images are sent as-is, so remove account numbers first.</p>
+
+        <button type="button" class="btn-primary" id="aiRunBtn">Analyze with Gemini</button>
+        <div id="aiStatus" class="ai-status" role="status"></div>
+        <div id="aiResult"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Freshness & Reliability Modal -->
+  <div id="dataInfoModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-container">
+      <button class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      <div id="dataInfoContent" class="data-info-content"></div>
+    </div>
+  </div>
 
   <!-- Sticky Comparison Floating Drawer (Visible when cards are checked) -->
   <div id="compareDrawer" class="compare-drawer">
@@ -352,6 +409,8 @@
   <script src="bank-data.js"></script>
   <script src="cards-data.js"></script>
   <script src="wallet.js"></script>
+  <script src="data-freshness.js"></script>
   <script src="app.js"></script>
+  <script src="ai-spending.js"></script>
 </body>
 </html>
