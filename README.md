@@ -1,41 +1,41 @@
-# Card Finder Pro 💳
+# Card Finder Pro 💳✨
 
 A modern, feature-rich credit card rewards calculator, card combo optimizer, and digital wallet assistant with comprehensive **Bank Intelligence & Underwriting Rulebook**.
 
 ---
 
-## How to Run
+## 🚀 How to Run
 
 ### Option 1: Run in Any Web Browser (Recommended)
-Simply open [**`index.html`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/index.html) directly in Chrome, Edge, Safari, or Firefox. It runs 100% offline with zero dependencies.
+Simply open [**`index.html`**](index.html) directly in Chrome, Edge, Safari, or Firefox. It runs 100% offline with zero dependencies.
 
 ### Option 2: Run in Jupyter Notebook or Google Colab
 If you are working inside an IPython notebook:
 ```python
 from IPython.display import HTML
 
-with open(r"C:\Users\tranl\.gemini\antigravity\scratch\card-finder-pro\bundle.html", "r", encoding="utf-8") as f:
+with open("bundle.html", "r", encoding="utf-8") as f:
     display(HTML(f.read()))
 ```
-Or run the included [**`jupyter_notebook_cell.py`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/jupyter_notebook_cell.py).
+Or run the included [**`jupyter_notebook_cell.py`**](jupyter_notebook_cell.py).
 
 ---
 
-## Clean Modular Architecture
+## 🏗️ Clean Modular Architecture
 
 The scripts are now cleanly separated into distinct modules:
 
 | File | Purpose |
 | :--- | :--- |
-| [**`bank-data.js`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/bank-data.js) | **Bank Intelligence & Underwriting Rules**: 14 major card issuers, credit bureau pull patterns, 1:1 transfer partners, soft-pull pre-approvals, and direct reconsideration phone hotlines. |
-| [**`cards-data.js`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/cards-data.js) | **Credit Cards Database & Spending Presets**: 27 top US credit cards across all credit tiers, category reward multipliers, signup bonuses, and annual statement credit values. |
-| [**`wallet.js`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/wallet.js) | **My Wallet & Checkout Swipe Guide**: Dedicated script managing user's owned cards, store checkout swipe recommendations, and missed rewards calculator. |
-| [**`app.js`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/app.js) | **Core Controller & UI Engine**: 3D perspective tilts, holographic reflections, filters, comparison matrix, donut chart generator, and CSV export. |
-| [**`bundle.html`**](file:///C:/Users/tranl/.gemini/antigravity/scratch/card-finder-pro/bundle.html) | **All-in-One Standalone File**: Full bundle (HTML + CSS + all JS) for single-file deployment or Jupyter Notebooks. |
+| [**`bank-data.js`**](bank-data.js) | **Bank Intelligence & Underwriting Rules**: 14 major card issuers, credit bureau pull patterns, 1:1 transfer partners, soft-pull pre-approvals, and direct reconsideration phone hotlines. |
+| [**`cards-data.js`**](cards-data.js) | **Credit Cards Database & Spending Presets**: 27 top US credit cards across all credit tiers, category reward multipliers, signup bonuses, and annual statement credit values. |
+| [**`wallet.js`**](wallet.js) | **My Wallet & Checkout Swipe Guide**: Dedicated script managing user's owned cards, store checkout swipe recommendations, and missed rewards calculator. |
+| [**`app.js`**](app.js) | **Core Controller & UI Engine**: 3D perspective tilts, holographic reflections, filters, comparison matrix, donut chart generator, and CSV export. |
+| [**`bundle.html`**](bundle.html) | **All-in-One Standalone File**: Full bundle (HTML + CSS + all JS) for single-file deployment or Jupyter Notebooks. |
 
 ---
 
-## Supported Banks & Issuers (14 Banks)
+## 🏛️ Supported Banks & Issuers (14 Banks)
 
 1. **JPMorgan Chase**: Chase 5/24 rule, 2/30 rule, Sapphire 48-month cooldown, Ultimate Rewards ecosystem.
 2. **American Express**: Once-per-lifetime bonus rule, 5 revolving card limit, 2/90 rule, Membership Rewards.
@@ -54,7 +54,7 @@ The scripts are now cleanly separated into distinct modules:
 
 ---
 
-## Data Freshness & Live Updates
+## 🔄 Data Freshness & Live Updates
 
 Card rates and bank rules change often and there is no official public API for them, so the app uses a patch feed:
 
@@ -77,7 +77,7 @@ Set `bundledSnapshotDate` in `data-freshness.js` to the date you last checked th
 
 ---
 
-## AI Spending Import (Google Gemini API)
+## ✨ AI Spending Import (Google Gemini API)
 
 Click **Import from bank statement** above the spending sliders. Upload a CSV / PDF / screenshot (or paste transactions), and Gemini categorizes every purchase. Totals are summed in JavaScript (not by the model), divided by the months covered, and applied to your sliders after you review them.
 
@@ -91,7 +91,7 @@ Click **Import from bank statement** above the spending sliders. Upload a CSV / 
 
 ---
 
-## AI Card Advisor (Google Gemini API)
+## 💬 AI Card Advisor (Google Gemini API)
 
 Click **Ask AI advisor** (bottom right). The chat assistant sees your monthly spending, your wallet, the top-ranked cards for you, the best 2-card combo and the relevant bank approval rules (5/24 etc.), and answers in the language you write in.
 

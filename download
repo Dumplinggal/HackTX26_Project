@@ -1,0 +1,19 @@
+# Secrets - never commit API keys
+.env
+.env.*
+*.pem
+*.key
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies and build output
+node_modules/
+dist/
+
+# Local data exports with personal info (your own statements)
+*statement*.csv
+!sample_*statement*.csv
