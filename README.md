@@ -51,3 +51,40 @@ The scripts are now cleanly separated into distinct modules:
 12. **Bilt Rewards / Wells Fargo**: 5 transactions/billing cycle rule, Rent Day double points.
 13. **Discover**: 1 card in year 1, 2 cards maximum lifetime, first-year Cashback Match.
 14. **U.S. Bank**: Extreme inquiry sensitivity (0/6 or 1/12 rule), Altitude mobile wallet 3x (4.5% on travel).
+
+---
+
+## 🔄 Data Freshness & Live Updates
+
+Card rates and bank rules change often and there is no official public API for them, so the app uses a patch feed:
+
+| File | Purpose |
+| :--- | :--- |
+| `data-freshness.js` | Fetches the patch feed, caches it in `localStorage`, applies it over the bundled data, and renders the status bar + details modal. |
+| `data-updates.json` | The feed. Edit this (or host it elsewhere and change `DATA_META.remoteUrl`) to update fees, rates, bonuses and bank rules without touching the app code. |
+
+Example `data-updates.json`:
+```json
+{
+  "updatedAt": "2026-10-24",
+  "cards": {
+    "chase-sapphire-preferred": { "annualFee": 95, "rewards": { "dining": 3 }, "verifiedAt": "2026-10-24", "sourceUrl": "https://..." }
+  },
+  "banks": { "Chase": { "reconsiderationPhone": "1-888-270-2127" } }
+}
+```
+Set `bundledSnapshotDate` in `data-freshness.js` to the date you last checked the built-in data. The status bar turns amber after 30 days and red after 90. Fetching needs the page served over http(s); opened via `file://` it falls back to bundled/cached data.
+
+---
+
+## ✨ AI Spending Import (Google Gemini API)
+
+Click **Import from bank statement** above the spending sliders. Upload a CSV / PDF / screenshot (or paste transactions), and Gemini categorizes every purchase. Totals are summed in JavaScript (not by the model), divided by the months covered, and applied to your sliders after you review them.
+
+| File | Purpose |
+| :--- | :--- |
+| `ai-spending.js` | Statement parsing, Gemini calls (`generateContent`), exact aggregation, review UI. |
+
+- Get a free key at https://aistudio.google.com/apikey and paste it in the dialog. It is stored only in your browser.
+- Models are listed in `AI_CONFIG.models` (default `gemini-3.5-flash`, falling back to `gemini-3-flash-preview`). Google retires models regularly, so check https://ai.google.dev/gemini-api/docs/models if you get a "model not available" error.
+- For CSV/pasted text only date, merchant and amount are sent, with long numbers masked. For a public deployment, proxy the call through your own server so the key is not exposed in the browser.
