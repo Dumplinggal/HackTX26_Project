@@ -2513,3 +2513,7 @@ select:focus, input[type="text"]:focus {
 .ai-months input { width: 80px; padding: 6px 8px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-surface); color: var(--text-main); }
 .ai-hint { font-size: 0.76rem; color: var(--text-muted); }
 .ai-apply { margin-top: 6px; }
+
+.ai-skipped { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-surface-alt); font-size: 0.8rem; }
+.ai-skipped summary { cursor: pointer; font-weight: 600; }
+.ai-skipped ul { margin: 8px 0 8px 18px; color: var(--text-muted); }

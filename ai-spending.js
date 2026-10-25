@@ -168,9 +168,17 @@ const AiSpending = (() => {
     if (hi !== -1) {
       const head = rows[hi].map(c => c.trim());
       const find = (re) => head.findIndex(c => re.test(c));
-      cols = { iDesc: find(/desc|merchant|payee|memo|details|name/i), iDate: find(/trans.*date|posting|^date|date/i),
+      // Pick the description column by priority ("Description" beats "Memo" beats "Account Name"),
+      // and never a column that is mostly digits or empty.
+      const letters = (c) => { const v = rows.slice(hi + 1, hi + 31).map(r => (r[c] || "").trim()).filter(Boolean);
+        return v.length && v.filter(x => /[A-Za-z]{3}/.test(x)).length / v.length > 0.6; };
+      const descIdx = [/^description$/i, /desc/i, /merchant/i, /payee/i, /details/i, /memo/i, /name/i]
+        .map(re => head.findIndex((c, ci) => re.test(c) && !/account/i.test(c) && letters(ci)))
+        .find(i => i !== -1);
+      cols = { iDesc: descIdx === undefined ? -1 : descIdx, iDate: find(/trans.*date|posting|^date|date/i),
                iDebit: find(/debit|withdraw/i), iAmt: find(/amount/i) };
       start = hi + 1;
+      cols.names = { desc: head[cols.iDesc], amt: head[cols.iAmt !== -1 ? cols.iAmt : cols.iDebit] };
       if (cols.iDesc === -1 || (cols.iAmt === -1 && cols.iDebit === -1)) cols = null;
     }
     if (!cols) { cols = detectByContent(rows); start = 0; }
@@ -201,6 +209,8 @@ const AiSpending = (() => {
     const tx = raw.filter(t => !t.signed || Math.sign(t.amount) === keepSign)
       .map(t => ({ date: t.date, desc: t.desc, amount: Math.abs(t.amount) }));
     tx.forEach((t, i) => { t.i = i; });
+    tx.meta = { rows: raw.length, kept: tx.length, sign: raw[0].signed ? (keepSign === -1 ? "negative amounts = purchases" : "positive amounts = purchases") : "debit column",
+                descCol: cols.names ? cols.names.desc : "(guessed from data)", amtCol: cols.names ? cols.names.amt : "(guessed from data)" };
     return tx.length ? tx : null;
   }
 
@@ -273,7 +283,8 @@ const AiSpending = (() => {
 - "gas": gas stations and EV charging.
 - "travel": airlines, hotels, car rentals, rideshare, trains, cruises, travel agencies.
 - "other": any other purchase (shopping, subscriptions, bills, entertainment, health...).
-- "ignore": NOT a purchase: credit card payments, bank transfers (Zelle, Venmo funding), deposits, refunds, interest, rent or mortgage, taxes, ATM cash.`;
+- "ignore": ONLY for lines that are clearly NOT a purchase: a credit card bill payment ("PAYMENT THANK YOU", "AUTOPAY"), a person-to-person transfer (Zelle, Venmo, Cash App, wire), a deposit or refund, interest, or an ATM cash withdrawal.
+IMPORTANT: when you are unsure, choose "other", never "ignore". Normal merchants, stores, restaurants, subscriptions and online purchases are NEVER "ignore".`;
 
   async function categorizeRows(rows, onProgress) {
     const out = new Map();
@@ -288,7 +299,9 @@ Each line is: index|description|amount. Return ONLY JSON: {"categories":[{"i":<i
 ${lines}`;
       const data = await callGemini([{ text: prompt }]);
       (Array.isArray(data.categories) ? data.categories : []).forEach(x => {
-        if (x && Number.isInteger(x.i) && typeof x.c === "string") out.set(x.i, x.c.toLowerCase().trim());
+        const idx = Number(x && (x.i !== undefined ? x.i : x.index));
+        const c = x && (x.c || x.category);
+        if (Number.isInteger(idx) && typeof c === "string") out.set(idx, c.toLowerCase().trim());
       });
     }
     return out;
@@ -334,15 +347,29 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
   const scrub2 = (t) => String(t).replace(/\d[\d\s-]{8,}\d/g, "XXXX");
 
   // ------------------------------------------------------------------ aggregation (exact math in JS)
-  function aggregate(tx, catByIndex) {
+  // Accept variations such as "Dining & Takeout", "restaurants", "Gas & EV Charging".
+  function normalizeCat(c) {
+    c = String(c || "").toLowerCase().trim();
+    if (AI_CATEGORIES.includes(c) || c === "ignore") return c;
+    if (/ignore|transfer|payment|refund|skip|exclude/.test(c)) return "ignore";
+    if (/din|restaur|food|cafe|coffee|takeout|delivery|bar\b/.test(c)) return "dining";
+    if (/groc|supermarket/.test(c)) return "groceries";
+    if (/\bgas\b|fuel|\bev\b|charging|petrol/.test(c)) return "gas";
+    if (/travel|flight|airline|hotel|lodging|rideshare|car rental/.test(c)) return "travel";
+    return c;
+  }
+
+  function aggregate(tx, catByIndex, includeIgnored = false) {
     const totals = { dining: 0, groceries: 0, gas: 0, travel: 0, other: 0 };
     let ignored = 0, ignoredCount = 0, guessed = 0, used = 0;
+    const skipped = [], items = [];
     let min = null, max = null;
     tx.forEach(t => {
-      let c = catByIndex ? catByIndex.get(t.i) : t.category;
-      if (c === "ignore") { ignored += t.amount; ignoredCount++; return; }
+      let c = normalizeCat(catByIndex ? catByIndex.get(t.i) : t.category);
+      if (c === "ignore" && !includeIgnored) { ignored += t.amount; ignoredCount++; skipped.push({ desc: t.desc, amount: t.amount }); return; }
+      if (c === "ignore") c = "other";
       if (!AI_CATEGORIES.includes(c)) { c = "other"; guessed++; }
-      totals[c] += t.amount; used++;
+      totals[c] += t.amount; used++; items.push({ desc: t.desc, amount: t.amount, cat: c });
       if (t.date) { if (!min || t.date < min) min = t.date; if (!max || t.date > max) max = t.date; }
     });
     let months = 1, fromDates = false;
@@ -352,7 +379,7 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
       fromDates = days >= 20;
       if (!fromDates) months = 1;
     }
-    return { totals, ignored, ignoredCount, guessed, used, months, fromDates };
+    return { totals, ignored, ignoredCount, guessed, used, months, fromDates, skipped, items };
   }
 
   // ------------------------------------------------------------------ UI
@@ -363,6 +390,34 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
     el.textContent = msg || "";
   }
 
+  function skippedPanel(r) {
+    if (!r.skipped || !r.skipped.length) return "";
+    const top = r.skipped.slice().sort((x, y) => y.amount - x.amount).slice(0, 8);
+    return `
+      <details class="ai-skipped" ${r.used ? "" : "open"}>
+        <summary>${r.skipped.length} items were skipped (${money(r.ignored)}). See which ones</summary>
+        <ul>${top.map(t => `<li>${esc(t.desc.slice(0, 50) || "(no description)")} &middot; ${money(t.amount)}</li>`).join("")}</ul>
+        <p class="ai-hint">If these are real purchases, count them as spending:</p>
+        <button type="button" class="ds-btn" id="aiIncludeBtn">Count skipped items as "Other"</button>
+      </details>`;
+  }
+
+  function inspectPanel(r) {
+    const m = ui.meta || {};
+    const how = m.source === "gemini"
+      ? "Read by Gemini directly from your file."
+      : `Read ${m.rows} rows from your file, using "${esc(m.descCol)}" as the merchant and "${esc(m.amtCol)}" as the amount (${esc(m.sign)}). ${m.kept} rows were treated as purchases.`;
+    const list = (r.items || []).slice(0, 15).map(t =>
+      `<tr><td>${esc((t.desc || "").slice(0, 38))}</td><td>${money(t.amount)}</td><td>${esc(t.cat)}</td></tr>`).join("");
+    return `
+      <details class="ai-skipped">
+        <summary>Check how we read your file</summary>
+        <p class="ai-hint">${how}</p>
+        <table class="ai-table"><thead><tr><th>Merchant</th><th>Amount</th><th>Category</th></tr></thead><tbody>${list}</tbody></table>
+        ${(r.items || []).length > 15 ? `<p class="ai-hint">Showing the first 15 of ${r.items.length}.</p>` : ""}
+      </details>`;
+  }
+
   function renderResult() {
     const box = $("aiResult");
     if (!box) return;
@@ -370,6 +425,15 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
     if (!r) { box.innerHTML = ""; return; }
     const m = Math.max(0.1, Number(ui.months) || 1);
     const cats = (typeof CATEGORIES !== "undefined") ? CATEGORIES : AI_CATEGORIES.map(k => ({ key: k, label: k, icon: "" }));
+    const bindInclude = () => {
+      const ib = $("aiIncludeBtn");
+      if (ib) ib.addEventListener("click", () => {
+        ui.result = aggregate(ui.tx, ui.map, true); ui.months = ui.result.months;
+        setStatus("Counted the skipped items as spending. Review the numbers below.", "ok");
+        renderResult();
+      });
+    };
+    if (!r.used) { box.innerHTML = skippedPanel(r); bindInclude(); return; }
     const rows = cats.map(c => `
       <tr><td>${esc(c.icon || "")} ${esc(c.label)}</td><td>${money(r.totals[c.key])}</td><td><strong>${money(r.totals[c.key] / m)}</strong>/mo</td></tr>`).join("");
     const monthly = Object.values(r.totals).reduce((a, b) => a + b, 0) / m;
@@ -377,6 +441,8 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
       <div class="ai-result-head">Found <strong>${r.used}</strong> purchases${r.ignoredCount ? ` (skipped ${r.ignoredCount} payments, transfers or refunds totaling ${money(r.ignored)})` : ""}.</div>
       <table class="ai-table"><thead><tr><th>Category</th><th>Total</th><th>Monthly average</th></tr></thead><tbody>${rows}
         <tr class="ai-total"><td>Total</td><td>${money(Object.values(r.totals).reduce((a, b) => a + b, 0))}</td><td><strong>${money(monthly)}</strong>/mo</td></tr></tbody></table>
+      ${skippedPanel(r)}
+      ${inspectPanel(r)}
       <label class="ai-months">Months covered by this statement:
         <input type="number" id="aiMonths" min="0.1" max="24" step="0.1" value="${m}">
       </label>
@@ -386,6 +452,7 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
     if (mi) mi.addEventListener("input", () => { ui.months = Number(mi.value) || 1; renderResult(); const n = $("aiMonths"); if (n) { n.focus(); n.setSelectionRange(n.value.length, n.value.length); } });
     const ab = $("aiApplyBtn");
     if (ab) ab.addEventListener("click", applyToApp);
+    bindInclude();
   }
 
   function applyToApp() {
@@ -438,10 +505,11 @@ ${scrub2(text).slice(0, AI_CONFIG.maxTextChars)}`;
       if (tx.length > AI_CONFIG.maxRows) { tx = tx.slice(0, AI_CONFIG.maxRows); }
       let map = null;
       if (cats) map = await categorizeRows(tx, setStatus);
+      ui.tx = tx; ui.map = map; ui.meta = tx.meta || { source: "gemini" };
       const agg = aggregate(tx, map);
-      if (!agg.used) throw new Error("Everything in this file looked like payments or transfers, so there was no spending to count.");
       ui.result = agg; ui.months = agg.months;
-      setStatus(`Done with ${ui.modelUsed || "Gemini"}. Review the numbers below, then apply them.`, "ok");
+      if (!agg.used) setStatus("The AI marked every transaction as a payment or transfer, so nothing was counted. Check the skipped list below.", "err");
+      else setStatus(`Done with ${ui.modelUsed || "Gemini"}. Review the numbers below, then apply them.`, "ok");
       renderResult();
     } catch (e) {
       setStatus(e.message || "Something went wrong.", "err");
