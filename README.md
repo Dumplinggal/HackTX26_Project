@@ -1,10 +1,10 @@
-# Card Finder Pro 💳✨
+# Card Finder Pro 💳
 
 A modern, feature-rich credit card rewards calculator, card combo optimizer, and digital wallet assistant with comprehensive **Bank Intelligence & Underwriting Rulebook**.
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### Option 1: Run in Any Web Browser (Recommended)
 Simply open [**`index.html`**](index.html) directly in Chrome, Edge, Safari, or Firefox. It runs 100% offline with zero dependencies.
@@ -21,7 +21,7 @@ Or run the included [**`jupyter_notebook_cell.py`**](jupyter_notebook_cell.py).
 
 ---
 
-## 🏗️ Clean Modular Architecture
+## Clean Modular Architecture
 
 The scripts are now cleanly separated into distinct modules:
 
@@ -35,7 +35,7 @@ The scripts are now cleanly separated into distinct modules:
 
 ---
 
-## 🏛️ Supported Banks & Issuers (14 Banks)
+## Supported Banks & Issuers (14 Banks)
 
 1. **JPMorgan Chase**: Chase 5/24 rule, 2/30 rule, Sapphire 48-month cooldown, Ultimate Rewards ecosystem.
 2. **American Express**: Once-per-lifetime bonus rule, 5 revolving card limit, 2/90 rule, Membership Rewards.
@@ -54,7 +54,7 @@ The scripts are now cleanly separated into distinct modules:
 
 ---
 
-## 🔄 Data Freshness & Live Updates
+## Data Freshness & Live Updates
 
 Card rates and bank rules change often and there is no official public API for them, so the app uses a patch feed:
 
@@ -77,7 +77,7 @@ Set `bundledSnapshotDate` in `data-freshness.js` to the date you last checked th
 
 ---
 
-## ✨ AI Spending Import (Google Gemini API)
+## AI Spending Import (Google Gemini API)
 
 Click **Import from bank statement** above the spending sliders. Upload a CSV / PDF / screenshot (or paste transactions), and Gemini categorizes every purchase. Totals are summed in JavaScript (not by the model), divided by the months covered, and applied to your sliders after you review them.
 
@@ -91,7 +91,7 @@ Click **Import from bank statement** above the spending sliders. Upload a CSV / 
 
 ---
 
-## 💬 AI Card Advisor (Google Gemini API)
+## AI Card Advisor (Google Gemini API)
 
 Click **Ask AI advisor** (bottom right). The chat assistant sees your monthly spending, your wallet, the top-ranked cards for you, the best 2-card combo and the relevant bank approval rules (5/24 etc.), and answers in the language you write in.
 
